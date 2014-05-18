@@ -14,13 +14,12 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 /**
- * An UltraSonicSensors instance is used to access three ultrasonic sensors
- * (leftInput, frontInput, and rightInput) and read the measurements from these
- * sensors....modified by Vic...ultrasonics works using Ytai's suggestions.
+ * An UltraSonicSensors instance is used to access three ultrasonic sensors (leftInput, frontInput, and rightInput) and read the measurements from these sensors....modified by Vic...ultrasonics works using Ytai's suggestions.
  * 
  * @author Erik Colban
  */
-public class UltraSonicSensor {
+public class UltraSonicSensor
+{
 	private IOIO ioio;
 	private ToggleButton button_;
 	private TextView log;
@@ -55,44 +54,38 @@ public class UltraSonicSensor {
 	 *            the IOIO instance used to communicate with the sensor
 	 * @throws ConnectionLostException
 	 */
-	public UltraSonicSensor(IOIO ioio) throws ConnectionLostException {
+	public UltraSonicSensor(IOIO ioio) throws ConnectionLostException
+	{
 		this.ioio = ioio;
-		this.leftStrobe = ioio
-				.openDigitalOutput(LEFT_STROBE_ULTRASONIC_OUTPUT_PIN);
-		this.rightStrobe = ioio
-				.openDigitalOutput(RIGHT_STROBE_ULTRASONIC_OUTPUT_PIN);
-		this.rearStrobe = ioio
-				.openDigitalOutput(REAR_STROBE_ULTRASONIC_OUTPUT_PIN);
-		this.frontStrobe = ioio
-				.openDigitalOutput(FRONT_STROBE_ULTRASONIC_OUTPUT_PIN);
+		this.leftStrobe = ioio.openDigitalOutput(LEFT_STROBE_ULTRASONIC_OUTPUT_PIN);
+		this.rightStrobe = ioio.openDigitalOutput(RIGHT_STROBE_ULTRASONIC_OUTPUT_PIN);
+		this.rearStrobe = ioio.openDigitalOutput(REAR_STROBE_ULTRASONIC_OUTPUT_PIN);
+		this.frontStrobe = ioio.openDigitalOutput(FRONT_STROBE_ULTRASONIC_OUTPUT_PIN);
 	}
 
 	/**
-	 * Makes a reading of the ultrasonic sensors and stores the results locally.
-	 * To access these readings, use {@link #getLeftDistance()},
-	 * {@link #getFrontDistance()}, and {@link #getRightDistance()}.
+	 * Makes a reading of the ultrasonic sensors and stores the results locally. To access these readings, use {@link #getLeftDistance()}, {@link #getFrontDistance()}, and {@link #getRightDistance()}.
 	 * 
 	 * @throws ConnectionLostException
 	 * @throws InterruptedException
 	 */
-	public void read() throws ConnectionLostException, InterruptedException {
+	public void read() throws ConnectionLostException, InterruptedException
+	{
 		leftDistance = read(leftStrobe, leftInput, LEFT_ULTRASONIC_INPUT_PIN);
-		frontDistance = read(frontStrobe, frontInput,
-				FRONT_ULTRASONIC_INPUT_PIN);
+		frontDistance = read(frontStrobe, frontInput, FRONT_ULTRASONIC_INPUT_PIN);
 		// rightDistance = read(rightStrobe, rightInput,
 		// RIGHT_ULTRASONIC_INPUT_PIN);
 		// rearDistance = read(rearStrobe, rearInput,
 		// REAR_ULTRASONIC_INPUT_PIN);
 	}
 
-	private int read(DigitalOutput strobe, PulseInput input, int inputPin)
-			throws ConnectionLostException, InterruptedException // Order of
-																	// following
-																	// statements
-																	// is very
-																	// important...do
-																	// not
-																	// change
+	private int read(DigitalOutput strobe, PulseInput input, int inputPin) throws ConnectionLostException, InterruptedException // Order of
+																																// following
+																																// statements
+																																// is very
+																																// important...do
+																																// not
+																																// change
 	{
 		int distance = 0;
 		ioio.beginBatch();
@@ -106,23 +99,28 @@ public class UltraSonicSensor {
 		return distance;
 	}
 
-	public synchronized int getLeftDistance() {
+	public synchronized int getLeftDistance()
+	{
 		return leftDistance;
 	}
 
-	public synchronized int getFrontDistance() {
+	public synchronized int getFrontDistance()
+	{
 		return frontDistance;
 	}
 
-	public synchronized int getRightDistance() {
+	public synchronized int getRightDistance()
+	{
 		return rightDistance;
 	}
 
-	public synchronized int getRearDistance() {
+	public synchronized int getRearDistance()
+	{
 		return rearDistance;
 	}
 
-	public void closeConnection() {
+	public void closeConnection()
+	{
 		leftInput.close();
 		frontInput.close();
 		rightInput.close();
