@@ -23,13 +23,13 @@ import android.widget.ToggleButton;
  * toggle button on the screen, which enables control of the on-board LED.
  * Modified by Vic rev 130402A
  */
-public class MainActivity extends IOIOActivity implements SensorEventListener,
-		RylexAPI
+public class MainActivity extends IOIOActivity implements SensorEventListener
 {
 	private ToggleButton button_;
 	private int targetDirection = 90;
 	private int difference;
 	private UltraSonicSensor sonar;
+	RylexAPI ra;
 	private TextView mText;
 	private ScrollView mScroller;
 	/**
@@ -47,6 +47,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener,
 	private int lastAzimuth;
 	private double pitch;
 	private double roll;
+	
+	MainActivity m;
+	Looper l;
 
 	/**
 	 * Called when the activity is first created. Here we normally initialize
@@ -57,9 +60,13 @@ public class MainActivity extends IOIOActivity implements SensorEventListener,
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
 		button_ = (ToggleButton) findViewById(R.id.button);
 		mScroller = (ScrollView) findViewById(R.id.scroller);
 		mText = (TextView) findViewById(R.id.logText);
+		
+		m = new MainActivity();
+		l = new Looper();
 
 		// Compass stuff
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -104,14 +111,14 @@ public class MainActivity extends IOIOActivity implements SensorEventListener,
 	 */
 	class Looper extends BaseIOIOLooper
 	{
-		private DigitalOutput led_;// The on-board LED
-		private DigitalOutput motorEnable; // Both motors
-		private DigitalOutput rightMotorClock; // Step right motor
-		private DigitalOutput leftMotorClock; // Step left motor
-		private DigitalOutput motorCongtrollerReset;
-		private DigitalOutput rightMotorControl; // Motor decay mode
-		private DigitalOutput rightMotorDirection;
-		private DigitalOutput leftMotorDirection;
+		public DigitalOutput led_;// The on-board LED
+		public DigitalOutput motorEnable; // Both motors
+		public DigitalOutput rightMotorClock; // Step right motor
+		public DigitalOutput leftMotorClock; // Step left motor
+		public DigitalOutput motorCongtrollerReset;
+		public DigitalOutput rightMotorControl; // Motor decay mode
+		public DigitalOutput rightMotorDirection;
+		public DigitalOutput leftMotorDirection;
 		
 		/**
 		 * Called every time a connection with IOIO has been established.
@@ -127,6 +134,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener,
 		protected void setup() throws ConnectionLostException 
 		{
 			sonar = new UltraSonicSensor(ioio_);
+			ra = new RylexAPI(m, l, sonar);
 			led_ = ioio_.openDigitalOutput(0, true);
 			rightMotorDirection = ioio_.openDigitalOutput(20, false);
 			leftMotorDirection = ioio_.openDigitalOutput(21, true);
@@ -165,35 +173,35 @@ public class MainActivity extends IOIOActivity implements SensorEventListener,
 				led_.write(false); //turns light on
 				try
 				{
-					SystemClock.sleep(1000);
-					sonar.read();
+					SystemClock.sleep(500);
+//					sonar.read();
 					log(String.valueOf(sonar.getFrontDistance()));
-					hugRightDistance(20);
-					Thread.sleep(10);
-					led_.write(true);
+					ra.hugRightDistance(20);
+//					Thread.sleep(10);
+//					led_.write(true);
 					// rightMotorClock.write(true);
 					// rightMotorClock.write(false);
 					// leftMotorClock.write(true);
 					// leftMotorClock.write(false);
-					difference = (int) (targetDirection - azimuth);
-					if (difference < -180)
-					{
-						difference += 360;
-					} else if (difference > 180)
-					{
-						difference -= 360;
-					}
-					if (difference > 3)
-					{
-						turnLeft();
-					} else if (difference < 3)
-					{
-						turnRight();
-					} else
-					{
-						goForward();
-						log("STRAIGHT");
-					}
+//					difference = (int) (targetDirection - azimuth);
+//					if (difference < -180)
+//					{
+//						difference += 360;
+//					} else if (difference > 180)
+//					{
+//						difference -= 360;
+//					}
+//					if (difference > 3)
+//					{
+//						ra.turnLeft();
+//					} else if (difference < 3)
+//					{
+//						ra.turnRight();
+//					} else
+//					{
+//						ra.goForward();
+//						log("STRAIGHT");
+//					}
 				} catch (Exception e)
 				{
 					log(e.getClass().getName() + ", " + e.getMessage());
@@ -204,45 +212,6 @@ public class MainActivity extends IOIOActivity implements SensorEventListener,
 			}
 		}
 
-		public void goForward() throws Exception
-		{
-			rightMotorClock.write(true);
-			rightMotorClock.write(false);
-			leftMotorClock.write(true);
-			leftMotorClock.write(false);
-		}
-		
-		public void hugRightDistance(int distance) throws Exception
-		{
-			log("Going to read the sensors");
-			sonar.read();
-			log("Read the sensors");
-			log(String.valueOf(sonar.getRightDistance()));
-//			if (sonar.getRightDistance() < distance)
-//			{
-//				turnTo(-3);
-//			} else if (sonar.getRightDistance() > distance)
-//			{
-//				turnTo(3);
-//			} else
-//			{
-//				goForward();
-//			}
-		}
-
-		public void turnRight() throws Exception
-		{
-			rightMotorClock.write(false);
-			leftMotorClock.write(true);
-			leftMotorClock.write(false);
-		}
-
-		public void turnLeft() throws Exception
-		{
-			rightMotorClock.write(true);
-			rightMotorClock.write(false);
-			leftMotorClock.write(false);
-		}
 	}
 
 	/**
