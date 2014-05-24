@@ -15,6 +15,9 @@ import ioio.lib.util.BaseIOIOLooper;
 import ioio.lib.util.IOIOLooper;
 import ioio.lib.util.android.IOIOActivity;
 import android.graphics.DashPathEffect;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ScrollView;
@@ -30,6 +33,21 @@ public class MainActivity extends IOIOActivity
 	public UltraSonicSensor sonar;
 	private TextView mText;
 	private ScrollView mScroller;
+	/**
+	 * Compass stuff
+	 */
+	SensorManager sensorManager;
+	private Sensor sensorAccelerometer;
+	private Sensor sensorMagneticField;
+	private float[] valuesAccelerometer;
+	private float[] valuesMagneticField;
+	private float[] matrixR;
+	private float[] matrixI;
+	private float[] matrixValues;
+	private double azimuth;
+	private int lastAzimuth;
+	private double pitch;
+	private double roll;
 
 	/**
 	 * Called when the activity is first created. Here we normally initialize our GUI.
@@ -138,6 +156,42 @@ public class MainActivity extends IOIOActivity
 			} else
 			{
 				led_.write(true);
+			}
+		}
+
+		public void onSensorChanged(SensorEvent event)
+		{
+			switch (event.sensor.getType())
+			{
+			case Sensor.TYPE_ACCELEROMETER:
+				for (int i = 0; i < 3; i++)
+				{
+					valuesAccelerometer[i] = event.values[i];
+				}
+				break;
+			case Sensor.TYPE_MAGNETIC_FIELD:
+				for (int i = 0; i < 3; i++)
+				{
+					valuesMagneticField[i] = event.values[i];
+				}
+				break;
+			}
+			boolean success = SensorManager.getRotationMatrix(matrixR, matrixI, valuesAccelerometer, valuesMagneticField);
+			if (success)
+			{
+				SensorManager.getOrientation(matrixR, matrixValues);
+				synchronized (this)
+				{
+					azimuth = Math.toDegrees(matrixValues[0]);
+					pitch = Math.toDegrees(matrixValues[1]);
+					roll = Math.toDegrees(matrixValues[2]);
+					if (Math.abs(lastAzimuth - (int) azimuth) > 2)
+					{
+						log("hi azimuth");
+						log("azimuth = " + (int) (azimuth));
+						lastAzimuth = (int) (azimuth);
+					}
+				}
 			}
 		}
 	}
