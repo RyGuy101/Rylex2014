@@ -31,6 +31,8 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private TextView mText;
 	private ScrollView mScroller;
 	MainActivity m;
+	SensorReader sensorReader;
+	Thread sr;
 	// Looper l;
 	/**
 	 * Compass stuff
@@ -116,6 +118,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			sonar = new UltraSonicSensor(ioio_);
 			ra = new RylexAPI(m, this, sonar);
+			sensorReader = new SensorReader(sonar, false);
+			sr = new Thread(sensorReader);
+//			sr.start();
 			led_ = ioio_.openDigitalOutput(0, true);
 			rightMotorDirection = ioio_.openDigitalOutput(20, true);// Goes forward
 			leftMotorDirection = ioio_.openDigitalOutput(21, false);// Goes forward
@@ -154,13 +159,17 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 				led_.write(false); // turns light on
 				try
 				{
-					SystemClock.sleep(10);
+//					if (sensorReader.getRead() != true)
+//					{
+//						sensorReader.setRead(true);
+//					}
 					ra.goForward();
+					SystemClock.sleep(10);
 					// SystemClock.sleep(1000);
 					// sonar.read();
 					// log("Distance F = " + String.valueOf(sonar.getFrontDistance()));
 					// log("Distance L = " + String.valueOf(sonar.getLeftDistance()));
-					///ra.hugLeftDistance(200);
+					// /ra.hugLeftDistance(200);
 					// Thread.sleep(10);
 					// led_.write(true);
 					// rightMotorClock.write(true);
