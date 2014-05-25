@@ -1,6 +1,8 @@
 package ioio.examples.hello;
 
-public class RylexAPI extends MainActivity
+import ioio.examples.hello.MainActivity.Looper;
+
+public class RylexAPI
 {
 	MainActivity m;
 	Looper l;
@@ -8,10 +10,14 @@ public class RylexAPI extends MainActivity
 
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar)
 	{
+		// m.log("In RylexAPI constructor");
 		this.m = m;
+		// m.log("Set MainActivity field 'm' equal to paramater 'm'");
 		this.l = l;
+		// m.log("Set Looper field 'l' equal to paramater 'l'");
 		this.sonar = sonar;
-
+		// m.log("Set UltraSonicSensor field 'sonar' equal to paramater 'sonar'");
+		// m.log("Done with RylexAPI constructor");
 	}
 
 	public void turnRight() throws Exception
@@ -38,10 +44,7 @@ public class RylexAPI extends MainActivity
 
 	public void hugRightDistance(int distance) throws Exception
 	{
-		log("Going to read the sensors");
 		sonar.read();
-		log("Read the sensors");
-		log(String.valueOf(sonar.getRightDistance()));
 		if (sonar.getRightDistance() < distance)
 		{
 			turnLeft();
@@ -53,13 +56,10 @@ public class RylexAPI extends MainActivity
 			goForward();
 		}
 	}
-	
+
 	public void hugLeftDistance(int distance) throws Exception
 	{
-		log("Going to read the sensors");
 		sonar.read();
-		log("Read the sensors");
-		log(String.valueOf(sonar.getLeftDistance()));
 		if (sonar.getLeftDistance() < distance)
 		{
 			turnRight();
