@@ -7,6 +7,11 @@ public class RylexAPI
 	MainActivity m;
 	Looper l;
 	UltraSonicSensor sonar;
+	public boolean rightForward = false;
+	public boolean leftForward = !rightForward;
+	public boolean rightBackward = !rightForward;
+	public boolean leftBackward = !leftForward;
+
 
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar)
 	{

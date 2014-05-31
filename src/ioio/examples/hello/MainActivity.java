@@ -13,6 +13,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Scroller;
 import android.widget.TextView;
@@ -23,6 +24,38 @@ import android.widget.ToggleButton;
  */
 public class MainActivity extends IOIOActivity implements SensorEventListener
 {
+	private Runnable urban = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			// TODO urban stuff goes here
+		}
+	};
+	private Runnable gold = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			// TODO gold stuff goes here
+		}
+	};
+	private Runnable drag = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			// TODO drag stuff goes here
+		}
+	};
+	private Runnable test = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			// TODO test stuff goes here
+		}
+	};
 	private ToggleButton button_;
 	private int targetDirection = 90;
 	private int difference;
@@ -31,8 +64,8 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private TextView mText;
 	private ScrollView mScroller;
 	MainActivity m;
-	SensorReader sensorReader;
-	Thread sr;
+//	SensorReader sensorReader;
+//	Thread sr;
 	// Looper l;
 	/**
 	 * Compass stuff
@@ -50,6 +83,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private double pitch;
 	private double roll;
 	private boolean logAzimuth = false;
+	public Button startButton;
 
 	/**
 	 * Called when the activity is first created. Here we normally initialize our GUI.
@@ -118,12 +152,12 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			sonar = new UltraSonicSensor(ioio_);
 			ra = new RylexAPI(m, this, sonar);
-			sensorReader = new SensorReader(sonar, false);
-			sr = new Thread(sensorReader);
+//			sensorReader = new SensorReader(sonar, false);
+//			sr = new Thread(sensorReader);
 //			sr.start();
 			led_ = ioio_.openDigitalOutput(0, true);
-			rightMotorDirection = ioio_.openDigitalOutput(20, true);// Goes forward
-			leftMotorDirection = ioio_.openDigitalOutput(21, false);// Goes forward
+			rightMotorDirection = ioio_.openDigitalOutput(20, ra.rightForward);// Goes forward
+			leftMotorDirection = ioio_.openDigitalOutput(21, ra.leftForward);// Goes forward
 			motorCongtrollerReset = ioio_.openDigitalOutput(22, true);
 			motorEnable = ioio_.openDigitalOutput(3, true);// Must be true for
 															// motors to run
