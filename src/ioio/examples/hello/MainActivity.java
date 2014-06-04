@@ -6,6 +6,7 @@ import ioio.lib.api.exception.ConnectionLostException;
 import ioio.lib.util.BaseIOIOLooper;
 import ioio.lib.util.IOIOLooper;
 import ioio.lib.util.android.IOIOActivity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,6 +14,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Scroller;
@@ -24,12 +26,55 @@ import android.widget.ToggleButton;
  */
 public class MainActivity extends IOIOActivity implements SensorEventListener
 {
+	private String challenge;
+	private boolean hazFenderz;
 	private Runnable urban = new Runnable()
 	{
 		@Override
 		public void run()
 		{
-			// TODO urban stuff goes here
+			try
+			{
+				// if (sensorReader.getRead() != true)
+				// {
+				// sensorReader.setRead(true);
+				// }
+				ra.goForward();
+				SystemClock.sleep(10);
+				// SystemClock.sleep(1000);
+				// sonar.read();
+				// log("Distance F = " + String.valueOf(sonar.getFrontDistance()));
+				// log("Distance L = " + String.valueOf(sonar.getLeftDistance()));
+				// /ra.hugLeftDistance(200);
+				// Thread.sleep(10);
+				// led_.write(true);
+				// rightMotorClock.write(true);
+				// rightMotorClock.write(false);
+				// leftMotorClock.write(true);
+				// leftMotorClock.write(false);
+				// difference = (int) (targetDirection - azimuth);
+				// if (difference < -180)
+				// {
+				// difference += 360;
+				// } else if (difference > 180)
+				// {
+				// difference -= 360;
+				// }
+				// if (difference > 3)
+				// {
+				// ra.turnLeft();
+				// } else if (difference < 3)
+				// {
+				// ra.turnRight();
+				// } else
+				// {
+				// ra.goForward();
+				// log("STRAIGHT");
+				// }
+				// log("");
+			} catch (Exception e)
+			{
+			}
 		}
 	};
 	private Runnable gold = new Runnable()
@@ -56,16 +101,18 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			// TODO test stuff goes here
 		}
 	};
+	private Runnable theChallenge;
 	private ToggleButton button_;
 	private int targetDirection = 90;
 	private int difference;
 	private UltraSonicSensor sonar;
 	RylexAPI ra;
+	private TextView title;
 	private TextView mText;
 	private ScrollView mScroller;
 	MainActivity m;
-//	SensorReader sensorReader;
-//	Thread sr;
+	// SensorReader sensorReader;
+	// Thread sr;
 	// Looper l;
 	/**
 	 * Compass stuff
@@ -96,6 +143,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		button_ = (ToggleButton) findViewById(R.id.button);
 		mScroller = (ScrollView) findViewById(R.id.scroller);
 		mText = (TextView) findViewById(R.id.logText);
+		title = (TextView) findViewById(R.id.title);
 		m = new MainActivity();
 		// l = new Looper();
 		// Compass stuff
@@ -108,6 +156,30 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		matrixI = new float[9];
 		matrixValues = new float[3];
 		// logAzimuth = false;
+	}
+
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		Intent intent = getIntent();
+		challenge = intent.getExtras().getString(Setup.CHALLENGE);
+		title.append(" Running challenge: " + challenge);
+		hazFenderz = intent.getExtras().getBoolean(Setup.FENDERZ);
+		title.append(", Haz fenderz: " + hazFenderz);
+		if (challenge == Setup.URBAN)
+		{
+			theChallenge = urban;
+		} else if (challenge == Setup.GOLD)
+		{
+			theChallenge = gold;
+		} else if (challenge == Setup.DRAG)
+		{
+			theChallenge = drag;
+		} else if (challenge == Setup.TEST)
+		{
+			theChallenge = test;
+		}
 	}
 
 	@Override
@@ -124,6 +196,11 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 		sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_NORMAL);
 		super.onResume();
+	}
+
+	public void toSetup(View v)
+	{
+		onBackPressed();
 	}
 
 	/**
@@ -152,9 +229,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			sonar = new UltraSonicSensor(ioio_);
 			ra = new RylexAPI(m, this, sonar);
-//			sensorReader = new SensorReader(sonar, false);
-//			sr = new Thread(sensorReader);
-//			sr.start();
+			// sensorReader = new SensorReader(sonar, false);
+			// sr = new Thread(sensorReader);
+			// sr.start();
 			led_ = ioio_.openDigitalOutput(0, true);
 			rightMotorDirection = ioio_.openDigitalOutput(20, ra.rightForward);// Goes forward
 			leftMotorDirection = ioio_.openDigitalOutput(21, ra.leftForward);// Goes forward
@@ -193,43 +270,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 				led_.write(false); // turns light on
 				try
 				{
-//					if (sensorReader.getRead() != true)
-//					{
-//						sensorReader.setRead(true);
-//					}
-					ra.goForward();
-					SystemClock.sleep(10);
-					// SystemClock.sleep(1000);
-					// sonar.read();
-					// log("Distance F = " + String.valueOf(sonar.getFrontDistance()));
-					// log("Distance L = " + String.valueOf(sonar.getLeftDistance()));
-					// /ra.hugLeftDistance(200);
-					// Thread.sleep(10);
-					// led_.write(true);
-					// rightMotorClock.write(true);
-					// rightMotorClock.write(false);
-					// leftMotorClock.write(true);
-					// leftMotorClock.write(false);
-					// difference = (int) (targetDirection - azimuth);
-					// if (difference < -180)
-					// {
-					// difference += 360;
-					// } else if (difference > 180)
-					// {
-					// difference -= 360;
-					// }
-					// if (difference > 3)
-					// {
-					// ra.turnLeft();
-					// } else if (difference < 3)
-					// {
-					// ra.turnRight();
-					// } else
-					// {
-					// ra.goForward();
-					// log("STRAIGHT");
-					// }
-					// log("");
+					theChallenge.run();
 				} catch (Exception e)
 				{
 					log(e.getClass().getName() + ", " + e.getMessage());

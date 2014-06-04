@@ -1,29 +1,25 @@
 package ioio.examples.hello;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
-import android.os.Build;
 
-public class Setup extends ActionBarActivity
+public class Setup extends Activity
 {
 	RadioButton urban;
 	RadioButton gold;
 	RadioButton drag;
 	RadioButton test;
+	CheckBox hazFenderz;
 	public static final String CHALLENGE = "challenge";
 	public static final String URBAN = "urban";
 	public static final String GOLD = "gold";
 	public static final String DRAG = "drag";
 	public static final String TEST = "test";
+	public static final String FENDERZ = "fenderz";
 	private String theChallenge;
 
 	@Override
@@ -35,6 +31,8 @@ public class Setup extends ActionBarActivity
 		gold = (RadioButton) findViewById(R.id.gold);
 		drag = (RadioButton) findViewById(R.id.drag);
 		test = (RadioButton) findViewById(R.id.test);
+		hazFenderz = (CheckBox) findViewById(R.id.hazFenderz);
+		urban.setChecked(true);
 	}
 
 	public void onRadioButtonClicked(View v)
@@ -58,6 +56,7 @@ public class Setup extends ActionBarActivity
 	{
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtra(CHALLENGE, theChallenge);
+		intent.putExtra(FENDERZ, hazFenderz.isChecked());
 		startActivity(intent);
 	}
 }
