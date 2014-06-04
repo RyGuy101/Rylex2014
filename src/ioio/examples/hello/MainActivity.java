@@ -228,7 +228,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		protected void setup() throws ConnectionLostException
 		{
 			sonar = new UltraSonicSensor(ioio_);
-			ra = new RylexAPI(m, this, sonar);
+			ra = new RylexAPI(m, this, sonar, hazFenderz);
 			// sensorReader = new SensorReader(sonar, false);
 			// sr = new Thread(sensorReader);
 			// sr.start();

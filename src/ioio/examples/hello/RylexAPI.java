@@ -7,22 +7,20 @@ public class RylexAPI
 	MainActivity m;
 	Looper l;
 	UltraSonicSensor sonar;
-	public boolean rightForward = false;
-	public boolean leftForward = !rightForward;
-	public boolean rightBackward = !rightForward;
-	public boolean leftBackward = !leftForward;
+	public boolean rightForward;
+	public boolean leftForward;
+	public boolean rightBackward;
+	public boolean leftBackward;
 
-
-	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar)
+	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
-		// m.log("In RylexAPI constructor");
 		this.m = m;
-		// m.log("Set MainActivity field 'm' equal to paramater 'm'");
 		this.l = l;
-		// m.log("Set Looper field 'l' equal to paramater 'l'");
 		this.sonar = sonar;
-		// m.log("Set UltraSonicSensor field 'sonar' equal to paramater 'sonar'");
-		// m.log("Done with RylexAPI constructor");
+		rightForward = !hazFenderz;
+		leftForward = !rightForward;
+		rightBackward = !rightForward;
+		leftBackward = !leftForward;
 	}
 
 	public void turnRight() throws Exception
