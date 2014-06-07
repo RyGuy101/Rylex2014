@@ -33,6 +33,7 @@ public class Setup extends Activity
 		test = (RadioButton) findViewById(R.id.test);
 		hazFenderz = (CheckBox) findViewById(R.id.hazFenderz);
 		urban.setChecked(true);
+		theChallenge = URBAN;
 	}
 
 	public void onRadioButtonClicked(View v)

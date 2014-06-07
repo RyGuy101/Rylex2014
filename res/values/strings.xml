@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello, IOIO User!</string>
-    <string name="app_name">Hello IOIO</string>
+    <string name="app_name">iARoC 2014</string>
     <string name="title_activity_setup">Setup</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -15,5 +15,6 @@
     <color name="robertDarkRed">#B00000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="blue">#0000FF</color>
 
 </resources>

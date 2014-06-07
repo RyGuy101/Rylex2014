@@ -163,11 +163,12 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	{
 		super.onStart();
 		Intent intent = getIntent();
+		title.setText(R.string.hello);
 		challenge = intent.getExtras().getString(Setup.CHALLENGE);
-		title.append(" Running challenge: " + challenge);
+		title.append("\nRunning challenge: " + challenge);
 		hazFenderz = intent.getExtras().getBoolean(Setup.FENDERZ);
-		title.append(", Haz fenderz: " + hazFenderz);
-		if (challenge == Setup.URBAN)
+		title.append("\nHaz fenderz: " + hazFenderz);
+		if (challenge.equals(Setup.URBAN))
 		{
 			theChallenge = urban;
 		} else if (challenge == Setup.GOLD)
