@@ -1,5 +1,6 @@
 package ioio.examples.hello;
 
+import android.os.SystemClock;
 import ioio.examples.hello.MainActivity.Looper;
 
 public class RylexAPI
@@ -39,6 +40,18 @@ public class RylexAPI
 
 	public void goForward() throws Exception
 	{
+		l.rightMotorDirection.write(rightForward);
+		l.leftMotorDirection.write(leftForward);
+		l.rightMotorClock.write(true);
+		l.rightMotorClock.write(false);
+		l.leftMotorClock.write(true);
+		l.leftMotorClock.write(false);
+	}
+	
+	public void goBackward() throws Exception
+	{
+		l.rightMotorDirection.write(rightBackward);
+		l.leftMotorDirection.write(leftBackward);
 		l.rightMotorClock.write(true);
 		l.rightMotorClock.write(false);
 		l.leftMotorClock.write(true);
@@ -58,6 +71,26 @@ public class RylexAPI
 		{
 			goForward();
 		}
+	}
+	
+	public void test() throws Exception {
+		m.log("--- STARTING TEST ---");
+		sonar.read();
+		m.log("Left Sensor: " + sonar.getLeftDistance());
+		m.log("Front Sensor: " + sonar.getFrontDistance());
+		for (int i = 0; i < 15; i++)
+		{
+			goForward();
+		}
+		for (int i = 0; i < 15; i++)
+		{
+			goBackward();
+		}
+		m.log("--- TEST COMPLETED ---");
+	}
+	
+	public void spinRight() {
+		
 	}
 
 	public void hugLeftDistance(int distance) throws Exception

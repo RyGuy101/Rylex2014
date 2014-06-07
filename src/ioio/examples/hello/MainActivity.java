@@ -7,6 +7,7 @@ import ioio.lib.util.BaseIOIOLooper;
 import ioio.lib.util.IOIOLooper;
 import ioio.lib.util.android.IOIOActivity;
 import android.content.Intent;
+import android.graphics.DashPathEffect;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -98,7 +99,13 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		@Override
 		public void run()
 		{
-			// TODO test stuff goes here
+			try
+			{
+				ra.test();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	};
 	private Runnable theChallenge;

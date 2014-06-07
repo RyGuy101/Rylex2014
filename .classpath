@@ -6,5 +6,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="lib" path="ioiolibandroid.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="/Users/alex/Downloads/IOIOLibAccessory.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
