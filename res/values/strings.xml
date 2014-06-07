@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello, IOIO User!</string>
+    <string name="hello"></string>
     <string name="app_name">iARoC 2014</string>
     <string name="title_activity_setup">Setup</string>
     <string name="hello_world">Hello world!</string>
