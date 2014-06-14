@@ -1,7 +1,8 @@
 package ioio.examples.hello;
 
-import android.os.SystemClock;
 import ioio.examples.hello.MainActivity.Looper;
+import ioio.lib.api.exception.ConnectionLostException;
+import android.os.SystemClock;
 
 public class RylexAPI
 {
@@ -12,6 +13,7 @@ public class RylexAPI
 	public boolean leftForward;
 	public boolean rightBackward;
 	public boolean leftBackward;
+	private int counter = 0;
 
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -47,7 +49,7 @@ public class RylexAPI
 		l.leftMotorClock.write(true);
 		l.leftMotorClock.write(false);
 	}
-	
+
 	public void goBackward() throws Exception
 	{
 		l.rightMotorDirection.write(rightBackward);
@@ -72,25 +74,62 @@ public class RylexAPI
 			goForward();
 		}
 	}
-	
-	public void test() throws Exception {
+
+	public void test() throws Exception
+	{
 		m.log("--- STARTING TEST ---");
 		sonar.read();
 		m.log("Left Sensor: " + sonar.getLeftDistance());
 		m.log("Front Sensor: " + sonar.getFrontDistance());
-		for (int i = 0; i < 15; i++)
-		{
-			goForward();
-		}
-		for (int i = 0; i < 15; i++)
-		{
-			goBackward();
-		}
+		goForward(100);
+		// goBackward(100); TODO: Add goBackward Method
 		m.log("--- TEST COMPLETED ---");
 	}
-	
-	public void spinRight() {
-		
+
+	public void spinRight(int speed) throws ConnectionLostException
+	{
+		l.rightMotorDirection.write(true);
+		l.leftMotorDirection.write(true);
+		l.rightMotorClock.close();
+		l.leftMotorClock.close();
+	}
+
+	public void spinLeft(int speed) throws ConnectionLostException
+	{
+		l.rightMotorDirection.write(false);
+		l.leftMotorDirection.write(false);
+		l.rightMotorClock.close();
+		l.leftMotorClock.close();
+	}
+
+	public void spinRight(int speed, double degrees) throws Exception
+	{
+		l.rightMotorDirection.write(false);
+		l.leftMotorDirection.write(false);
+		double pulses = degrees * 2.54;// (20.0/9.0);
+		for (int i = 0; i < pulses; i++)
+		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+		}
+	}
+
+	public void spinLeft(int speed, double degrees) throws Exception
+	{
+		l.rightMotorDirection.write(true);
+		l.leftMotorDirection.write(true);
+		double pulses = degrees * 2.46;// (20.0/9.0);
+		for (int i = 0; i < pulses; i++)
+		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+		}
 	}
 
 	public void hugLeftDistance(int distance) throws Exception
@@ -107,4 +146,32 @@ public class RylexAPI
 			goForward();
 		}
 	}
+
+	public void goForward(int speed) throws ConnectionLostException
+	{
+		l.rightMotorDirection.write(false);
+		l.leftMotorDirection.write(true);
+		SystemClock.sleep(1000 / speed);
+		l.rightMotorClock.write(true);
+		l.rightMotorClock.write(false);
+		l.leftMotorClock.write(true);
+		l.leftMotorClock.write(false);
+	}
+
+	public void goForward(int speed, int centimeters) throws ConnectionLostException
+	{
+		double pulses = centimeters * 10.95;
+		l.rightMotorDirection.write(false);
+		l.leftMotorDirection.write(true);
+		for (int i = 0; i < pulses; i++)
+		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+		}
+	}
+
+	
 }

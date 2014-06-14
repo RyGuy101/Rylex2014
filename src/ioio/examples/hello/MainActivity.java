@@ -2,6 +2,7 @@ package ioio.examples.hello;
 
 import ioio.lib.api.DigitalOutput;
 import ioio.lib.api.IOIO;
+import ioio.lib.api.PwmOutput;
 import ioio.lib.api.exception.ConnectionLostException;
 import ioio.lib.util.BaseIOIOLooper;
 import ioio.lib.util.IOIOLooper;
@@ -29,6 +30,15 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 {
 	private String challenge;
 	private boolean hazFenderz;
+	
+	private final static String LOGTAG = "IOIOLooper";
+	private PwmOutput rightMotorClock;
+	private PwmOutput leftMotorClock;
+	private boolean startedAcceleration = false;
+	
+	private int leftMotorPWMfrequency = 200;// used to be both 200;
+	private int rightMotorPWMfrequency = 195;
+	
 	private Runnable urban = new Runnable()
 	{
 		@Override
@@ -366,4 +376,36 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		log("NullPointerException\nThank you for using the forfeit method!");
 		throw new NullPointerException();
 	}
+	
+	public void accelerateTo(final int finalPWMfrequency) {
+    	if (startedAcceleration)
+    		return;
+    	new Thread(new Runnable() {
+    		public void run() {
+    			int counter = 0;
+    			while (leftMotorPWMfrequency < finalPWMfrequency) {
+    				try {
+    					counter++;
+    					
+    					SystemClock.sleep(1);
+    					log("Setting Motor frequency : " + leftMotorPWMfrequency);
+//    					rightMotorClock.setFrequency(rightMotorPWMfrequency);
+//    					leftMotorClock.setFrequency(leftMotorPWMfrequency);
+    					leftMotorPWMfrequency += 2;
+    					rightMotorPWMfrequency += 2;
+    					
+//    					if(frontSensor() < 100 && counter >= 100) {
+//    						stop();
+//    						goForward(450);
+//    						counter = 0;
+//    					}
+
+    				} catch (Exception ex) {
+    					log("Motor clock pulsing hiccup");
+    				}
+    			}
+    		}
+    	}).start();
+    	startedAcceleration = true;
+    }
 }
