@@ -79,8 +79,8 @@ public class RylexAPI
 	{
 		m.log("--- STARTING TEST ---");
 		sonar.read();
-		m.log("Left Sensor: " + sonar.getLeftDistance());
-		m.log("Front Sensor: " + sonar.getFrontDistance());
+		// m.log("Left Sensor: " + sonar.getLeftDistance());
+		// m.log("Front Sensor: " + sonar.getFrontDistance());
 		goForward(100, 10);
 		spinRight(100, 90);
 		SystemClock.sleep(500);

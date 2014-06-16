@@ -72,10 +72,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				log("testing");
-				// ra.test();
-				ra.goForward();
-				SystemClock.sleep(10);
+				ra.test();
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -126,7 +123,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		mScroller = (ScrollView) findViewById(R.id.scroller);
 		mText = (TextView) findViewById(R.id.logText);
 		title = (TextView) findViewById(R.id.title);
-		m = new MainActivity();
+		m = this;
 		// l = new Looper();
 		// Compass stuff
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
