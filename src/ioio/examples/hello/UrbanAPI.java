@@ -40,6 +40,7 @@ public class UrbanAPI
 		leftForward = !rightForward;
 		rightBackward = !rightForward;
 		leftBackward = !leftForward;
+		ra = new RylexAPI(m, l, sonar, hazFenderz);
 	}
 
 	public void urbanChallange() throws Exception
@@ -247,8 +248,8 @@ public class UrbanAPI
 		}
 		// rightMotorClockPulse = ioio.openDigitalOutput(MOTOR_CLOCK_RIGHT_PIN);
 		// leftMotorClockPulse = ioio.openDigitalOutput(MOTOR_CLOCK_LEFT_PIN);
-		l.leftMotorDirection.write(false);
-		l.rightMotorDirection.write(false);
+		l.leftMotorDirection.write(leftBackward);
+		l.rightMotorDirection.write(rightForward);
 		double pulses = degrees * 2.46;
 		for (int i = 0; i < pulses; i++)
 		{
@@ -522,8 +523,8 @@ public class UrbanAPI
 		{
 			gridSquares2.get(counter).setDirection(gridSquares2.get(counter).getDirection() + 1);
 		}
-		l.rightMotorDirection.write(true);
-		l.leftMotorDirection.write(true);
+		l.rightMotorDirection.write(rightBackward);
+		l.leftMotorDirection.write(leftForward);
 		double pulses = degrees * 2.54;
 		for (int i = 0; i < pulses; i++)
 		{
@@ -546,8 +547,8 @@ public class UrbanAPI
 		}
 		// rightMotorClockPulse = ioio.openDigitalOutput(MOTOR_CLOCK_RIGHT_PIN);
 		// leftMotorClockPulse = ioio.openDigitalOutput(MOTOR_CLOCK_LEFT_PIN);
-		l.leftMotorDirection.write(false);
-		l.rightMotorDirection.write(false);
+		l.leftMotorDirection.write(leftBackward);
+		l.rightMotorDirection.write(rightForward);
 		double pulses = degrees * 2.46;
 		for (int i = 0; i < pulses; i++)
 		{

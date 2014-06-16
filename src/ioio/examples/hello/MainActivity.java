@@ -30,15 +30,12 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 {
 	private String challenge;
 	private boolean hazFenderz;
-	
 	private final static String LOGTAG = "IOIOLooper";
 	private PwmOutput rightMotorClock;
 	private PwmOutput leftMotorClock;
 	private boolean startedAcceleration = false;
-	
 	private int leftMotorPWMfrequency = 200;// used to be both 200;
 	private int rightMotorPWMfrequency = 195;
-	
 	private Runnable urban = new Runnable()
 	{
 		@Override
@@ -46,43 +43,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				// if (sensorReader.getRead() != true)
-				// {
-				// sensorReader.setRead(true);
-				// }
-				ra.goForward();
-				SystemClock.sleep(10);
-				// SystemClock.sleep(1000);
-				// sonar.read();
-				// log("Distance F = " + String.valueOf(sonar.getFrontDistance()));
-				// log("Distance L = " + String.valueOf(sonar.getLeftDistance()));
-				// /ra.hugLeftDistance(200);
-				// Thread.sleep(10);
-				// led_.write(true);
-				// rightMotorClock.write(true);
-				// rightMotorClock.write(false);
-				// leftMotorClock.write(true);
-				// leftMotorClock.write(false);
-				// difference = (int) (targetDirection - azimuth);
-				// if (difference < -180)
-				// {
-				// difference += 360;
-				// } else if (difference > 180)
-				// {
-				// difference -= 360;
-				// }
-				// if (difference > 3)
-				// {
-				// ra.turnLeft();
-				// } else if (difference < 3)
-				// {
-				// ra.turnRight();
-				// } else
-				// {
-				// ra.goForward();
-				// log("STRAIGHT");
-				// }
-				// log("");
+				ua.urbanChallange();
 			} catch (Exception e)
 			{
 			}
@@ -111,7 +72,10 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				ra.test();
+				log("testing");
+				// ra.test();
+				ra.goForward();
+				SystemClock.sleep(10);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -124,6 +88,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private int difference;
 	private UltraSonicSensor sonar;
 	RylexAPI ra;
+	UrbanAPI ua;
 	private TextView title;
 	private TextView mText;
 	private ScrollView mScroller;
@@ -188,13 +153,13 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		if (challenge.equals(Setup.URBAN))
 		{
 			theChallenge = urban;
-		} else if (challenge == Setup.GOLD)
+		} else if (challenge.equals(Setup.GOLD))
 		{
 			theChallenge = gold;
-		} else if (challenge == Setup.DRAG)
+		} else if (challenge.equals(Setup.DRAG))
 		{
 			theChallenge = drag;
-		} else if (challenge == Setup.TEST)
+		} else if (challenge.equals(Setup.TEST))
 		{
 			theChallenge = test;
 		}
@@ -247,6 +212,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			sonar = new UltraSonicSensor(ioio_);
 			ra = new RylexAPI(m, this, sonar, hazFenderz);
+			ua = new UrbanAPI(m, this, sonar, hazFenderz);
 			// sensorReader = new SensorReader(sonar, false);
 			// sr = new Thread(sensorReader);
 			// sr.start();
@@ -376,36 +342,39 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		log("NullPointerException\nThank you for using the forfeit method!");
 		throw new NullPointerException();
 	}
-	
-	public void accelerateTo(final int finalPWMfrequency) {
-    	if (startedAcceleration)
-    		return;
-    	new Thread(new Runnable() {
-    		public void run() {
-    			int counter = 0;
-    			while (leftMotorPWMfrequency < finalPWMfrequency) {
-    				try {
-    					counter++;
-    					
-    					SystemClock.sleep(1);
-    					log("Setting Motor frequency : " + leftMotorPWMfrequency);
-//    					rightMotorClock.setFrequency(rightMotorPWMfrequency);
-//    					leftMotorClock.setFrequency(leftMotorPWMfrequency);
-    					leftMotorPWMfrequency += 2;
-    					rightMotorPWMfrequency += 2;
-    					
-//    					if(frontSensor() < 100 && counter >= 100) {
-//    						stop();
-//    						goForward(450);
-//    						counter = 0;
-//    					}
 
-    				} catch (Exception ex) {
-    					log("Motor clock pulsing hiccup");
-    				}
-    			}
-    		}
-    	}).start();
-    	startedAcceleration = true;
-    }
+	public void accelerateTo(final int finalPWMfrequency)
+	{
+		if (startedAcceleration)
+			return;
+		new Thread(new Runnable()
+		{
+			public void run()
+			{
+				int counter = 0;
+				while (leftMotorPWMfrequency < finalPWMfrequency)
+				{
+					try
+					{
+						counter++;
+						SystemClock.sleep(1);
+						log("Setting Motor frequency : " + leftMotorPWMfrequency);
+						// rightMotorClock.setFrequency(rightMotorPWMfrequency);
+						// leftMotorClock.setFrequency(leftMotorPWMfrequency);
+						leftMotorPWMfrequency += 2;
+						rightMotorPWMfrequency += 2;
+						// if(frontSensor() < 100 && counter >= 100) {
+						// stop();
+						// goForward(450);
+						// counter = 0;
+						// }
+					} catch (Exception ex)
+					{
+						log("Motor clock pulsing hiccup");
+					}
+				}
+			}
+		}).start();
+		startedAcceleration = true;
+	}
 }

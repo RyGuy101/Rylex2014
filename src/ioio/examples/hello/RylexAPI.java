@@ -81,31 +81,35 @@ public class RylexAPI
 		sonar.read();
 		m.log("Left Sensor: " + sonar.getLeftDistance());
 		m.log("Front Sensor: " + sonar.getFrontDistance());
-		goForward(100);
-		// goBackward(100); TODO: Add goBackward Method
+		goForward(100, 10);
+		spinRight(100, 90);
+		SystemClock.sleep(500);
+		spinLeft(100, 90);
+		// goBackward(100);
+		SystemClock.sleep(1000);
 		m.log("--- TEST COMPLETED ---");
 	}
 
 	public void spinRight(int speed) throws ConnectionLostException
 	{
-		l.rightMotorDirection.write(true);
-		l.leftMotorDirection.write(true);
+		l.rightMotorDirection.write(rightBackward);
+		l.leftMotorDirection.write(leftForward);
 		l.rightMotorClock.close();
 		l.leftMotorClock.close();
 	}
 
 	public void spinLeft(int speed) throws ConnectionLostException
 	{
-		l.rightMotorDirection.write(false);
-		l.leftMotorDirection.write(false);
+		l.rightMotorDirection.write(rightForward);
+		l.leftMotorDirection.write(leftBackward);
 		l.rightMotorClock.close();
 		l.leftMotorClock.close();
 	}
 
 	public void spinRight(int speed, double degrees) throws Exception
 	{
-		l.rightMotorDirection.write(false);
-		l.leftMotorDirection.write(false);
+		l.rightMotorDirection.write(rightBackward);
+		l.leftMotorDirection.write(leftForward);
 		double pulses = degrees * 2.54;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
@@ -119,8 +123,8 @@ public class RylexAPI
 
 	public void spinLeft(int speed, double degrees) throws Exception
 	{
-		l.rightMotorDirection.write(true);
-		l.leftMotorDirection.write(true);
+		l.rightMotorDirection.write(rightForward);
+		l.leftMotorDirection.write(leftBackward);
 		double pulses = degrees * 2.46;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
@@ -149,8 +153,8 @@ public class RylexAPI
 
 	public void goForward(int speed) throws ConnectionLostException
 	{
-		l.rightMotorDirection.write(false);
-		l.leftMotorDirection.write(true);
+		l.rightMotorDirection.write(rightForward);
+		l.leftMotorDirection.write(leftForward);
 		SystemClock.sleep(1000 / speed);
 		l.rightMotorClock.write(true);
 		l.rightMotorClock.write(false);
@@ -161,8 +165,8 @@ public class RylexAPI
 	public void goForward(int speed, int centimeters) throws ConnectionLostException
 	{
 		double pulses = centimeters * 10.95;
-		l.rightMotorDirection.write(false);
-		l.leftMotorDirection.write(true);
+		l.rightMotorDirection.write(rightForward);
+		l.leftMotorDirection.write(leftForward);
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);
@@ -173,5 +177,14 @@ public class RylexAPI
 		}
 	}
 
-	
+	public void goBackward(int speed) throws ConnectionLostException
+	{
+		l.rightMotorDirection.write(rightBackward);
+		l.leftMotorDirection.write(leftBackward);
+		// SystemClock.sleep(1000 / speed);
+		l.rightMotorClock.write(true);
+		l.rightMotorClock.write(false);
+		l.leftMotorClock.write(true);
+		l.leftMotorClock.write(false);
+	}
 }
