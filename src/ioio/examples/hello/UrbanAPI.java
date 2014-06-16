@@ -54,6 +54,7 @@ public class UrbanAPI
 		m.log("The current goal is: ");
 		m.log(goalX + ", " + goalY);
 		// rightSensor = rightSensor();
+		sonar.read();
 		frontSensor = sonar.getFrontDistance();
 		m.log("read front sensor");
 		leftSensor = sonar.getLeftDistance();
@@ -125,16 +126,7 @@ public class UrbanAPI
 			m.log("wall in front. counter = " + counter);
 			ra.goForward(100, frontSensor + 2);
 			goBackward(defaultSpeed, 18); // Test 20, previous 19
-			sonar.read();
-			frontSensor = sonar.getFrontDistance();
-			// rearSensor = rearSensor();
-			leftSensor = sonar.getLeftDistance();
-			// rightSensor = rightSensor();
-			SystemClock.sleep(1000);
-			frontSensor = sonar.getFrontDistance();
-			// rearSensor = rearSensor();
-			leftSensor = sonar.getLeftDistance();
-			// rightSensor = rightSensor();
+			readSensors();
 			m.log("second left Distance: " + leftSensor);
 			m.log("second front distance: " + frontSensor);
 		}

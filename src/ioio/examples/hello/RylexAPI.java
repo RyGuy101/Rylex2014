@@ -110,7 +110,7 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftForward);
-		double pulses = degrees * 2.54;// (20.0/9.0);
+		double pulses = degrees * 2.4;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);
@@ -125,7 +125,7 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftBackward);
-		double pulses = degrees * 2.46;// (20.0/9.0);
+		double pulses = degrees * 2.33;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);
