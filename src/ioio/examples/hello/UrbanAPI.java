@@ -3,7 +3,6 @@ package ioio.examples.hello;
 import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.exception.ConnectionLostException;
 import java.util.ArrayList;
-import org.wintrisstech.vicswagon.GridSquare;
 import android.os.SystemClock;
 
 public class UrbanAPI
@@ -29,6 +28,7 @@ public class UrbanAPI
 	private int defaultSpeed = 250;
 	public int tempX = 0;
 	public int tempY = 0;
+	public int cellSize = 70;
 	RylexAPI ra;
 
 	public UrbanAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
@@ -42,7 +42,7 @@ public class UrbanAPI
 		leftBackward = !leftForward;
 	}
 
-	public void urbanChallange()
+	public void urbanChallange() throws Exception
 	{
 		sonar.read();
 		m.log("Left distance: " + sonar.getLeftDistance());
@@ -56,23 +56,23 @@ public class UrbanAPI
 		frontSensor = sonar.getFrontDistance();
 		m.log("read front sensor");
 		leftSensor = sonar.getLeftDistance();
-		//m.log("rightSensor: distance = " + rightSensor());
+		// m.log("rightSensor: distance = " + rightSensor());
 		m.log("Read sensors");
 		SystemClock.sleep(100);
 		m.log("slept successfully");
 		while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
 		{
-			//m.log("" + sensorMonitor.searchForIRBeam());
+			// m.log("" + sensorMonitor.searchForIRBeam());
 			m.log("in the first while loop");
 			leftWallHugger();
-			//m.log("left Distance: " + leftSensor);
-			//m.log("front distance: " + frontSensor);
+			// m.log("left Distance: " + leftSensor);
+			// m.log("front distance: " + frontSensor);
 			// if (tempBool == true)
 			// {
 			// leftWallHugger();
 			// } else
 			// {
-			//m.log("front distance: " + frontSensor);
+			// m.log("front distance: " + frontSensor);
 			// SystemClock.sleep(250);
 			// }
 		}
@@ -89,23 +89,23 @@ public class UrbanAPI
 			m.log("about to start mazeMapper");
 			mazeMapper();
 		}
-		//m.log("" + sensorMonitor.getFrontDistance());
+		// m.log("" + sensorMonitor.getFrontDistance());
 		// SystemClock.sleep(250);
 		// goForward(100, 50);
 		// spinRight(100, 180);
 		// mazeMapper();
 		// showOffSpeed();
 		// Put in for sensor check
-		//m.log("front Distance: " + frontSensor);
+		// m.log("front Distance: " + frontSensor);
 		// goForward(100, 100);
 		// accelerateTo(2000);
 		// SystemClock.sleep(200);
-		//m.log("right Distance: " + rightsensor);
+		// m.log("right Distance: " + rightsensor);
 		// SystemClock.sleep(200);
 		// Put in for sensor check
 		// goForward(100, 1);
 		// SystemClock.sleep(200);
-		//m.log("rear Distance: " + rearSensor());
+		// m.log("rear Distance: " + rearSensor());
 		/*
 		 * if (sensorMonitor != null) { sensorMonitor.readAllSensors(); float duration = sensorMonitor.getFrontIRPulseDuration();m.log("Detected IR beam duration: " + duration); }
 		 */
@@ -115,16 +115,7 @@ public class UrbanAPI
 	public void leftWallHugger() throws Exception
 	{
 		m.log("beginning of wallHugger method");
-		sonar.read();
-		frontSensor = sonar.getFrontDistance();
-		// rearSensor = rearSensor();
-		leftSensor = sonar.getLeftDistance();
-		// rightSensor = rightSensor();
-		SystemClock.sleep(1000);
-		sonar.read();
-		frontSensor = sonar.getFrontDistance();
-		// rearSensor = rearSensor();
-		leftSensor = sonar.getLeftDistance();
+		readSensors();
 		// rightSensor = rightSensor();
 		m.log("left Distance: " + leftSensor);
 		m.log("front distance: " + frontSensor);
@@ -268,55 +259,71 @@ public class UrbanAPI
 			l.leftMotorClock.write(false);
 		}
 	}
-	
-	public void updateGrid() {
+
+	public void updateGrid()
+	{
 		tempX = gridSquares.get(counter).getX();
 		tempY = gridSquares.get(counter).getY();
-		if (gridSquares.get(counter).getDirection() == NORTH) {
+		if (gridSquares.get(counter).getDirection() == NORTH)
+		{
 			m.log("The Direction is: North");
-		} else if (gridSquares.get(counter).getDirection() == SOUTH) {
+		} else if (gridSquares.get(counter).getDirection() == SOUTH)
+		{
 			m.log("The Direction is: South");
-		} else if (gridSquares.get(counter).getDirection() == EAST) {
+		} else if (gridSquares.get(counter).getDirection() == EAST)
+		{
 			m.log("The Direction is: East");
-		} else if (gridSquares.get(counter).getDirection() == WEST) {
+		} else if (gridSquares.get(counter).getDirection() == WEST)
+		{
 			m.log("The Direction is: West");
 		}
-		if (gridSquares.get(counter).getDirection() == NORTH) {
+		if (gridSquares.get(counter).getDirection() == NORTH)
+		{
 			tempY = gridSquares.get(counter).getY() + 1;
-		} else if (gridSquares.get(counter).getDirection() == EAST) {
+		} else if (gridSquares.get(counter).getDirection() == EAST)
+		{
 			tempX = gridSquares.get(counter).getX() + 1;
-		} else if (gridSquares.get(counter).getDirection() == SOUTH) {
+		} else if (gridSquares.get(counter).getDirection() == SOUTH)
+		{
 			tempY = gridSquares.get(counter).getY() - 1;
-		} else if (gridSquares.get(counter).getDirection() == WEST) {
+		} else if (gridSquares.get(counter).getDirection() == WEST)
+		{
 			tempX = gridSquares.get(counter).getX() - 1;
 		}
-		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter)
-				.getDirection()));
+		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
 	}
 
-	public void updateGrid2() {
+	public void updateGrid2()
+	{
 		tempX = gridSquares2.get(counter).getX();
 		tempY = gridSquares2.get(counter).getY();
-		if (gridSquares2.get(counter).getDirection() == NORTH) {
+		if (gridSquares2.get(counter).getDirection() == NORTH)
+		{
 			m.log("The Direction is: North");
-		} else if (gridSquares2.get(counter).getDirection() == SOUTH) {
+		} else if (gridSquares2.get(counter).getDirection() == SOUTH)
+		{
 			m.log("The Direction is: South");
-		} else if (gridSquares2.get(counter).getDirection() == EAST) {
+		} else if (gridSquares2.get(counter).getDirection() == EAST)
+		{
 			m.log("The Direction is: East");
-		} else if (gridSquares2.get(counter).getDirection() == WEST) {
+		} else if (gridSquares2.get(counter).getDirection() == WEST)
+		{
 			m.log("The Direction is: West");
 		}
-		if (gridSquares2.get(counter).getDirection() == NORTH) {
+		if (gridSquares2.get(counter).getDirection() == NORTH)
+		{
 			tempY = gridSquares2.get(counter).getY() + 1;
-		} else if (gridSquares2.get(counter).getDirection() == EAST) {
+		} else if (gridSquares2.get(counter).getDirection() == EAST)
+		{
 			tempX = gridSquares2.get(counter).getX() + 1;
-		} else if (gridSquares2.get(counter).getDirection() == SOUTH) {
+		} else if (gridSquares2.get(counter).getDirection() == SOUTH)
+		{
 			tempY = gridSquares2.get(counter).getY() - 1;
-		} else if (gridSquares2.get(counter).getDirection() == WEST) {
+		} else if (gridSquares2.get(counter).getDirection() == WEST)
+		{
 			tempX = gridSquares2.get(counter).getX() - 1;
 		}
-		gridSquares2.add(new GridSquare(tempX, tempY, gridSquares2.get(counter)
-				.getDirection()));
+		gridSquares2.add(new GridSquare(tempX, tempY, gridSquares2.get(counter).getDirection()));
 	}
 
 	public void mazeMapper() throws ConnectionLostException, InterruptedException
@@ -349,188 +356,206 @@ public class UrbanAPI
 				}
 				m.log("incremented counter");
 				updateGrid2();
-				goForward(defaultSpeed, cellSize);
+				ra.goForward(defaultSpeed, cellSize);
 				counter++;
 				return;
 			}
 		}
 	}
-	
-	// TODO: Go Directions Methods
-	
-	public void goNorth() throws ConnectionLostException, InterruptedException {
-		frontSensor = frontSensor();
-		// rearSensor = rearSensor();
-		leftSensor = leftSensor();
-		// rightSensor = rightSensor();
-		SystemClock.sleep(1000);
-		frontSensor = frontSensor();
-		// rearSensor = rearSensor();
-		leftSensor = leftSensor();
-		// rightSensor = rightSensor();
 
-		if (frontSensor < 50) {
-			goForward(100, 25);
+	// TODO: Go Directions Methods
+	public void goNorth() throws ConnectionLostException, InterruptedException
+	{
+		readSensors();
+		// rightSensor = rightSensor();
+		if (frontSensor < 50)
+		{
+			ra.goForward(100, 25);
 			goBackward(defaultSpeed, 18); // Test 20, previous 19
-			frontSensor = frontSensor();
-			// rearSensor = rearSensor();
-			leftSensor = leftSensor();
-			// rightSensor = rightSensor();
-			SystemClock.sleep(1000);
-			frontSensor = frontSensor();
-			// rearSensor = rearSensor();
-			leftSensor = leftSensor();
-			// rightSensor = rightSensor();
+			readSensors();
 		}
-		if (gridSquares2.get(counter).getDirection() == NORTH) {
+		if (gridSquares2.get(counter).getDirection() == NORTH)
+		{
 			// goForward(defaultSpeed, 70);
 		}
-		if (gridSquares2.get(counter).getDirection() == SOUTH) {
+		if (gridSquares2.get(counter).getDirection() == SOUTH)
+		{
 			spinRight2(defaultSpeed, 90);
 			spinRight2(defaultSpeed, 90);
 			m.log("FAILED_BUILD_EXCEPTION");
 		}
-		if (gridSquares2.get(counter).getDirection() == EAST) {
+		if (gridSquares2.get(counter).getDirection() == EAST)
+		{
 			spinLeft2(defaultSpeed, 90);
 		}
-		if (gridSquares2.get(counter).getDirection() == WEST) {
+		if (gridSquares2.get(counter).getDirection() == WEST)
+		{
 			spinRight2(defaultSpeed, 90);
-			if (leftSensor < 30) {
+			if (leftSensor < 30)
+			{
 				goBackward(100, 20);
-				goForward(defaultSpeed, 10);
+				ra.goForward(defaultSpeed, 10);
 			}
 		}
 	}
 
-	public void goSouth() throws ConnectionLostException, InterruptedException {
-		frontSensor = frontSensor();
-		// rearSensor = rearSensor();
-		leftSensor = leftSensor();
+	public void goSouth() throws ConnectionLostException, InterruptedException
+	{
+		readSensors();
 		// rightSensor = rightSensor();
-		SystemClock.sleep(1000);
-		frontSensor = frontSensor();
-		// rearSensor = rearSensor();
-		leftSensor = leftSensor();
-		// rightSensor = rightSensor();
-
-		if (frontSensor < 50) {
-			goForward(100, 25);
+		if (frontSensor < 50)
+		{
+			ra.goForward(100, 25);
 			goBackward(defaultSpeed, 18); // Test 20, previous 19
-			frontSensor = frontSensor();
-			// rearSensor = rearSensor();
-			leftSensor = leftSensor();
-			// rightSensor = rightSensor();
-			SystemClock.sleep(1000);
-			frontSensor = frontSensor();
-			// rearSensor = rearSensor();
-			leftSensor = leftSensor();
-			// rightSensor = rightSensor();
+			readSensors();
 		}
-		if (gridSquares2.get(counter).getDirection() == SOUTH) {
+		if (gridSquares2.get(counter).getDirection() == SOUTH)
+		{
 			// goForward(defaultSpeed, 70);
 		}
-		if (gridSquares2.get(counter).getDirection() == NORTH) {
+		if (gridSquares2.get(counter).getDirection() == NORTH)
+		{
 			spinRight2(defaultSpeed, 90);
 			spinRight2(defaultSpeed, 90);
-			log("FAILED_BUILD_EXCEPTION");
+			m.log("FAILED_BUILD_EXCEPTION");
 		}
-		if (gridSquares2.get(counter).getDirection() == EAST) {
+		if (gridSquares2.get(counter).getDirection() == EAST)
+		{
 			spinRight2(defaultSpeed, 90);
-			if (leftSensor < 30) {
+			if (leftSensor < 30)
+			{
 				goBackward(100, 20);
-				goForward(defaultSpeed, 10);
+				ra.goForward(defaultSpeed, 10);
 			}
 		}
-		if (gridSquares2.get(counter).getDirection() == WEST) {
+		if (gridSquares2.get(counter).getDirection() == WEST)
+		{
 			spinLeft2(defaultSpeed, 90);
 		}
 	}
 
-	public void goEast() throws ConnectionLostException, InterruptedException {
-		frontSensor = frontSensor();
-		// rearSensor = rearSensor();
-		leftSensor = leftSensor();
-		// rightSensor = rightSensor();
-		SystemClock.sleep(1000);
-		frontSensor = frontSensor();
-		// rearSensor = rearSensor();
-		leftSensor = leftSensor();
-		// rightSensor = rightSensor();
-
-		if (frontSensor < 50) {
-			goForward(100, 25);
+	public void goEast() throws ConnectionLostException, InterruptedException
+	{
+		readSensors();
+		if (frontSensor < 50)
+		{
+			ra.goForward(100, 25);
 			goBackward(defaultSpeed, 18); // Test 20, previous 19
-			frontSensor = frontSensor();
-			// rearSensor = rearSensor();
-			leftSensor = leftSensor();
-			// rightSensor = rightSensor();
-			SystemClock.sleep(1000);
-			frontSensor = frontSensor();
-			// rearSensor = rearSensor();
-			leftSensor = leftSensor();
-			// rightSensor = rightSensor();
+			readSensors();
 		}
-		if (gridSquares2.get(counter).getDirection() == EAST) {
+		if (gridSquares2.get(counter).getDirection() == EAST)
+		{
 			// goForward(defaultSpeed, 70);
 		}
-		if (gridSquares2.get(counter).getDirection() == WEST) {
+		if (gridSquares2.get(counter).getDirection() == WEST)
+		{
 			spinRight2(defaultSpeed, 90);
 			spinRight2(defaultSpeed, 90);
-			log("FAILED_BUILD_EXCEPTION");
+			m.log("FAILED_BUILD_EXCEPTION");
 		}
-		if (gridSquares2.get(counter).getDirection() == NORTH) {
+		if (gridSquares2.get(counter).getDirection() == NORTH)
+		{
 			spinRight2(defaultSpeed, 90);
-			if (leftSensor < 30) {
+			if (leftSensor < 30)
+			{
 				goBackward(100, 20);
-				goForward(defaultSpeed, 10);
+				ra.goForward(defaultSpeed, 10);
 			}
 		}
-		if (gridSquares2.get(counter).getDirection() == SOUTH) {
+		if (gridSquares2.get(counter).getDirection() == SOUTH)
+		{
 			spinLeft2(defaultSpeed, 90);
 		}
 	}
 
-	public void goWest() throws ConnectionLostException, InterruptedException {
-		frontSensor = frontSensor();
-		// rearSensor = rearSensor();
-		leftSensor = leftSensor();
-		// rightSensor = rightSensor();
+	public void readSensors() throws ConnectionLostException, InterruptedException
+	{
+		sonar.read();
+		frontSensor = sonar.getFrontDistance();
+		leftSensor = sonar.getLeftDistance();
 		SystemClock.sleep(1000);
-		frontSensor = frontSensor();
-		// rearSensor = rearSensor();
-		leftSensor = leftSensor();
-		// rightSensor = rightSensor();
+		sonar.read();
+		frontSensor = sonar.getFrontDistance();
+		leftSensor = sonar.getLeftDistance();
+	}
 
-		if (frontSensor < 50) {
-			goForward(100, 25);
+	public void goWest() throws ConnectionLostException, InterruptedException
+	{
+		readSensors();
+		if (frontSensor < 50)
+		{
+			ra.goForward(100, 25);
 			goBackward(defaultSpeed, 18); // Test 20, previous 19
-			frontSensor = frontSensor();
-			// rearSensor = rearSensor();
-			leftSensor = leftSensor();
-			// rightSensor = rightSensor();
-			SystemClock.sleep(1000);
-			frontSensor = frontSensor();
-			// rearSensor = rearSensor();
-			leftSensor = leftSensor();
-			// rightSensor = rightSensor();
+			readSensors();
 		}
-		if (gridSquares2.get(counter).getDirection() == WEST) {
+		if (gridSquares2.get(counter).getDirection() == WEST)
+		{
 			// goForward(defaultSpeed, 70);
 		}
-		if (gridSquares2.get(counter).getDirection() == EAST) {
+		if (gridSquares2.get(counter).getDirection() == EAST)
+		{
 			spinRight2(defaultSpeed, 90);
 			spinRight2(defaultSpeed, 90);
-			log("FAILED_BUILD_EXCEPTION");
+			m.log("FAILED_BUILD_EXCEPTION");
 		}
-		if (gridSquares2.get(counter).getDirection() == SOUTH) {
+		if (gridSquares2.get(counter).getDirection() == SOUTH)
+		{
 			spinRight2(defaultSpeed, 90);
-			if (leftSensor < 30) {
+			if (leftSensor < 30)
+			{
 				goBackward(100, 20);
-				goForward(defaultSpeed, 10);
+				ra.goForward(defaultSpeed, 10);
 			}
 		}
-		if (gridSquares2.get(counter).getDirection() == NORTH) {
+		if (gridSquares2.get(counter).getDirection() == NORTH)
+		{
 			spinLeft2(defaultSpeed, 90);
+		}
+	}
+
+	public void spinRight2(int speed, double degrees) throws ConnectionLostException
+	{
+		if (gridSquares2.get(counter).getDirection() == WEST)
+		{
+			gridSquares2.get(counter).setDirection(NORTH);
+		} else
+		{
+			gridSquares2.get(counter).setDirection(gridSquares2.get(counter).getDirection() + 1);
+		}
+		l.rightMotorDirection.write(true);
+		l.leftMotorDirection.write(true);
+		double pulses = degrees * 2.54;
+		for (int i = 0; i < pulses; i++)
+		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+		}
+	}
+
+	public void spinLeft2(int speed, double degrees) throws ConnectionLostException
+	{
+		if (gridSquares2.get(counter).getDirection() == NORTH)
+		{
+			gridSquares2.get(counter).setDirection(WEST);
+		} else
+		{
+			gridSquares2.get(counter).setDirection(gridSquares2.get(counter).getDirection() - 1);
+		}
+		// rightMotorClockPulse = ioio.openDigitalOutput(MOTOR_CLOCK_RIGHT_PIN);
+		// leftMotorClockPulse = ioio.openDigitalOutput(MOTOR_CLOCK_LEFT_PIN);
+		l.leftMotorDirection.write(false);
+		l.rightMotorDirection.write(false);
+		double pulses = degrees * 2.46;
+		for (int i = 0; i < pulses; i++)
+		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
 		}
 	}
 }
