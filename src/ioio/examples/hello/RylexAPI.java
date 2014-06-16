@@ -14,6 +14,7 @@ public class RylexAPI
 	public boolean rightBackward;
 	public boolean leftBackward;
 	private int counter = 0;
+	private int defaultSpeed = 250;
 
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -186,5 +187,25 @@ public class RylexAPI
 		l.rightMotorClock.write(false);
 		l.leftMotorClock.write(true);
 		l.leftMotorClock.write(false);
+	}
+
+	void goStraight(double azimuth) throws ConnectionLostException
+	{
+		if (m.getDegrees() < (azimuth))
+		{
+			while (m.getDegrees() < (azimuth))
+			{
+				spinRight(defaultSpeed);
+			}
+		} else if (m.getDegrees() > (azimuth))
+		{
+			while (m.getDegrees() > (azimuth))
+			{
+				spinLeft(defaultSpeed);
+			}
+		} else
+		{
+			goForward(defaultSpeed);
+		}
 	}
 }
