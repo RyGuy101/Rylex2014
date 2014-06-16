@@ -165,7 +165,7 @@ public class RylexAPI
 
 	public void goForward(int speed, int centimeters) throws ConnectionLostException
 	{
-		double pulses = centimeters * 10.95;
+		double pulses = centimeters * 13.7;
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftForward);
 		for (int i = 0; i < pulses; i++)
