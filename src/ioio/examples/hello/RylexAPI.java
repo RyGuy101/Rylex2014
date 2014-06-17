@@ -79,15 +79,19 @@ public class RylexAPI
 	public void test() throws Exception
 	{
 		m.log("--- STARTING TEST ---");
+		m.log("Reading Sensors");
 		sonar.read();
-		// m.log("Left Sensor: " + sonar.getLeftDistance());
-		// m.log("Front Sensor: " + sonar.getFrontDistance());
-		goForward(100, 10);
-		spinRight(100, 90);
+		m.log("Left Sensor: " + sonar.getLeftDistance());
+		m.log("Front Sensor: " + sonar.getFrontDistance());
+		m.log("goForward at defaultSpeed for 10 cm");
+		goForward(defaultSpeed, 10);
+		m.log("spinRight at defaultSpeed for 90¡");
+		spinRight(defaultSpeed, 90);
 		SystemClock.sleep(500);
-		spinLeft(100, 90);
-		// goBackward(100);
-		SystemClock.sleep(1000);
+		m.log("spinLeft at defaultSpeed for 90¡");
+		spinLeft(defaultSpeed, 90);
+		m.log("goBackward at defaultSpeed for 10 cm");
+		goBackward(defaultSpeed, 10);
 		m.log("--- TEST COMPLETED ---");
 	}
 
@@ -111,7 +115,7 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftForward);
-		double pulses = degrees * 2.4;// (20.0/9.0);
+		double pulses = degrees * 2.3;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);
@@ -126,7 +130,7 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftBackward);
-		double pulses = degrees * 2.33;// (20.0/9.0);
+		double pulses = degrees * 2.25;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);
@@ -187,6 +191,21 @@ public class RylexAPI
 		l.rightMotorClock.write(false);
 		l.leftMotorClock.write(true);
 		l.leftMotorClock.write(false);
+	}
+
+	public void goBackward(int speed, int centimeters) throws ConnectionLostException
+	{
+		double pulses = centimeters * 10.95;
+		l.rightMotorDirection.write(rightBackward);
+		l.leftMotorDirection.write(leftBackward);
+		for (int i = 0; i < pulses; i++)
+		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+		}
 	}
 
 	void goStraight(double azimuth) throws ConnectionLostException
