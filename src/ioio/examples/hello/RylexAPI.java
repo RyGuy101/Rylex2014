@@ -15,6 +15,9 @@ public class RylexAPI
 	public boolean leftBackward;
 	private int counter = 0;
 	private int defaultSpeed = 250;
+	public double degreesRightX = 2.22;
+	public double degreesLeftX = 2.08;
+	public double centimetersX = 13.7;
 
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -115,7 +118,7 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftForward);
-		double pulses = degrees * 2.3;// (20.0/9.0);
+		double pulses = degrees * degreesRightX;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);
@@ -130,7 +133,7 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftBackward);
-		double pulses = degrees * 2.25;// (20.0/9.0);
+		double pulses = degrees * degreesLeftX;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);
@@ -169,7 +172,7 @@ public class RylexAPI
 
 	public void goForward(int speed, int centimeters) throws ConnectionLostException
 	{
-		double pulses = centimeters * 13.7;
+		double pulses = centimeters * centimetersX;
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftForward);
 		for (int i = 0; i < pulses; i++)
@@ -195,7 +198,7 @@ public class RylexAPI
 
 	public void goBackward(int speed, int centimeters) throws ConnectionLostException
 	{
-		double pulses = centimeters * 10.95;
+		double pulses = centimeters * centimetersX;
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftBackward);
 		for (int i = 0; i < pulses; i++)

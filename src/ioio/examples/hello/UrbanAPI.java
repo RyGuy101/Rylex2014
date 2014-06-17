@@ -21,6 +21,8 @@ public class UrbanAPI
 	public static final int EAST = 2; // Eating
 	public static final int SOUTH = 3; // Soggy
 	public static final int WEST = 4; // Waffles
+	private int startX = 0;
+	private int startY = 0;
 	private int goalX = 0;
 	private int goalY = 2;
 	private int frontSensor;
@@ -45,27 +47,14 @@ public class UrbanAPI
 
 	public void urbanChallange() throws Exception
 	{
-		sonar.read();
-		m.log("Left distance: " + sonar.getLeftDistance());
-		SystemClock.sleep(1000);
-		gridSquares.add(new GridSquare(2, 0, WEST));
-		m.log("We are a GO for the Urban Challenge!");
-		m.log("NOTE: This is a backup!");
+		gridSquares.add(new GridSquare(startX, startY, WEST));
 		m.log("The current goal is: ");
 		m.log(goalX + ", " + goalY);
-		// rightSensor = rightSensor();
-		sonar.read();
-		frontSensor = sonar.getFrontDistance();
-		m.log("read front sensor");
-		leftSensor = sonar.getLeftDistance();
-		// m.log("rightSensor: distance = " + rightSensor());
-		m.log("Read sensors");
-		SystemClock.sleep(100);
-		m.log("slept successfully");
+		readSensors();
 		while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
 		{
 			// m.log("" + sensorMonitor.searchForIRBeam());
-			m.log("in the first while loop");
+			m.log("In the first while loop");
 			leftWallHugger();
 			// m.log("left Distance: " + leftSensor);
 			// m.log("front distance: " + frontSensor);
@@ -205,7 +194,7 @@ public class UrbanAPI
 			counter++;
 		} else
 		{
-			ra.spinRight(defaultSpeed, 90);
+			spinRight(defaultSpeed, 90);
 			ra.goBackward(100, 20);
 			ra.goForward(defaultSpeed, 10);
 			// tempBool = false; //WARNING: This is a test!!! Return to false
@@ -227,9 +216,30 @@ public class UrbanAPI
 		// leftMotorClockPulse = ioio.openDigitalOutput(MOTOR_CLOCK_LEFT_PIN);
 		l.leftMotorDirection.write(leftBackward);
 		l.rightMotorDirection.write(rightForward);
-		double pulses = degrees * 2.46;
+		double pulses = degrees * ra.degreesLeftX;
 		for (int i = 0; i < pulses; i++)
 		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+		}
+	}
+	public void spinRight(int speed, double degrees)
+			throws ConnectionLostException {
+		if (gridSquares.get(counter).getDirection() == WEST) {
+			gridSquares.get(counter).setDirection(NORTH);
+		} else {
+			gridSquares.get(counter).setDirection(
+					gridSquares.get(counter).getDirection() + 1);
+		}
+
+		l.rightMotorDirection.write(true);
+		l.leftMotorDirection.write(true);
+
+		double pulses = degrees * 2.54;
+		for (int i = 0; i < pulses; i++) {
 			SystemClock.sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
@@ -448,13 +458,11 @@ public class UrbanAPI
 
 	public void readSensors() throws ConnectionLostException, InterruptedException
 	{
+		SystemClock.sleep(250);
 		sonar.read();
 		frontSensor = sonar.getFrontDistance();
 		leftSensor = sonar.getLeftDistance();
-		SystemClock.sleep(1000);
-		sonar.read();
-		frontSensor = sonar.getFrontDistance();
-		leftSensor = sonar.getLeftDistance();
+		SystemClock.sleep(250);
 	}
 
 	public void goWest() throws ConnectionLostException, InterruptedException
@@ -502,7 +510,7 @@ public class UrbanAPI
 		}
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftForward);
-		double pulses = degrees * 2.54;
+		double pulses = degrees * ra.degreesRightX;
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);
@@ -526,7 +534,7 @@ public class UrbanAPI
 		// leftMotorClockPulse = ioio.openDigitalOutput(MOTOR_CLOCK_LEFT_PIN);
 		l.leftMotorDirection.write(leftBackward);
 		l.rightMotorDirection.write(rightForward);
-		double pulses = degrees * 2.46;
+		double pulses = degrees * ra.degreesLeftX;
 		for (int i = 0; i < pulses; i++)
 		{
 			SystemClock.sleep(1000 / speed);

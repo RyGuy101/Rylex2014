@@ -62,7 +62,13 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		@Override
 		public void run()
 		{
-			// TODO drag stuff goes here
+			try
+			{
+				da.accelerateTo(2000);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	};
 	private Runnable test = new Runnable()
@@ -72,7 +78,11 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				ra.test();
+				// ra.test();
+				ra.spinRight(250, 360);
+				SystemClock.sleep(1000);
+				ra.spinLeft(250, 360);
+				SystemClock.sleep(1000);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -86,6 +96,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private UltraSonicSensor sonar;
 	RylexAPI ra;
 	UrbanAPI ua;
+	DragAPI da;
 	private TextView title;
 	private TextView mText;
 	private ScrollView mScroller;
@@ -210,6 +221,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			sonar = new UltraSonicSensor(ioio_);
 			ra = new RylexAPI(m, this, sonar, hazFenderz);
 			ua = new UrbanAPI(m, this, sonar, hazFenderz);
+			da = new DragAPI(m, this, sonar, hazFenderz, ioio_);
 			// sensorReader = new SensorReader(sonar, false);
 			// sr = new Thread(sensorReader);
 			// sr.start();
