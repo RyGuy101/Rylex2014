@@ -114,12 +114,32 @@ public class RylexAPI
 		l.leftMotorClock.close();
 	}
 
+	// public void spinRight(int speed, double degrees) throws Exception
+	// {
+	// l.rightMotorDirection.write(rightBackward);
+	// l.leftMotorDirection.write(leftForward);
+	// double pulses = degrees * degreesRightX;// (20.0/9.0);
+	// for (int i = 0; i < pulses; i++)
+	// {
+	// SystemClock.sleep(1000 / speed);
+	// l.rightMotorClock.write(true);
+	// l.rightMotorClock.write(false);
+	// l.leftMotorClock.write(true);
+	// l.leftMotorClock.write(false);
+	// }
+	// }
 	public void spinRight(int speed, double degrees) throws Exception
 	{
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftForward);
-		double pulses = degrees * degreesRightX;// (20.0/9.0);
-		for (int i = 0; i < pulses; i++)
+		double goal = m.azimuth + degrees;
+		if (goal > 180)
+		{
+			goal -= 360;
+		}
+		double fix;
+		double azi = m.azimuth;
+		while (m.azimuth < goal)
 		{
 			SystemClock.sleep(1000 / speed);
 			l.rightMotorClock.write(true);

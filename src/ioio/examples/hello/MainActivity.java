@@ -115,11 +115,11 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private float[] matrixR;
 	private float[] matrixI;
 	private float[] matrixValues;
-	private double azimuth;
+	public double azimuth;
 	private int lastAzimuth;
 	private double pitch;
 	private double roll;
-	private boolean logAzimuth = false;
+	private boolean logAzimuth = true;
 	public Button startButton;
 
 	/**
