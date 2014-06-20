@@ -81,21 +81,21 @@ public class RylexAPI
 
 	public void test() throws Exception
 	{
-		m.m.log("--- STARTING TEST ---");
-		m.log("Reading Sensors");
+		log("--- STARTING TEST ---");
+		log("Reading Sensors");
 		sonar.read();
-		m.log("Left Sensor: " + sonar.getLeftDistance());
-		m.log("Front Sensor: " + sonar.getFrontDistance());
-		m.log("goForward at defaultSpeed for 10 cm");
+		log("Left Sensor: " + sonar.getLeftDistance());
+		log("Front Sensor: " + sonar.getFrontDistance());
+		log("goForward at defaultSpeed for 10 cm");
 		goForward(defaultSpeed, 10);
-		m.log("spinRight at defaultSpeed for 90¡");
+		log("spinRight at defaultSpeed for 90¡");
 		spinRight(defaultSpeed, 90);
 		SystemClock.sleep(500);
-		m.log("spinLeft at defaultSpeed for 90¡");
+		log("spinLeft at defaultSpeed for 90¡");
 		spinLeft(defaultSpeed, 90);
-		m.log("goBackward at defaultSpeed for 10 cm");
+		log("goBackward at defaultSpeed for 10 cm");
 		goBackward(defaultSpeed, 10);
-		m.log("--- TEST COMPLETED ---");
+		log("--- TEST COMPLETED ---");
 	}
 
 	public void spinRight(int speed) throws ConnectionLostException
@@ -189,11 +189,11 @@ public class RylexAPI
 			fix = 0;
 		}
 		double azi = m.azimuth + fix;
-		m.log("current angle: " + azi);
-		m.log("goal: " + goal);
+		log("current angle: " + azi);
+		log("goal: " + goal);
 		while (azi < goal)
 		{
-			m.log("azi = " + azi);
+			log("azi = " + azi);
 			azi = m.azimuth + fix;
 			SystemClock.sleep(1000 / speed);
 			l.rightMotorClock.write(true);
@@ -290,4 +290,8 @@ public class RylexAPI
 		}
 	}
 
+	public void log(String msg)
+	{
+		m.log(msg);
+	}
 }
