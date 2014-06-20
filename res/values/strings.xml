@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello"></string>
+    <string name="hello">Control Panel:</string>
     <string name="app_name">iARoC 2014</string>
     <string name="title_activity_setup">Setup</string>
     <string name="hello_world">Hello world!</string>
@@ -15,6 +15,8 @@
     <color name="robertDarkRed">#B00000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="red">#0000FF</color>
     <color name="blue">#0000FF</color>
+    <color name="green">#00FF00</color>
 
 </resources>

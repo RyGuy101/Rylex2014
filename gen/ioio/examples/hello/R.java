@@ -858,12 +858,14 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f070002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f080007;
+        public static final int abc_search_url_text_holo=0x7f080009;
         public static final int abc_search_url_text_normal=0x7f080000;
         public static final int abc_search_url_text_pressed=0x7f080002;
         public static final int abc_search_url_text_selected=0x7f080001;
         public static final int black=0x7f080005;
-        public static final int blue=0x7f080006;
+        public static final int blue=0x7f080007;
+        public static final int green=0x7f080008;
+        public static final int red=0x7f080006;
         public static final int robertDarkRed=0x7f080003;
         public static final int white=0x7f080004;
     }
@@ -1096,7 +1098,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_settings=0x7f060048;
+        public static final int action_settings=0x7f06004a;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
@@ -1112,6 +1114,7 @@ containing a value of this type.
         public static final int dropdown=0x7f06000f;
         public static final int edit_query=0x7f060030;
         public static final int end=0x7f060013;
+        public static final int endLearningButton=0x7f060046;
         public static final int expand_activities_button=0x7f060026;
         public static final int expanded_menu=0x7f06002c;
         public static final int gold=0x7f060040;
@@ -1123,7 +1126,7 @@ containing a value of this type.
         public static final int image=0x7f060027;
         public static final int listMode=0x7f060001;
         public static final int list_item=0x7f060029;
-        public static final int logText=0x7f060047;
+        public static final int logText=0x7f060049;
         public static final int middle=0x7f060012;
         public static final int never=0x7f060009;
         public static final int none=0x7f060010;
@@ -1131,7 +1134,8 @@ containing a value of this type.
         public static final int progress_circular=0x7f060018;
         public static final int progress_horizontal=0x7f060019;
         public static final int radio=0x7f06002f;
-        public static final int scroller=0x7f060046;
+        public static final int restartButton=0x7f060047;
+        public static final int scroller=0x7f060048;
         public static final int search_badge=0x7f060032;
         public static final int search_bar=0x7f060031;
         public static final int search_button=0x7f060033;

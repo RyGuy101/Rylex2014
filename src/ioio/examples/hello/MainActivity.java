@@ -79,10 +79,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				ra.spinRight(250, 360);
-				SystemClock.sleep(1000);
-				ra.spinLeft(250, 360);
-				SystemClock.sleep(1000);
+				ra.spinRight(250, 90);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -94,6 +91,8 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private int targetDirection = 90;
 	private int difference;
 	private UltraSonicSensor sonar;
+	public Button endLearn;
+	public Button startMap;
 	RylexAPI ra;
 	UrbanAPI ua;
 	DragAPI da;
@@ -390,5 +389,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			}
 		}).start();
 		startedAcceleration = true;
+	}
+	
+	public void mapMaze() throws Exception {
+		ua.mazeMapper();
 	}
 }

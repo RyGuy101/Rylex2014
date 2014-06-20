@@ -29,6 +29,20 @@
             android:layout_height="wrap_content"
             android:onClick="toSetup"
             android:text="Back to Setup" />
+        
+        <Button
+            android:id="@+id/endLearningButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Learn" />
+
+        <Button
+            android:id="@+id/restartButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="mapMaze"
+            android:text="Map" />
+
     </LinearLayout>
 
     <ScrollView
