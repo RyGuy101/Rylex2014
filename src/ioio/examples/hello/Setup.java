@@ -61,4 +61,8 @@ public class Setup extends Activity
 		intent.putExtra(FENDERZ, hazFenderz.isChecked());
 		startActivity(intent);
 	}
+	
+	public void crash() {
+		throw new NullPointerException("Crashing upon the user's request");
+	}
 }

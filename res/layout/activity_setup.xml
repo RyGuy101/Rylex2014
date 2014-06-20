@@ -66,4 +66,11 @@
         android:text="@string/start_label"
         android:onClick="start" />
 
+    <Button
+        android:id="@+id/exitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="crash"
+        android:text="Exit" />
+
 </LinearLayout>
