@@ -56,6 +56,7 @@ public class UrbanAPI
 		m.log("The current goal is: ");
 		m.log(goalX + ", " + goalY);
 		readSensors();
+		backwardAlign();
 		while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
 		{
 			m.log("In the first while loop");
@@ -131,24 +132,7 @@ public class UrbanAPI
 			{
 				m.log("The Direction is: West");
 			}
-			if (gridSquares.get(counter).getDirection() == NORTH)
-			{
-				tempY = gridSquares.get(counter).getY() + 1;
-			} else if (gridSquares.get(counter).getDirection() == EAST)
-			{
-				tempX = gridSquares.get(counter).getX() + 1;
-			} else if (gridSquares.get(counter).getDirection() == SOUTH)
-			{
-				tempY = gridSquares.get(counter).getY() - 1;
-			} else if (gridSquares.get(counter).getDirection() == WEST)
-			{
-				tempX = gridSquares.get(counter).getX() - 1;
-			}
-			gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
-			ra.goForward(defaultSpeed, cellSize);
-			m.log("just went forward");
-			counter++;
-			m.log("incremented counter");
+			goOneCell();
 			// goForward(-300, 50);
 			// spinRight(300, 360);
 		} else if (frontSensor >= 50)
@@ -195,9 +179,44 @@ public class UrbanAPI
 		m.log("End of wallHugger method");
 	}
 
+	public void goOneCell() throws ConnectionLostException
+	{
+		if (gridSquares.get(counter).getDirection() == NORTH)
+		{
+			tempY = gridSquares.get(counter).getY() + 1;
+		} else if (gridSquares.get(counter).getDirection() == EAST)
+		{
+			tempX = gridSquares.get(counter).getX() + 1;
+		} else if (gridSquares.get(counter).getDirection() == SOUTH)
+		{
+			tempY = gridSquares.get(counter).getY() - 1;
+		} else if (gridSquares.get(counter).getDirection() == WEST)
+		{
+			tempX = gridSquares.get(counter).getX() - 1;
+		}
+		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
+		ra.goForward(defaultSpeed, cellSize);
+		m.log("just went forward");
+		counter++;
+		m.log("incremented counter");
+	}
+
 	public void backwardAlign() throws ConnectionLostException
 	{
 		ra.goBackward(100, 20);
+		if (gridSquares.get(counter).getDirection() == NORTH)
+		{
+			northDegrees = m.azimuth;
+		} else if (gridSquares.get(counter).getDirection() == SOUTH)
+		{
+			southDegrees = m.azimuth;
+		} else if (gridSquares.get(counter).getDirection() == EAST)
+		{
+			eastDegrees = m.azimuth;
+		} else if (gridSquares.get(counter).getDirection() == WEST)
+		{
+			westDegrees = m.azimuth;
+		}
 		ra.goForward(defaultSpeed, 10);
 	}
 
