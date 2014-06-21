@@ -149,7 +149,7 @@ public class RylexAPI
 			l.leftMotorClock.write(false);
 			if (prevAzi * m.azimuth <= 0 && m.azimuth < 0)
 			{
-				fix += 360;
+				fix = 360;
 			}
 			azi = m.azimuth + fix;
 		}

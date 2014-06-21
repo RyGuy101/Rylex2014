@@ -33,6 +33,10 @@ public class UrbanAPI
 	public int tempY = 0;
 	public int cellSize = 70;
 	RylexAPI ra;
+	public double northDegrees;
+	public double southDegrees;
+	public double eastDegrees;
+	public double westDegrees;
 
 	public UrbanAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -194,6 +198,7 @@ public class UrbanAPI
 	public void backwardAlign() throws ConnectionLostException
 	{
 		ra.goBackward(100, 20);
+		
 		ra.goForward(defaultSpeed, 10);
 	}
 
@@ -201,6 +206,7 @@ public class UrbanAPI
 	{
 		ra.goForward(100, (int) (frontSensor + 2));
 		ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
+		m.azimuth = 0;
 	}
 
 	public void spinLeft(int speed, double degrees) throws ConnectionLostException
