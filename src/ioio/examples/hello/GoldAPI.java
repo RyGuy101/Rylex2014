@@ -20,7 +20,8 @@ public class GoldAPI
 		ra = new RylexAPI(m, l, sonar, hazFenderz);
 	}
 	
-	public void spinScan() {
+	public void spinScan() throws Exception {
+		ra.spinLeft(500, 360);
 		// TODO: Implement spinScan()
 	}
 	

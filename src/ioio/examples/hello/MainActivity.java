@@ -36,7 +36,6 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private boolean startedAcceleration = false;
 	private int leftMotorPWMfrequency = 200;// used to be both 200;
 	private int rightMotorPWMfrequency = 195;
-	
 	private Runnable urban = new Runnable()
 	{
 		@Override
@@ -55,7 +54,6 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		@Override
 		public void run()
 		{
-			
 		}
 	};
 	private Runnable drag = new Runnable()
@@ -79,9 +77,8 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				 ra.test();
-//				ra.testUltrasonic();
-//				ra.spinLeft(250, 360);
+				// ra.test();
+				ra.spinRightAzi(100, 90);
 				SystemClock.sleep(1000);
 			} catch (Exception e)
 			{

@@ -130,31 +130,32 @@ public class RylexAPI
 		}
 	}
 
-	// public void spinRight(int speed, double degrees) throws Exception
-	// {
-	// log("initial azimuth = " + m.azimuth);
-	// l.rightMotorDirection.write(rightBackward);
-	// l.leftMotorDirection.write(leftForward);
-	// double goal = m.azimuth + degrees;
-	// double prevAzi = 1;
-	// double fix = 0;
-	// double azi = m.azimuth + fix;
-	// while (azi < goal)
-	// {
-	// prevAzi = azi - fix;
-	// SystemClock.sleep(1000 / speed);
-	// l.rightMotorClock.write(true);
-	// l.rightMotorClock.write(false);
-	// l.leftMotorClock.write(true);
-	// l.leftMotorClock.write(false);
-	// if (prevAzi * m.azimuth <= 0 && m.azimuth < 0)
-	// {
-	// fix += 360;
-	// }
-	// azi = m.azimuth + fix;
-	// }
-	// log("final azimuth = " + m.azimuth);
-	// }
+	public void spinRightAzi(int speed, double degrees) throws Exception
+	{
+		log("initial azimuth = " + m.azimuth);
+		l.rightMotorDirection.write(rightBackward);
+		l.leftMotorDirection.write(leftForward);
+		double goal = m.azimuth + degrees;
+		double prevAzi = 1;
+		double fix = 0;
+		double azi = m.azimuth + fix;
+		while (azi < goal)
+		{
+			prevAzi = azi - fix;
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+			if (prevAzi * m.azimuth <= 0 && m.azimuth < 0)
+			{
+				fix += 360;
+			}
+			azi = m.azimuth + fix;
+		}
+		log("final azimuth = " + m.azimuth);
+	}
+
 	public void spinLeft(int speed, double degrees) throws Exception
 	{
 		l.rightMotorDirection.write(rightForward);
