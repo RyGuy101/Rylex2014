@@ -54,7 +54,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		@Override
 		public void run()
 		{
-			// TODO gold stuff goes here
+			
 		}
 	};
 	private Runnable drag = new Runnable()
@@ -78,8 +78,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				// ra.test();
-				ra.spinLeft(250, 360);
+				 ra.test();
+//				ra.testUltrasonic();
+//				ra.spinLeft(250, 360);
 				SystemClock.sleep(1000);
 			} catch (Exception e)
 			{
