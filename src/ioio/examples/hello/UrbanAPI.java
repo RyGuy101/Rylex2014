@@ -54,19 +54,8 @@ public class UrbanAPI
 		readSensors();
 		while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
 		{
-			// m.log("" + sensorMonitor.searchForIRBeam());
 			m.log("In the first while loop");
 			leftWallHugger();
-			// m.log("left Distance: " + leftSensor);
-			// m.log("front distance: " + frontSensor);
-			// if (tempBool == true)
-			// {
-			// leftWallHugger();
-			// } else
-			// {
-			// m.log("front distance: " + frontSensor);
-			// SystemClock.sleep(250);
-			// }
 		}
 		m.log("I broke out.");
 		ra.goForward(defaultSpeed, 30);
@@ -210,7 +199,7 @@ public class UrbanAPI
 
 	public void forwardAlign() throws ConnectionLostException
 	{
-		ra.goForward(100, (int) (frontSensor / 100.0));
+		ra.goForward(100, (int) (frontSensor / 150.0));
 		ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
 	}
 
