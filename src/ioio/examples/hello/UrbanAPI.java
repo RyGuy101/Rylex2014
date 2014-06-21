@@ -21,13 +21,13 @@ public class UrbanAPI
 	public static final int EAST = 2; // Eating
 	public static final int SOUTH = 3; // Soggy
 	public static final int WEST = 4; // Waffles
-	public int startDirection = NORTH; 
+	public int startDirection = NORTH;
 	private int startX = 0;
 	private int startY = 0;
 	private int goalX = 0;
 	private int goalY = 2;
-	private int frontSensor;
-	private int leftSensor;
+	private double frontSensor;
+	private double leftSensor;
 	private int defaultSpeed = 250;
 	public int tempX = 0;
 	public int tempY = 0;
@@ -100,7 +100,7 @@ public class UrbanAPI
 		// rightSensor = rightSensor();
 		m.log("left Distance: " + leftSensor);
 		m.log("front distance: " + frontSensor);
-		if (frontSensor < 3000)
+		if (frontSensor < 50)
 		{
 			m.log("wall in front. counter = " + counter);
 			forwardAlign();
@@ -108,7 +108,7 @@ public class UrbanAPI
 			m.log("second left Distance: " + leftSensor);
 			m.log("second front distance: " + frontSensor);
 		}
-		if (leftSensor >= 3000)
+		if (leftSensor >= 50)
 		{
 			spinLeft(defaultSpeed, 90);
 			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
@@ -147,7 +147,7 @@ public class UrbanAPI
 			m.log("incremented counter");
 			// goForward(-300, 50);
 			// spinRight(300, 360);
-		} else if (frontSensor >= 3000)
+		} else if (frontSensor >= 50)
 		{
 			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
 			tempX = gridSquares.get(counter).getX();
@@ -199,7 +199,7 @@ public class UrbanAPI
 
 	public void forwardAlign() throws ConnectionLostException
 	{
-		ra.goForward(100, (int) (frontSensor / 150.0));
+		ra.goForward(100, (int) (frontSensor + 2));
 		ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
 	}
 
@@ -357,7 +357,7 @@ public class UrbanAPI
 	{
 		readSensors();
 		// rightSensor = rightSensor();
-		if (frontSensor < 3000)
+		if (frontSensor < 50)
 		{
 			ra.goForward(100, 25);
 			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
@@ -391,7 +391,7 @@ public class UrbanAPI
 	{
 		readSensors();
 		// rightSensor = rightSensor();
-		if (frontSensor < 3000)
+		if (frontSensor < 50)
 		{
 			ra.goForward(100, 25);
 			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
@@ -424,7 +424,7 @@ public class UrbanAPI
 	public void goEast() throws ConnectionLostException, InterruptedException
 	{
 		readSensors();
-		if (frontSensor < 3000)
+		if (frontSensor < 50)
 		{
 			ra.goForward(100, 25);
 			ra.goBackward(defaultSpeed, 18); // 20, previous 19
@@ -458,15 +458,15 @@ public class UrbanAPI
 	{
 		SystemClock.sleep(250);
 		sonar.read();
-		frontSensor = sonar.getFrontDistance();
-		leftSensor = sonar.getLeftDistance();
+		frontSensor = sonar.getFrontDistance() * ra.CONVERSION_FACTOR;
+		leftSensor = sonar.getLeftDistance() * ra.CONVERSION_FACTOR;
 		SystemClock.sleep(250);
 	}
 
 	public void goWest() throws ConnectionLostException, InterruptedException
 	{
 		readSensors();
-		if (frontSensor < 3000)
+		if (frontSensor < 50)
 		{
 			ra.goForward(100, 25);
 			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19

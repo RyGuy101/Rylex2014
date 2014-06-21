@@ -36,6 +36,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private boolean startedAcceleration = false;
 	private int leftMotorPWMfrequency = 200;// used to be both 200;
 	private int rightMotorPWMfrequency = 195;
+	
 	private Runnable urban = new Runnable()
 	{
 		@Override
@@ -98,6 +99,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	RylexAPI ra;
 	UrbanAPI ua;
 	DragAPI da;
+	GoldAPI ga;
 	private TextView title;
 	private TextView mText;
 	private ScrollView mScroller;

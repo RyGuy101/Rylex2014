@@ -18,6 +18,7 @@ public class RylexAPI
 	public double degreesRightX = 2.22;
 	public double degreesLeftX = 2.1;
 	public double centimetersX = 13.7;
+	public final double CONVERSION_FACTOR = 0.01666667;
 
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
