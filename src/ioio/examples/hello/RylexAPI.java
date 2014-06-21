@@ -16,7 +16,7 @@ public class RylexAPI
 	private int counter = 0;
 	private int defaultSpeed = 250;
 	public double degreesRightX = 2.22;
-	public double degreesLeftX = 2.08;
+	public double degreesLeftX = 2.1;
 	public double centimetersX = 13.7;
 
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
@@ -114,53 +114,85 @@ public class RylexAPI
 		l.leftMotorClock.close();
 	}
 
-	// public void spinRight(int speed, double degrees) throws Exception
-	// {
-	// l.rightMotorDirection.write(rightBackward);
-	// l.leftMotorDirection.write(leftForward);
-	// double pulses = degrees * degreesRightX;// (20.0/9.0);
-	// for (int i = 0; i < pulses; i++)
-	// {
-	// SystemClock.sleep(1000 / speed);
-	// l.rightMotorClock.write(true);
-	// l.rightMotorClock.write(false);
-	// l.leftMotorClock.write(true);
-	// l.leftMotorClock.write(false);
-	// }
-	// }
 	public void spinRight(int speed, double degrees) throws Exception
 	{
-		log("initial azimuth = " + m.azimuth);
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftForward);
-		double goal = m.azimuth + degrees;
-		double prevAzi = 1;
-		double fix = 0;
-		double azi = m.azimuth + fix;
-		while (azi < goal)
+		double pulses = degrees * degreesRightX;// (20.0/9.0);
+		for (int i = 0; i < pulses; i++)
 		{
-			prevAzi = azi - fix;
 			SystemClock.sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
 			l.leftMotorClock.write(false);
-			if (prevAzi * m.azimuth <= 0 && m.azimuth < 0)
-			{
-				fix += 360;
-			}
-			azi = m.azimuth + fix;
 		}
-		log("final azimuth = " + m.azimuth);
+	}
+
+	// public void spinRight(int speed, double degrees) throws Exception
+	// {
+	// log("initial azimuth = " + m.azimuth);
+	// l.rightMotorDirection.write(rightBackward);
+	// l.leftMotorDirection.write(leftForward);
+	// double goal = m.azimuth + degrees;
+	// double prevAzi = 1;
+	// double fix = 0;
+	// double azi = m.azimuth + fix;
+	// while (azi < goal)
+	// {
+	// prevAzi = azi - fix;
+	// SystemClock.sleep(1000 / speed);
+	// l.rightMotorClock.write(true);
+	// l.rightMotorClock.write(false);
+	// l.leftMotorClock.write(true);
+	// l.leftMotorClock.write(false);
+	// if (prevAzi * m.azimuth <= 0 && m.azimuth < 0)
+	// {
+	// fix += 360;
+	// }
+	// azi = m.azimuth + fix;
+	// }
+	// log("final azimuth = " + m.azimuth);
+	// }
+	public void spinLeft(int speed, double degrees) throws Exception
+	{
+		l.rightMotorDirection.write(rightForward);
+		l.leftMotorDirection.write(leftBackward);
+		double pulses = degrees * degreesLeftX;// (20.0/9.0);
+		for (int i = 0; i < pulses; i++)
+		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+		}
 	}
 
 	// public void spinLeft(int speed, double degrees) throws Exception
 	// {
-	// l.rightMotorDirection.write(rightForward);
-	// l.leftMotorDirection.write(leftBackward);
-	// double pulses = degrees * degreesLeftX;// (20.0/9.0);
-	// for (int i = 0; i < pulses; i++)
+	// l.rightMotorDirection.write(rightBackward);
+	// l.leftMotorDirection.write(leftForward);
+	// double goal = m.azimuth - degrees;
+	// if (goal < -180)
 	// {
+	// goal += 360;
+	// }
+	// double fix;
+	// if (goal + degrees > 180)
+	// {
+	// fix = 360;
+	// } else
+	// {
+	// fix = 0;
+	// }
+	// double azi = m.azimuth + fix;
+	// log("current angle: " + azi);
+	// log("goal: " + goal);
+	// while (azi < goal)
+	// {
+	// log("azi = " + azi);
+	// azi = m.azimuth + fix;
 	// SystemClock.sleep(1000 / speed);
 	// l.rightMotorClock.write(true);
 	// l.rightMotorClock.write(false);
@@ -168,38 +200,6 @@ public class RylexAPI
 	// l.leftMotorClock.write(false);
 	// }
 	// }
-	public void spinLeft(int speed, double degrees) throws Exception
-	{
-		l.rightMotorDirection.write(rightBackward);
-		l.leftMotorDirection.write(leftForward);
-		double goal = m.azimuth - degrees;
-		if (goal < -180)
-		{
-			goal += 360;
-		}
-		double fix;
-		if (goal + degrees > 180)
-		{
-			fix = 360;
-		} else
-		{
-			fix = 0;
-		}
-		double azi = m.azimuth + fix;
-		log("current angle: " + azi);
-		log("goal: " + goal);
-		while (azi < goal)
-		{
-			log("azi = " + azi);
-			azi = m.azimuth + fix;
-			SystemClock.sleep(1000 / speed);
-			l.rightMotorClock.write(true);
-			l.rightMotorClock.write(false);
-			l.leftMotorClock.write(true);
-			l.leftMotorClock.write(false);
-		}
-	}
-
 	public void hugLeftDistance(int distance) throws Exception
 	{
 		sonar.read();
@@ -290,5 +290,13 @@ public class RylexAPI
 	public void log(String msg)
 	{
 		m.log(msg);
+	}
+
+	public void testUltrasonic() throws Exception
+	{
+		sonar.read();
+		log("left = " + sonar.getLeftDistance());
+		log("front = " + sonar.getFrontDistance());
+		SystemClock.sleep(1000);
 	}
 }
