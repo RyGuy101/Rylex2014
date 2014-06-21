@@ -23,4 +23,8 @@ public class GoldAPI
 	public void spinScan() {
 		// TODO: Implement spinScan()
 	}
+	
+	public void checkIR() {
+		// TODO: Implement checkIR()
+	}
 }
