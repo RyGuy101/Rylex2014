@@ -198,13 +198,25 @@ public class UrbanAPI
 	public void backwardAlign() throws ConnectionLostException
 	{
 		ra.goBackward(100, 20);
-		
 		ra.goForward(defaultSpeed, 10);
 	}
 
 	public void forwardAlign() throws ConnectionLostException
 	{
 		ra.goForward(100, (int) (frontSensor + 2));
+		if (gridSquares.get(counter).getDirection() == NORTH)
+		{
+			northDegrees = m.azimuth;
+		} else if (gridSquares.get(counter).getDirection() == SOUTH)
+		{
+			southDegrees = m.azimuth;
+		} else if (gridSquares.get(counter).getDirection() == EAST)
+		{
+			eastDegrees = m.azimuth;
+		} else if (gridSquares.get(counter).getDirection() == WEST)
+		{
+			westDegrees = m.azimuth;
+		}
 		ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
 		m.azimuth = 0;
 	}
