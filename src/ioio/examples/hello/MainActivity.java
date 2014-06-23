@@ -1,5 +1,6 @@
 package ioio.examples.hello;
 
+import ioio.examples.hello.R.string;
 import ioio.lib.api.DigitalOutput;
 import ioio.lib.api.IOIO;
 import ioio.lib.api.PwmOutput;
@@ -77,7 +78,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				ra.test();
+				// ra.test();
+				ra.sleep(1000);
+				log("slept");
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -234,8 +237,8 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		protected void setup() throws ConnectionLostException
 		{
 			sonar = new UltraSonicSensor(ioio_);
-			sensorMonitor = new SensorMonitor(ioio_, m);
-			sensorMonitor.setupAllSensors(true, false, false, false, false);
+			// sensorMonitor = new SensorMonitor(ioio_, m);
+			// sensorMonitor.setupAllSensors(true, false, false, false, false);
 			ra = new RylexAPI(m, this, sonar, sensorMonitor, hazFenderz);
 			ua = new UrbanAPI(m, this, sonar, hazFenderz);
 			da = new DragAPI(m, this, sonar, hazFenderz, ioio_);

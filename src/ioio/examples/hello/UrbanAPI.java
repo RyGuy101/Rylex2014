@@ -33,10 +33,10 @@ public class UrbanAPI
 	public int tempY = 0;
 	public int cellSize = 70;
 	RylexAPI ra;
-	public double northDegrees;
-	public double southDegrees;
-	public double eastDegrees;
-	public double westDegrees;
+	public double northDegrees = 1000;
+	public double southDegrees = 1000;
+	public double eastDegrees = 1000;
+	public double westDegrees = 1000;
 
 	public UrbanAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -153,22 +153,7 @@ public class UrbanAPI
 			{
 				m.log("The Direction is: West");
 			}
-			if (gridSquares.get(counter).getDirection() == NORTH)
-			{
-				tempY = gridSquares.get(counter).getY() + 1;
-			} else if (gridSquares.get(counter).getDirection() == EAST)
-			{
-				tempX = gridSquares.get(counter).getX() + 1;
-			} else if (gridSquares.get(counter).getDirection() == SOUTH)
-			{
-				tempY = gridSquares.get(counter).getY() - 1;
-			} else if (gridSquares.get(counter).getDirection() == WEST)
-			{
-				tempX = gridSquares.get(counter).getX() - 1;
-			}
-			gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
-			ra.goForward(defaultSpeed, cellSize);
-			counter++;
+			goOneCell();
 		} else
 		{
 			spinRight(defaultSpeed, 90);
@@ -179,20 +164,36 @@ public class UrbanAPI
 		m.log("End of wallHugger method");
 	}
 
-	public void goOneCell() throws ConnectionLostException
+	public void goOneCell() throws Exception
 	{
 		if (gridSquares.get(counter).getDirection() == NORTH)
 		{
 			tempY = gridSquares.get(counter).getY() + 1;
+			if (northDegrees != 1000)
+			{
+				ra.spinToAzi(defaultSpeed, northDegrees);
+			}
 		} else if (gridSquares.get(counter).getDirection() == EAST)
 		{
 			tempX = gridSquares.get(counter).getX() + 1;
+			if (eastDegrees != 1000)
+			{
+				ra.spinToAzi(defaultSpeed, eastDegrees);
+			}
 		} else if (gridSquares.get(counter).getDirection() == SOUTH)
 		{
 			tempY = gridSquares.get(counter).getY() - 1;
+			if (southDegrees != 1000)
+			{
+				ra.spinToAzi(defaultSpeed, southDegrees);
+			}
 		} else if (gridSquares.get(counter).getDirection() == WEST)
 		{
 			tempX = gridSquares.get(counter).getX() - 1;
+			if (westDegrees != 1000)
+			{
+				ra.spinToAzi(defaultSpeed, westDegrees);
+			}
 		}
 		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
 		ra.goForward(defaultSpeed, cellSize);

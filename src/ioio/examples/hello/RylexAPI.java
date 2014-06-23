@@ -2,8 +2,10 @@ package ioio.examples.hello;
 
 import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.exception.ConnectionLostException;
+import android.annotation.SuppressLint;
 import android.os.SystemClock;
 
+@SuppressLint("NewApi")
 public class RylexAPI
 {
 	MainActivity m;
@@ -88,6 +90,7 @@ public class RylexAPI
 		sonar.read();
 		log("Left Sensor: " + sonar.getLeftDistance());
 		log("Front Sensor: " + sonar.getFrontDistance());
+		log("IR: " + getIR());
 		log("goForward at defaultSpeed for 10 cm");
 		goForward(defaultSpeed, 10);
 		log("spinRight at defaultSpeed for 90¡");
@@ -304,12 +307,73 @@ public class RylexAPI
 		log("rear = " + sonar.getRearDistance());
 		SystemClock.sleep(1000);
 	}
-	
-	public void victoryDance() throws Exception {
+
+	public void victoryDance() throws Exception
+	{
 		spinRight(defaultSpeed, 360);
 	}
-	
-	public double getIR() {
+
+	public double getIR()
+	{
 		return sensorMonitor.getFrontIRPulseDuration();
+	}
+
+	public void sleep(long nanos)
+	{
+		long initialTime = SystemClock.elapsedRealtimeNanos();
+		while (SystemClock.elapsedRealtimeNanos() - initialTime < nanos)
+		{
+		}
+	}
+
+	public void spinToAzi(int speed, double goalAzi) throws Exception
+	{
+		double prevAzi = 1;
+		double fix = 0;
+		double azi = m.azimuth + fix;
+		if (goalAzi > azi)
+		{
+			l.rightMotorDirection.write(rightBackward);
+			l.leftMotorDirection.write(leftForward);
+			while (azi < goalAzi)
+			{
+				prevAzi = azi - fix;
+				SystemClock.sleep(1000 / speed);
+				l.rightMotorClock.write(true);
+				l.rightMotorClock.write(false);
+				l.leftMotorClock.write(true);
+				l.leftMotorClock.write(false);
+				if (prevAzi * m.azimuth <= 0 && m.azimuth < 0)
+				{
+					fix += 360;
+				} else if (prevAzi * m.azimuth <= 0 && m.azimuth > 0)
+				{
+					fix -= 360;
+				}
+				azi = m.azimuth + fix;
+			}
+		}
+		if (goalAzi < azi)
+		{
+			l.rightMotorDirection.write(rightForward);
+			l.leftMotorDirection.write(leftBackward);
+			while (azi > goalAzi)
+			{
+				prevAzi = azi - fix;
+				SystemClock.sleep(1000 / speed);
+				l.rightMotorClock.write(true);
+				l.rightMotorClock.write(false);
+				l.leftMotorClock.write(true);
+				l.leftMotorClock.write(false);
+				if (prevAzi * m.azimuth <= 0 && m.azimuth > 0)
+				{
+					fix -= 360;
+				} else if (prevAzi * m.azimuth <= 0 && m.azimuth < 0)
+				{
+					fix += 360;
+				}
+				azi = m.azimuth + fix;
+			}
+		}
 	}
 }
