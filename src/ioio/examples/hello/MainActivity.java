@@ -64,7 +64,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				da.accelerateTo(2000);
+				da.accelerateTo2(100, 3000, 1);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -79,7 +79,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				ra.sleep(1000);
+				ra.sleep(1000000000);
 				log("slept");
 			} catch (Exception e)
 			{

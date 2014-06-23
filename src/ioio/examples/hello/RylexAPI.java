@@ -320,8 +320,8 @@ public class RylexAPI
 
 	public void sleep(long nanos)
 	{
-		long initialTime = SystemClock.elapsedRealtimeNanos();
-		while (SystemClock.elapsedRealtimeNanos() - initialTime < nanos)
+		long initialTime = System.nanoTime();
+		while (System.nanoTime() - initialTime < nanos)
 		{
 		}
 	}

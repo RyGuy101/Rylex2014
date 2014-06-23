@@ -1,5 +1,6 @@
 package ioio.examples.hello;
 
+import android.os.IInterface;
 import android.os.SystemClock;
 import android.util.Log;
 import ioio.examples.hello.MainActivity.Looper;
@@ -29,6 +30,10 @@ public class DragAPI
 	private static final int MOTOR_CLOCK_LEFT_PIN = 27;
 	private static final int MOTOR_CLOCK_RIGHT_PIN = 28;
 	private int pulseWidth = 10;// microseconds
+	private final static String LOGTAG = "IOIOLooper";
+	private PwmOutput rightMotorClock;
+	private PwmOutput leftMotorClock;
+	RylexAPI ra;
 
 	public DragAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz, IOIO ioio)
 	{
@@ -40,54 +45,60 @@ public class DragAPI
 		leftForward = !rightForward;
 		rightBackward = !rightForward;
 		leftBackward = !leftForward;
+		ra = m.ra;
 	}
 
-	public void accelerateTo(final int finalPWMfrequency) throws Exception
+	// public void accelerateTo(final int finalPWMfrequency)
+	// {
+	// if (startedAcceleration)
+	// return;
+	// new Thread(new Runnable()
+	// {
+	// public void run()
+	// {
+	// int counter = 0;
+	// while (leftMotorPWMfrequency < finalPWMfrequency)
+	// {
+	// try
+	// {
+	// counter++;
+	// SystemClock.sleep(1);
+	// Log.d(LOGTAG, "Setting Motor frequency : " + leftMotorPWMfrequency);
+	// rightMotorClock.setFrequency(rightMotorPWMfrequency);
+	// leftMotorClock.setFrequency(leftMotorPWMfrequency);
+	// leftMotorPWMfrequency += 2;
+	// rightMotorPWMfrequency += 2;
+	// if (frontSensor() < 100 && counter >= 100)
+	// {
+	// stop();
+	// goForward(450);
+	// counter = 0;
+	// }
+	// } catch (Exception ex)
+	// {
+	// log("Motor clock pulsing hiccup");
+	// }
+	// }
+	// }
+	// }).start();
+	// startedAcceleration = true;
+	// }
+	public void accelerateTo2(int initialSpeed, int finalSpeed, double rate) throws Exception
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftForward);
-		l.rightMotorClock.close();
-		l.leftMotorClock.close();
-		new Thread(new Runnable()
+		double currentSpeed = initialSpeed;
+		while (true)
 		{
-			public void run()
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+			ra.sleep((long) (1000000000 / currentSpeed));
+			if (currentSpeed <= finalSpeed - rate)
 			{
-				while (leftMotorPWMfrequency < finalPWMfrequency)
-				{
-					try
-					{
-						SystemClock.sleep(1000 / leftMotorPWMfrequency);
-						m.log("Setting Motor frequency : " + leftMotorPWMfrequency);
-						l.rightMotorClock = (DigitalOutput) ioio.openPwmOutput(MOTOR_CLOCK_RIGHT_PIN, rightMotorPWMfrequency);// pin
-						// #,
-						// frequency
-						// right
-						// motor//
-						// pin
-						// 10
-						// on
-						// original
-						// wagon...right
-						((PwmOutput) l.rightMotorClock).setPulseWidth(pulseWidth);
-						l.leftMotorClock = (DigitalOutput) ioio.openPwmOutput(MOTOR_CLOCK_LEFT_PIN, leftMotorPWMfrequency);// pin
-						// #,
-						// frequency
-						// right
-						// motor//
-						// pin
-						// 10
-						// on
-						// original
-						// wagon...right
-						((PwmOutput) l.leftMotorClock).setPulseWidth(pulseWidth);
-						leftMotorPWMfrequency++;
-						rightMotorPWMfrequency++;
-					} catch (Exception ex)
-					{
-						m.log("Motor clock pulsing hiccup");
-					}
-				}
+				currentSpeed += rate;
 			}
-		}).start();
+		}
 	}
 }
