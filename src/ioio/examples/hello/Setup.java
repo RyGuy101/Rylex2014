@@ -13,12 +13,14 @@ public class Setup extends Activity
 	RadioButton gold;
 	RadioButton drag;
 	RadioButton test;
+	RadioButton testUltra;
 	CheckBox hazFenderz;
 	public static final String CHALLENGE = "challenge";
 	public static final String URBAN = "urban";
 	public static final String GOLD = "gold";
 	public static final String DRAG = "drag";
 	public static final String TEST = "test";
+	public static final String TEST_ULTRA = "testUltra";
 	public static final String FENDERZ = "fenderz";
 	private String theChallenge;
 
@@ -31,6 +33,7 @@ public class Setup extends Activity
 		gold = (RadioButton) findViewById(R.id.gold);
 		drag = (RadioButton) findViewById(R.id.drag);
 		test = (RadioButton) findViewById(R.id.test);
+		testUltra = (RadioButton) findViewById(R.id.testUltra);
 		hazFenderz = (CheckBox) findViewById(R.id.hazFenderz);
 		urban.setChecked(true);
 		theChallenge = URBAN;
@@ -51,6 +54,9 @@ public class Setup extends Activity
 		} else if (v.equals(test))
 		{
 			theChallenge = TEST;
+		} else if (v.equals(testUltra))
+		{
+			theChallenge = TEST_ULTRA;
 		}
 	}
 

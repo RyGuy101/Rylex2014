@@ -77,9 +77,21 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				// ra.test();
-				ra.spinRightAzi(100, 90);
-				SystemClock.sleep(1000);
+				ra.test();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	};
+	private Runnable testUltra = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			try
+			{
+				ra.testUltrasonic();
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -169,6 +181,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		} else if (challenge.equals(Setup.TEST))
 		{
 			theChallenge = test;
+		} else if (challenge.equals(Setup.TEST_ULTRA))
+		{
+			theChallenge = testUltra;
 		}
 	}
 

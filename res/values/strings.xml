@@ -10,6 +10,7 @@
     <string name="gold_label">Gold Rush</string>
     <string name="drag_label">Drag Race</string>
     <string name="Test_Label">Test All</string>
+    <string name="Test_Ultra_Label">Test Ultra Sonic Sensors</string>
     <string name="chooseLabel">Choose the challenge to run:</string>
     <string name="start_label">Start</string>
     <color name="robertDarkRed">#B00000</color>
