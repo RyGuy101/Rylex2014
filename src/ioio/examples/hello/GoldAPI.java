@@ -10,6 +10,7 @@ public class GoldAPI
 	UltraSonicSensor sonar;
 	private IOIO ioio;
 	RylexAPI ra;
+	private SensorMonitor sensorMonitor = null;
 	
 	public GoldAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz, IOIO ioio)
 	{
@@ -27,5 +28,9 @@ public class GoldAPI
 	
 	public void checkIR() {
 		// TODO: Implement checkIR()
+	}
+	
+	public double getIR() {
+		return sensorMonitor.getFrontIRPulseDuration();
 	}
 }
