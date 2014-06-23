@@ -18,6 +18,7 @@ public class RylexAPI
 	public double degreesRightX = 2.22;
 	public double degreesLeftX = 2.1;
 	public double centimetersX = 13.7;
+	private SensorMonitor sensorMonitor = null;
 
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -305,5 +306,9 @@ public class RylexAPI
 	
 	public void victoryDance() throws Exception {
 		spinRight(defaultSpeed, 360);
+	}
+	
+	public double getIR() {
+		return sensorMonitor.getFrontIRPulseDuration();
 	}
 }
