@@ -298,6 +298,8 @@ public class RylexAPI
 		sonar.read();
 		log("left = " + sonar.getLeftDistance());
 		log("front = " + sonar.getFrontDistance());
+		log("right = " + sonar.getRightDistance());
+		log("rear = " + sonar.getRearDistance());
 		SystemClock.sleep(1000);
 	}
 }
