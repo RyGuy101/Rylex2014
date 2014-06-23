@@ -103,6 +103,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private int targetDirection = 90;
 	private int difference;
 	private UltraSonicSensor sonar;
+	private SensorMonitor sensorMonitor;
 	public Button endLearn;
 	public Button startMap;
 	RylexAPI ra;
@@ -233,7 +234,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		protected void setup() throws ConnectionLostException
 		{
 			sonar = new UltraSonicSensor(ioio_);
-			ra = new RylexAPI(m, this, sonar, hazFenderz);
+			sensorMonitor = new SensorMonitor(ioio_, m);
+			sensorMonitor.setupAllSensors(true, false, false, false, false);
+			ra = new RylexAPI(m, this, sonar, sensorMonitor, hazFenderz);
 			ua = new UrbanAPI(m, this, sonar, hazFenderz);
 			da = new DragAPI(m, this, sonar, hazFenderz, ioio_);
 			// sensorReader = new SensorReader(sonar, false);

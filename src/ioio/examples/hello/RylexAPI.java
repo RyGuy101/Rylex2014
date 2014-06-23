@@ -18,13 +18,14 @@ public class RylexAPI
 	public double degreesRightX = 2.22;
 	public double degreesLeftX = 2.1;
 	public double centimetersX = 13.7;
-	private SensorMonitor sensorMonitor = null;
+	private SensorMonitor sensorMonitor;
 
-	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
+	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, SensorMonitor sensorMonitor, boolean hazFenderz)
 	{
 		this.m = m;
 		this.l = l;
 		this.sonar = sonar;
+		this.sensorMonitor = sensorMonitor;
 		rightForward = !hazFenderz;
 		leftForward = !rightForward;
 		rightBackward = !rightForward;

@@ -11,17 +11,18 @@ public class GoldAPI
 	UltraSonicSensor sonar;
 	private IOIO ioio;
 	RylexAPI ra;
-	
+
 	public GoldAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz, IOIO ioio)
 	{
 		this.m = m;
 		this.l = l;
 		this.sonar = sonar;
 		this.ioio = ioio;
-		ra = new RylexAPI(m, l, sonar, hazFenderz);
+		ra = m.ra;
 	}
-	
-	public void spinScan(int speed) throws Exception {
+
+	public void spinScan(int speed) throws Exception
+	{
 		l.rightMotorDirection.write(ra.rightForward);
 		l.leftMotorDirection.write(ra.leftBackward);
 		double pulses = 360 * ra.degreesLeftX;// (20.0/9.0);
@@ -33,7 +34,8 @@ public class GoldAPI
 			l.leftMotorClock.write(true);
 			l.leftMotorClock.write(false);
 			ra.getIR();
-			if(ra.getIR() < 1500) {
+			if (ra.getIR() < 1500)
+			{
 				m.log("");
 				m.log("SEES IR");
 				m.log("");

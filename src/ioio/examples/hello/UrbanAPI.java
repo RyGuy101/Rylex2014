@@ -47,7 +47,7 @@ public class UrbanAPI
 		leftForward = !rightForward;
 		rightBackward = !rightForward;
 		leftBackward = !leftForward;
-		ra = new RylexAPI(m, l, sonar, hazFenderz);
+		ra = m.ra;
 	}
 
 	public void urbanChallange() throws Exception
