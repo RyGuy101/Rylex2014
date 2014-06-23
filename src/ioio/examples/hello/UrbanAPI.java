@@ -171,6 +171,13 @@ public class UrbanAPI
 			tempY = gridSquares.get(counter).getY() + 1;
 			if (northDegrees != 1000)
 			{
+				double azi = m.azimuth;
+				double diff0 = Math.abs(northDegrees - azi);
+				double diff1 = Math.abs(northDegrees + 360 - azi);
+				double diff2 = Math.abs(northDegrees - 360 - azi);
+				double diff01 = Math.min(diff0, diff1);
+				double diff012 = Math.min(diff01, diff2);
+				double degrees = diff012 + m.azimuth;
 				ra.spinToAzi(defaultSpeed, northDegrees);
 			}
 		} else if (gridSquares.get(counter).getDirection() == EAST)
