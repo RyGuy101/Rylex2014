@@ -302,4 +302,8 @@ public class RylexAPI
 		log("rear = " + sonar.getRearDistance());
 		SystemClock.sleep(1000);
 	}
+	
+	public void victoryDance() throws Exception {
+		spinRight(defaultSpeed, 360);
+	}
 }

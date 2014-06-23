@@ -1,5 +1,6 @@
 package ioio.examples.hello;
 
+import android.os.SystemClock;
 import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.IOIO;
 
@@ -21,13 +22,25 @@ public class GoldAPI
 		ra = new RylexAPI(m, l, sonar, hazFenderz);
 	}
 	
-	public void spinScan() throws Exception {
-		ra.spinLeft(500, 360);
-		// TODO: Implement spinScan()
-	}
-	
-	public void checkIR() {
-		// TODO: Implement checkIR()
+	public void spinScan(int speed) throws Exception {
+		l.rightMotorDirection.write(ra.rightForward);
+		l.leftMotorDirection.write(ra.leftBackward);
+		double pulses = 360 * ra.degreesLeftX;// (20.0/9.0);
+		for (int i = 0; i < pulses; i++)
+		{
+			SystemClock.sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+			getIR();
+			if(getIR() < 1500) {
+				m.log("");
+				m.log("SEES IR");
+				m.log("");
+				break;
+			}
+		}
 	}
 	
 	public double getIR() {
