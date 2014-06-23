@@ -495,8 +495,8 @@ public class UrbanAPI
 	{
 		SystemClock.sleep(250);
 		sonar.read();
-		frontSensor = sonar.getFrontDistance() * ra.CONVERSION_FACTOR;
-		leftSensor = sonar.getLeftDistance() * ra.CONVERSION_FACTOR;
+		frontSensor = sonar.getFrontDistance();
+		leftSensor = sonar.getLeftDistance();
 		SystemClock.sleep(250);
 	}
 

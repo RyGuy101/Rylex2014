@@ -44,7 +44,7 @@ public class UltraSonicSensor
 	private PulseInput frontInput;
 	private PulseInput rightInput;
 	private PulseInput rearInput;
-	private float CONVERSION_FACTOR = 1000000; // Gives ultrasonics reqadings in
+	private float CONVERSION_FACTOR = (float) (1000000 * 0.01666667); // Gives ultrasonics reqadings in
 												// microseconds
 
 	/**
@@ -73,10 +73,8 @@ public class UltraSonicSensor
 	{
 		leftDistance = read(leftStrobe, leftInput, LEFT_ULTRASONIC_INPUT_PIN);
 		frontDistance = read(frontStrobe, frontInput, FRONT_ULTRASONIC_INPUT_PIN);
-		// rightDistance = read(rightStrobe, rightInput,
-		// RIGHT_ULTRASONIC_INPUT_PIN);
-		// rearDistance = read(rearStrobe, rearInput,
-		// REAR_ULTRASONIC_INPUT_PIN);
+		rightDistance = read(rightStrobe, rightInput, RIGHT_ULTRASONIC_INPUT_PIN);
+		rearDistance = read(rearStrobe, rearInput, REAR_ULTRASONIC_INPUT_PIN);
 	}
 
 	private int read(DigitalOutput strobe, PulseInput input, int inputPin) throws ConnectionLostException, InterruptedException // Order of
