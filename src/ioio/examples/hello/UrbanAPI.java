@@ -30,7 +30,7 @@ public class UrbanAPI
 	private double frontSensor;
 	private double leftSensor;
 	private double rightSensor;
-	private double backSensor;
+	private double rearSensor;
 	private int defaultSpeed = 250;
 	public int tempX = 0;
 	public int tempY = 0;
@@ -233,7 +233,7 @@ public class UrbanAPI
 
 	public void backwardAlign() throws ConnectionLostException
 	{
-		ra.goBackward(100, 20);
+		ra.goBackward(100, (int) (rearSensor + 2));
 		if (gridSquares.get(counter).getDirection() == NORTH)
 		{
 			northDegrees = m.azimuth;
@@ -528,7 +528,7 @@ public class UrbanAPI
 		frontSensor = sonar.getFrontDistance();
 		leftSensor = sonar.getLeftDistance();
 		rightSensor = sonar.getRightDistance();
-		backSensor = sonar.getRearDistance();
+		rearSensor = sonar.getRearDistance();
 		ra.sleep(250);
 	}
 
@@ -556,6 +556,7 @@ public class UrbanAPI
 			spinRight2(defaultSpeed, 90);
 			if (leftSensor < 30)
 			{
+				readSensors();
 				backwardAlign();
 			}
 		}
