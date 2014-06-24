@@ -40,6 +40,7 @@ public class UrbanAPI
 	public double southDegrees = 1000;
 	public double eastDegrees = 1000;
 	public double westDegrees = 1000;
+	int wallDistance = 50;
 
 	public UrbanAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -109,7 +110,7 @@ public class UrbanAPI
 		// rightSensor = rightSensor();
 		m.log("left Distance: " + leftSensor);
 		m.log("front distance: " + frontSensor);
-		if (frontSensor < 50)
+		if (frontSensor < wallDistance)
 		{
 			m.log("wall in front. counter = " + counter);
 			forwardAlign();
@@ -117,7 +118,7 @@ public class UrbanAPI
 			m.log("second left Distance: " + leftSensor);
 			m.log("second front distance: " + frontSensor);
 		}
-		if (leftSensor >= 50)
+		if (leftSensor >= wallDistance)
 		{
 			spinLeft(defaultSpeed, 90);
 			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
@@ -139,7 +140,7 @@ public class UrbanAPI
 			goOneCell();
 			// goForward(-300, 50);
 			// spinRight(300, 360);
-		} else if (frontSensor >= 50)
+		} else if (frontSensor >= wallDistance)
 		{
 			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
 			tempX = gridSquares.get(counter).getX();
@@ -173,32 +174,36 @@ public class UrbanAPI
 		if (gridSquares.get(counter).getDirection() == NORTH)
 		{
 			tempY = gridSquares.get(counter).getY() + 1;
-			if (northDegrees != 1000)
-			{
-				ra.goStraight(defaultSpeed, cellSize, northDegrees);
-			}
+			// if (northDegrees != 1000)
+			// {
+			// ra.goStraight(defaultSpeed, cellSize, northDegrees);
+			// }
 		} else if (gridSquares.get(counter).getDirection() == EAST)
 		{
 			tempX = gridSquares.get(counter).getX() + 1;
-			if (eastDegrees != 1000)
-			{
-				ra.goStraight(defaultSpeed, cellSize, eastDegrees);
-			}
+			// if (eastDegrees != 1000)
+			// {
+			// ra.goStraight(defaultSpeed, cellSize, eastDegrees);
+			// }
 		} else if (gridSquares.get(counter).getDirection() == SOUTH)
 		{
 			tempY = gridSquares.get(counter).getY() - 1;
-			if (southDegrees != 1000)
-			{
-				ra.goStraight(defaultSpeed, cellSize, southDegrees);
-			}
+			// if (southDegrees != 1000)
+			// {
+			// ra.goStraight(defaultSpeed, cellSize, southDegrees);
+			// }
 		} else if (gridSquares.get(counter).getDirection() == WEST)
 		{
 			tempX = gridSquares.get(counter).getX() - 1;
-			if (westDegrees != 1000)
-			{
-				ra.goStraight(defaultSpeed, cellSize, westDegrees);
-			}
+			// if (westDegrees != 1000)
+			// {
+			// ra.goStraight(defaultSpeed, cellSize, westDegrees);
+			// }
 		}
+		// if (northDegrees == 1000 && eastDegrees == 1000 && westDegrees == 1000 && southDegrees == 1000)
+		// {
+		ra.goForward(defaultSpeed, cellSize);
+		// }
 		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
 		// ra.goForward(defaultSpeed, cellSize);
 		m.log("just went forward");
@@ -424,7 +429,7 @@ public class UrbanAPI
 	{
 		readSensors();
 		// rightSensor = rightSensor();
-		if (frontSensor < 50)
+		if (frontSensor < wallDistance)
 		{
 			ra.goForward(100, 25);
 			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
@@ -458,7 +463,7 @@ public class UrbanAPI
 	{
 		readSensors();
 		// rightSensor = rightSensor();
-		if (frontSensor < 50)
+		if (frontSensor < wallDistance)
 		{
 			ra.goForward(100, 25);
 			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
@@ -491,7 +496,7 @@ public class UrbanAPI
 	public void goEast() throws ConnectionLostException, InterruptedException
 	{
 		readSensors();
-		if (frontSensor < 50)
+		if (frontSensor < wallDistance)
 		{
 			ra.goForward(100, 25);
 			ra.goBackward(defaultSpeed, 18); // 20, previous 19
@@ -512,6 +517,7 @@ public class UrbanAPI
 			spinRight2(defaultSpeed, 90);
 			if (leftSensor < 30)
 			{
+				readSensors();
 				backwardAlign();
 			}
 		}
@@ -535,7 +541,7 @@ public class UrbanAPI
 	public void goWest() throws ConnectionLostException, InterruptedException
 	{
 		readSensors();
-		if (frontSensor < 50)
+		if (frontSensor < wallDistance)
 		{
 			ra.goForward(100, 25);
 			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19

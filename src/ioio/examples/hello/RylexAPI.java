@@ -348,10 +348,10 @@ public class RylexAPI
 		return sensorMonitor.getFrontIRPulseDuration();
 	}
 
-	public void sleep(long milis)
+	public void sleep(long millis)
 	{
 		long initialTime = System.nanoTime();
-		long nanos = milis * 1000000;
+		long nanos = millis * 1000000;
 		while (System.nanoTime() - initialTime < nanos)
 		{
 		}
