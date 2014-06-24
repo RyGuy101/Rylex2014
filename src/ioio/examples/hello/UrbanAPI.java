@@ -170,38 +170,34 @@ public class UrbanAPI
 		if (gridSquares.get(counter).getDirection() == NORTH)
 		{
 			tempY = gridSquares.get(counter).getY() + 1;
-			// if (northDegrees != 1000)
-			// {
-			// double degrees = findBestDegrees(northDegrees);
-			// ra.spinToAzi(defaultSpeed, degrees);
-			// }
+			if (northDegrees != 1000)
+			{
+				ra.goStraight(defaultSpeed, cellSize, northDegrees);
+			}
 		} else if (gridSquares.get(counter).getDirection() == EAST)
 		{
 			tempX = gridSquares.get(counter).getX() + 1;
-			// if (eastDegrees != 1000)
-			// {
-			// double degrees = findBestDegrees(eastDegrees);
-			// ra.spinToAzi(defaultSpeed, degrees);
-			// }
+			if (eastDegrees != 1000)
+			{
+				ra.goStraight(defaultSpeed, cellSize, eastDegrees);
+			}
 		} else if (gridSquares.get(counter).getDirection() == SOUTH)
 		{
 			tempY = gridSquares.get(counter).getY() - 1;
-			// if (southDegrees != 1000)
-			// {
-			// double degrees = findBestDegrees(southDegrees);
-			// ra.spinToAzi(defaultSpeed, degrees);
-			// }
+			if (southDegrees != 1000)
+			{
+				ra.goStraight(defaultSpeed, cellSize, southDegrees);
+			}
 		} else if (gridSquares.get(counter).getDirection() == WEST)
 		{
 			tempX = gridSquares.get(counter).getX() - 1;
-			// if (westDegrees != 1000)
-			// {
-			// double degrees = findBestDegrees(westDegrees);
-			// ra.spinToAzi(defaultSpeed, degrees);
-			// }
+			if (westDegrees != 1000)
+			{
+				ra.goStraight(defaultSpeed, cellSize, westDegrees);
+			}
 		}
 		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
-		ra.goForward(defaultSpeed, cellSize);
+		// ra.goForward(defaultSpeed, cellSize);
 		m.log("just went forward");
 		counter++;
 		m.log("incremented counter");
