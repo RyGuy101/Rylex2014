@@ -134,7 +134,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private int lastAzimuth;
 	private double pitch;
 	private double roll;
-	private boolean logAzimuth = false;
+	private boolean logAzimuth = true;
 
 	/**
 	 * Called when the activity is first created. Here we normally initialize our GUI.

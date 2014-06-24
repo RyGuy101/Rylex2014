@@ -4,6 +4,7 @@ import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.exception.ConnectionLostException;
 import java.util.ArrayList;
 import android.os.SystemClock;
+import android.util.Log;
 
 public class UrbanAPI
 {
@@ -28,6 +29,8 @@ public class UrbanAPI
 	private int goalY = 11;
 	private double frontSensor;
 	private double leftSensor;
+	private double rightSensor;
+	private double backSensor;
 	private int defaultSpeed = 250;
 	public int tempX = 0;
 	public int tempY = 0;
@@ -62,8 +65,8 @@ public class UrbanAPI
 			m.log("In the first while loop");
 			leftWallHugger();
 		}
-		m.log("Initiating victory dance");
 		ra.goForward(defaultSpeed, 30);
+		m.log("Initiating victory dance");
 		ra.victoryDance();
 		ra.sleep(20000);
 		m.log("done sleeping");
@@ -524,6 +527,8 @@ public class UrbanAPI
 		sonar.read();
 		frontSensor = sonar.getFrontDistance();
 		leftSensor = sonar.getLeftDistance();
+		rightSensor = sonar.getRightDistance();
+		backSensor = sonar.getRearDistance();
 		ra.sleep(250);
 	}
 
