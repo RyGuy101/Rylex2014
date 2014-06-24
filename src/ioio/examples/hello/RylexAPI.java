@@ -467,4 +467,31 @@ public class RylexAPI
 			}
 		}
 	}
+
+	public void followWallLeft(int speed, int distance, int centimeters) throws Exception
+	{
+		int pulses = (int) (centimeters * centimetersX);
+		sonar.read();
+		int prevDistance = sonar.getLeftDistance();
+		goForward(speed, 5);
+		for (int i = 0; i < pulses; i++)
+		{
+			sonar.read();
+			if (sonar.getLeftDistance() > prevDistance && sonar.getLeftDistance() > distance)
+			{
+				prevDistance = sonar.getLeftDistance();
+				spinLeft(speed, 5);
+				goForward(speed, 5);
+			} else if (sonar.getLeftDistance() < prevDistance && sonar.getLeftDistance() < distance)
+			{
+				prevDistance = sonar.getLeftDistance();
+				spinRight(speed, 5);
+				goForward(speed, 5);
+			} else
+			{
+				prevDistance = sonar.getLeftDistance();
+				goForward(speed, 5);
+			}
+		}
+	}
 }

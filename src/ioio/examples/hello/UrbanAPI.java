@@ -41,6 +41,7 @@ public class UrbanAPI
 	public double eastDegrees = 1000;
 	public double westDegrees = 1000;
 	int wallDistance = 50;
+	int desiredWallDistance = 24;
 
 	public UrbanAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -202,7 +203,8 @@ public class UrbanAPI
 		}
 		// if (northDegrees == 1000 && eastDegrees == 1000 && westDegrees == 1000 && southDegrees == 1000)
 		// {
-		ra.goForward(defaultSpeed, cellSize);
+		// ra.goForward(defaultSpeed, cellSize);
+		ra.followWallLeft(defaultSpeed, desiredWallDistance, cellSize);
 		// }
 		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
 		// ra.goForward(defaultSpeed, cellSize);
@@ -621,10 +623,10 @@ public class UrbanAPI
 	public void goSuperStraight(int speed) throws Exception
 	{
 		sonar.read();
-		if (sonar.getLeftDistance() > sonar.getRightDistance() && sonar.getLeftDistance() <= wallDistance) 
+		if (sonar.getLeftDistance() > sonar.getRightDistance() && sonar.getLeftDistance() <= wallDistance)
 		{
 			spinLeft(defaultSpeed, 5);
-		} else if (sonar.getLeftDistance() < sonar.getRightDistance() && sonar.getLeftDistance() <= wallDistance) 
+		} else if (sonar.getLeftDistance() < sonar.getRightDistance() && sonar.getLeftDistance() <= wallDistance)
 		{
 			spinRight(defaultSpeed, 5);
 		}
