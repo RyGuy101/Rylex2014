@@ -95,7 +95,7 @@ public class RylexAPI
 		goForward(defaultSpeed, 10);
 		log("spinRight at defaultSpeed for 90¡");
 		spinRight(defaultSpeed, 90);
-		SystemClock.sleep(500);
+		sleep(500);
 		log("spinLeft at defaultSpeed for 90¡");
 		spinLeft(defaultSpeed, 90);
 		log("goBackward at defaultSpeed for 10 cm");
@@ -126,7 +126,7 @@ public class RylexAPI
 		double pulses = degrees * degreesRightX;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
@@ -146,7 +146,7 @@ public class RylexAPI
 		while (azi < goal)
 		{
 			prevAzi = azi - fix;
-			SystemClock.sleep(1000 / speed);
+			sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
@@ -167,7 +167,7 @@ public class RylexAPI
 		double pulses = degrees * degreesLeftX;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
@@ -199,7 +199,7 @@ public class RylexAPI
 	// {
 	// log("azi = " + azi);
 	// azi = m.azimuth + fix;
-	// SystemClock.sleep(1000 / speed);
+	// sleep(1000 / speed);
 	// l.rightMotorClock.write(true);
 	// l.rightMotorClock.write(false);
 	// l.leftMotorClock.write(true);
@@ -225,7 +225,7 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftForward);
-		SystemClock.sleep(1000 / speed);
+		sleep(1000 / speed);
 		l.rightMotorClock.write(true);
 		l.rightMotorClock.write(false);
 		l.leftMotorClock.write(true);
@@ -239,7 +239,7 @@ public class RylexAPI
 		l.leftMotorDirection.write(leftForward);
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
@@ -251,7 +251,7 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftBackward);
-		SystemClock.sleep(1000 / speed);
+		sleep(1000 / speed);
 		l.rightMotorClock.write(true);
 		l.rightMotorClock.write(false);
 		l.leftMotorClock.write(true);
@@ -265,7 +265,7 @@ public class RylexAPI
 		l.leftMotorDirection.write(leftBackward);
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
@@ -305,7 +305,7 @@ public class RylexAPI
 		log("front = " + sonar.getFrontDistance());
 		log("right = " + sonar.getRightDistance());
 		log("rear = " + sonar.getRearDistance());
-		SystemClock.sleep(1000);
+		sleep(1000);
 	}
 
 	public void victoryDance() throws Exception
@@ -318,9 +318,10 @@ public class RylexAPI
 		return sensorMonitor.getFrontIRPulseDuration();
 	}
 
-	public void sleep(long nanos)
+	public void sleep(long milis)
 	{
 		long initialTime = System.nanoTime();
+		long nanos = milis * 1000000;
 		while (System.nanoTime() - initialTime < nanos)
 		{
 		}
@@ -338,7 +339,7 @@ public class RylexAPI
 			while (azi < goalAzi)
 			{
 				prevAzi = azi - fix;
-				SystemClock.sleep(1000 / speed);
+				sleep(1000 / speed);
 				l.rightMotorClock.write(true);
 				l.rightMotorClock.write(false);
 				l.leftMotorClock.write(true);
@@ -360,7 +361,7 @@ public class RylexAPI
 			while (azi > goalAzi)
 			{
 				prevAzi = azi - fix;
-				SystemClock.sleep(1000 / speed);
+				sleep(1000 / speed);
 				l.rightMotorClock.write(true);
 				l.rightMotorClock.write(false);
 				l.leftMotorClock.write(true);

@@ -62,8 +62,9 @@ public class UrbanAPI
 			m.log("In the first while loop");
 			leftWallHugger();
 		}
-		m.log("I broke out.");
+		m.log("Initiating victory dance");
 		ra.goForward(defaultSpeed, 30);
+		ra.victoryDance();
 		SystemClock.sleep(20000);
 		m.log("done sleeping");
 		counter = 0;
@@ -169,44 +170,66 @@ public class UrbanAPI
 		if (gridSquares.get(counter).getDirection() == NORTH)
 		{
 			tempY = gridSquares.get(counter).getY() + 1;
-			if (northDegrees != 1000)
-			{
-				double azi = m.azimuth;
-				double diff0abs = Math.abs(northDegrees - azi);
-				double diff1abs = Math.abs(northDegrees + 360 - azi);
-				double diff2 = Math.abs(northDegrees - 360 - azi);
-				double diff01 = Math.min(diff0abs, diff1abs);
-				double diff012 = Math.min(diff01, diff2);
-				double degrees = diff012 + m.azimuth;
-				ra.spinToAzi(defaultSpeed, northDegrees);
-			}
+			// if (northDegrees != 1000)
+			// {
+			// double degrees = findBestDegrees(northDegrees);
+			// ra.spinToAzi(defaultSpeed, degrees);
+			// }
 		} else if (gridSquares.get(counter).getDirection() == EAST)
 		{
 			tempX = gridSquares.get(counter).getX() + 1;
-			if (eastDegrees != 1000)
-			{
-				ra.spinToAzi(defaultSpeed, eastDegrees);
-			}
+			// if (eastDegrees != 1000)
+			// {
+			// double degrees = findBestDegrees(eastDegrees);
+			// ra.spinToAzi(defaultSpeed, degrees);
+			// }
 		} else if (gridSquares.get(counter).getDirection() == SOUTH)
 		{
 			tempY = gridSquares.get(counter).getY() - 1;
-			if (southDegrees != 1000)
-			{
-				ra.spinToAzi(defaultSpeed, southDegrees);
-			}
+			// if (southDegrees != 1000)
+			// {
+			// double degrees = findBestDegrees(southDegrees);
+			// ra.spinToAzi(defaultSpeed, degrees);
+			// }
 		} else if (gridSquares.get(counter).getDirection() == WEST)
 		{
 			tempX = gridSquares.get(counter).getX() - 1;
-			if (westDegrees != 1000)
-			{
-				ra.spinToAzi(defaultSpeed, westDegrees);
-			}
+			// if (westDegrees != 1000)
+			// {
+			// double degrees = findBestDegrees(westDegrees);
+			// ra.spinToAzi(defaultSpeed, degrees);
+			// }
 		}
 		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
 		ra.goForward(defaultSpeed, cellSize);
 		m.log("just went forward");
 		counter++;
 		m.log("incremented counter");
+	}
+
+	public double findBestDegrees(double degrees)
+	{
+		double azi = m.azimuth;
+		double diff0 = degrees - azi;
+		double diff1 = degrees + 360 - azi;
+		double diff2 = degrees - 360 - azi;
+		double diff0abs = Math.abs(diff0);
+		double diff1abs = Math.abs(diff1);
+		double diff2abs = Math.abs(diff2);
+		double diff01abs = Math.min(diff0abs, diff1abs);
+		double diff012abs = Math.min(diff01abs, diff2abs);
+		double newDegrees = 0;
+		if (diff012abs == diff0abs)
+		{
+			newDegrees = diff0 + azi;
+		} else if (diff012abs == diff1abs)
+		{
+			newDegrees = diff1 + azi;
+		} else if (diff012abs == diff2abs)
+		{
+			newDegrees = diff2 + azi;
+		}
+		return newDegrees;
 	}
 
 	public void backwardAlign() throws ConnectionLostException

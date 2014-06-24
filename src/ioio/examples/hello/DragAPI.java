@@ -48,42 +48,7 @@ public class DragAPI
 		ra = m.ra;
 	}
 
-	// public void accelerateTo(final int finalPWMfrequency)
-	// {
-	// if (startedAcceleration)
-	// return;
-	// new Thread(new Runnable()
-	// {
-	// public void run()
-	// {
-	// int counter = 0;
-	// while (leftMotorPWMfrequency < finalPWMfrequency)
-	// {
-	// try
-	// {
-	// counter++;
-	// SystemClock.sleep(1);
-	// Log.d(LOGTAG, "Setting Motor frequency : " + leftMotorPWMfrequency);
-	// rightMotorClock.setFrequency(rightMotorPWMfrequency);
-	// leftMotorClock.setFrequency(leftMotorPWMfrequency);
-	// leftMotorPWMfrequency += 2;
-	// rightMotorPWMfrequency += 2;
-	// if (frontSensor() < 100 && counter >= 100)
-	// {
-	// stop();
-	// goForward(450);
-	// counter = 0;
-	// }
-	// } catch (Exception ex)
-	// {
-	// log("Motor clock pulsing hiccup");
-	// }
-	// }
-	// }
-	// }).start();
-	// startedAcceleration = true;
-	// }
-	public void accelerateTo2(int initialSpeed, int finalSpeed, double rate) throws Exception
+	public void accelerateTo(int initialSpeed, int finalSpeed, double rate) throws Exception
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftForward);

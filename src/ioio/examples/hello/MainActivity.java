@@ -64,7 +64,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				da.accelerateTo2(100, 3000, 1);
+				da.accelerateTo(100, 1500, 0.5);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
