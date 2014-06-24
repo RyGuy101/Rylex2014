@@ -79,7 +79,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				ua.goSuperStraight(250);
+				ra.followWallLeft(250, 24);
 			} catch (Exception e)
 			{
 				e.printStackTrace();

@@ -452,14 +452,17 @@ public class RylexAPI
 			sonar.read();
 			if (sonar.getLeftDistance() > prevDistance && sonar.getLeftDistance() > distance)
 			{
-				spinLeft(speed, 2);
+				prevDistance = sonar.getLeftDistance();
+				spinLeft(speed, 5);
 				goForward(speed, 5);
 			} else if (sonar.getLeftDistance() < prevDistance && sonar.getLeftDistance() < distance)
 			{
-				spinRight(speed, 2);
+				prevDistance = sonar.getLeftDistance();
+				spinRight(speed, 5);
 				goForward(speed, 5);
 			} else
 			{
+				prevDistance = sonar.getLeftDistance();
 				goForward(speed, 5);
 			}
 		}
