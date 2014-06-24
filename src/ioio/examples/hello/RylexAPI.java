@@ -107,16 +107,22 @@ public class RylexAPI
 	{
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftForward);
-		l.rightMotorClock.close();
-		l.leftMotorClock.close();
+		sleep(1000 / speed);
+		l.rightMotorClock.write(true);
+		l.rightMotorClock.write(false);
+		l.leftMotorClock.write(true);
+		l.leftMotorClock.write(false);
 	}
 
 	public void spinLeft(int speed) throws ConnectionLostException
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftBackward);
-		l.rightMotorClock.close();
-		l.leftMotorClock.close();
+		sleep(1000 / speed);
+		l.rightMotorClock.write(true);
+		l.rightMotorClock.write(false);
+		l.leftMotorClock.write(true);
+		l.leftMotorClock.write(false);
 	}
 
 	public void spinRight(int speed, double degrees) throws Exception
@@ -301,20 +307,18 @@ public class RylexAPI
 		double pulses = centimeters * centimetersX;
 		while (i < pulses)
 		{
-			if (m.azimuth < azimuth)
+			if (m.azimuth < azimuth - 5)
 			{
-				while (m.azimuth < azimuth)
-				{
-					spinRight(speed);
-					log("right");
-				}
-			} else if (m.azimuth > azimuth)
+				// while (m.azimuth < azimuth)
+				// {
+				spinRight(speed);
+				// }
+			} else if (m.azimuth > azimuth + 5)
 			{
-				while (m.azimuth > azimuth)
-				{
-					spinLeft(speed);
-					log("left");
-				}
+				// while (m.azimuth > azimuth)
+				// {
+				spinLeft(speed);
+				// }
 			} else
 			{
 				goForward(speed);
