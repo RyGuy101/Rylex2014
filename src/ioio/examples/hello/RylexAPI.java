@@ -41,11 +41,33 @@ public class RylexAPI
 		l.leftMotorClock.write(false);
 	}
 
+	public void turnRight(int speed, int pulses) throws Exception
+	{
+		l.leftMotorDirection.write(leftForward);
+		for (int i = 0; i < pulses; i++)
+		{
+			sleep(1000 / speed);
+			l.leftMotorClock.write(true);
+			l.leftMotorClock.write(false);
+		}
+	}
+
 	public void turnLeft() throws Exception
 	{
 		l.rightMotorClock.write(true);
 		l.rightMotorClock.write(false);
 		l.leftMotorClock.write(false);
+	}
+
+	public void turnLeft(int speed, int pulses) throws Exception
+	{
+		l.rightMotorDirection.write(rightForward);
+		for (int i = 0; i < pulses; i++)
+		{
+			sleep(1000 / speed);
+			l.rightMotorClock.write(true);
+			l.rightMotorClock.write(false);
+		}
 	}
 
 	public void goForward() throws Exception
@@ -419,8 +441,27 @@ public class RylexAPI
 			}
 		}
 	}
-	public void followWallLeft()
+
+	public void followWallLeft(int speed, int distance) throws Exception
 	{
-		
+		sonar.read();
+		int prevDistance = sonar.getLeftDistance();
+		goForward(speed, 5);
+		while (true)
+		{
+			sonar.read();
+			if (sonar.getLeftDistance() > prevDistance && sonar.getLeftDistance() > distance)
+			{
+				spinLeft(speed, 2);
+				goForward(speed, 5);
+			} else if (sonar.getLeftDistance() < prevDistance && sonar.getLeftDistance() < distance)
+			{
+				spinRight(speed, 2);
+				goForward(speed, 5);
+			} else
+			{
+				goForward(speed, 5);
+			}
+		}
 	}
 }

@@ -617,4 +617,16 @@ public class UrbanAPI
 			l.leftMotorClock.write(false);
 		}
 	}
+
+	public void goSuperStraight(int speed) throws Exception
+	{
+		sonar.read();
+		if (sonar.getLeftDistance() > sonar.getRightDistance() && sonar.getLeftDistance() <= wallDistance) 
+		{
+			spinLeft(defaultSpeed, 5);
+		} else if (sonar.getLeftDistance() < sonar.getRightDistance() && sonar.getLeftDistance() <= wallDistance) 
+		{
+			spinRight(defaultSpeed, 5);
+		}
+	}
 }
