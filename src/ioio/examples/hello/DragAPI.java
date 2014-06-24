@@ -56,11 +56,11 @@ public class DragAPI
 		double initialAzi = m.azimuth;
 		while (true)
 		{
-			if (m.azimuth < initialAzi)
-			{
-			} else if (m.azimuth > initialAzi)
-			{
-			} else
+			// if (m.azimuth < initialAzi)
+			// {
+			// } else if (m.azimuth > initialAzi)
+			// {
+			// } else
 			{
 				l.rightMotorClock.write(true);
 				l.rightMotorClock.write(false);

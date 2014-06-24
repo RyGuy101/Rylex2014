@@ -79,8 +79,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				ra.sleep(1000);
-				log("slept");
+				ra.goStraight(azimuth);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -370,11 +369,6 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	{
 		log("NullPointerException\nThank you for using the forfeit method!");
 		throw new NullPointerException();
-	}
-
-	public double getDegrees()
-	{
-		return azimuth;
 	}
 
 	public void accelerateTo(final int finalPWMfrequency)

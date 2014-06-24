@@ -275,17 +275,19 @@ public class RylexAPI
 
 	void goStraight(double azimuth) throws ConnectionLostException
 	{
-		if (m.getDegrees() < (azimuth))
+		if (m.azimuth < azimuth)
 		{
-			while (m.getDegrees() < (azimuth))
+			while (m.azimuth < azimuth)
 			{
 				spinRight(defaultSpeed);
+				log("right");
 			}
-		} else if (m.getDegrees() > (azimuth))
+		} else if (m.azimuth > azimuth)
 		{
-			while (m.getDegrees() > (azimuth))
+			while (m.azimuth > azimuth)
 			{
 				spinLeft(defaultSpeed);
+				log("left");
 			}
 		} else
 		{
