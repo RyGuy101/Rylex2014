@@ -307,13 +307,13 @@ public class RylexAPI
 		double pulses = centimeters * centimetersX;
 		while (i < pulses)
 		{
-			if (m.azimuth < azimuth - 5)
+			if (m.azimuth < azimuth - 10)
 			{
 				// while (m.azimuth < azimuth)
 				// {
 				spinRight(speed);
 				// }
-			} else if (m.azimuth > azimuth + 5)
+			} else if (m.azimuth > azimuth + 10)
 			{
 				// while (m.azimuth > azimuth)
 				// {
@@ -418,5 +418,9 @@ public class RylexAPI
 				azi = m.azimuth + fix;
 			}
 		}
+	}
+	public void followWallLeft()
+	{
+		
 	}
 }

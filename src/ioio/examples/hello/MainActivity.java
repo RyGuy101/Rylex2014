@@ -79,7 +79,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				ra.goStraight(50, 70, azimuth);
+				ra.goStraight(250, 70, azimuth);
 				log("done");
 			} catch (Exception e)
 			{

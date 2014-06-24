@@ -44,7 +44,7 @@ public class UltraSonicSensor
 	private PulseInput frontInput;
 	private PulseInput rightInput;
 	private PulseInput rearInput;
-	private float CONVERSION_FACTOR = (float) (1000000 * 0.01666667); // Gives ultrasonics reqadings in
+	private float CONVERSION_FACTOR = 18000; // Gives ultrasonics reqadings in
 												// microseconds
 
 	/**
