@@ -295,6 +295,34 @@ public class RylexAPI
 		}
 	}
 
+	public void goStraight(int speed, int centimeters, double azimuth) throws ConnectionLostException
+	{
+		int i = 0;
+		double pulses = centimeters * centimetersX;
+		while (i < pulses)
+		{
+			if (m.azimuth < azimuth)
+			{
+				while (m.azimuth < azimuth)
+				{
+					spinRight(speed);
+					log("right");
+				}
+			} else if (m.azimuth > azimuth)
+			{
+				while (m.azimuth > azimuth)
+				{
+					spinLeft(speed);
+					log("left");
+				}
+			} else
+			{
+				goForward(speed);
+				i++;
+			}
+		}
+	}
+
 	public void log(String msg)
 	{
 		m.log(msg);
