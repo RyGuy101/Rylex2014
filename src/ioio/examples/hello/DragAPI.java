@@ -53,13 +53,21 @@ public class DragAPI
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftForward);
 		double currentSpeed = initialSpeed;
+		double initialAzi = m.azimuth;
 		while (true)
 		{
-			l.rightMotorClock.write(true);
-			l.rightMotorClock.write(false);
-			l.leftMotorClock.write(true);
-			l.leftMotorClock.write(false);
-			ra.sleep((long) (1000 / currentSpeed));
+			if (m.azimuth < initialAzi)
+			{
+			} else if (m.azimuth > initialAzi)
+			{
+			} else
+			{
+				l.rightMotorClock.write(true);
+				l.rightMotorClock.write(false);
+				l.leftMotorClock.write(true);
+				l.leftMotorClock.write(false);
+			}
+			ra.sleepNano((long) (1000000000 / currentSpeed));
 			if (currentSpeed <= finalSpeed - rate)
 			{
 				currentSpeed += rate;

@@ -25,7 +25,7 @@ public class UrbanAPI
 	private int startX = 0;
 	private int startY = 0;
 	private int goalX = 0;
-	private int goalY = 2;
+	private int goalY = 11;
 	private double frontSensor;
 	private double leftSensor;
 	private int defaultSpeed = 250;

@@ -327,6 +327,14 @@ public class RylexAPI
 		}
 	}
 
+	public void sleepNano(long nanos)
+	{
+		long initialTime = System.nanoTime();
+		while (System.nanoTime() - initialTime < nanos)
+		{
+		}
+	}
+
 	public void spinToAzi(int speed, double goalAzi) throws Exception
 	{
 		double prevAzi = 1;
