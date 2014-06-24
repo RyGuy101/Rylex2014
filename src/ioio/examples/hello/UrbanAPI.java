@@ -65,7 +65,7 @@ public class UrbanAPI
 		m.log("Initiating victory dance");
 		ra.goForward(defaultSpeed, 30);
 		ra.victoryDance();
-		SystemClock.sleep(20000);
+		ra.sleep(20000);
 		m.log("done sleeping");
 		counter = 0;
 		m.log("counter made to 0");
@@ -77,7 +77,7 @@ public class UrbanAPI
 			mazeMapper();
 		}
 		// m.log("" + sensorMonitor.getFrontDistance());
-		// SystemClock.sleep(250);
+		// ra.sleep(250);
 		// goForward(100, 50);
 		// spinRight(100, 180);
 		// mazeMapper();
@@ -86,12 +86,12 @@ public class UrbanAPI
 		// m.log("front Distance: " + frontSensor);
 		// goForward(100, 100);
 		// accelerateTo(2000);
-		// SystemClock.sleep(200);
+		// ra.sleep(200);
 		// m.log("right Distance: " + rightsensor);
-		// SystemClock.sleep(200);
+		// ra.sleep(200);
 		// Put in for sensor check
 		// goForward(100, 1);
-		// SystemClock.sleep(200);
+		// ra.sleep(200);
 		// m.log("rear Distance: " + rearSensor());
 		/*
 		 * if (sensorMonitor != null) { sensorMonitor.readAllSensors(); float duration = sensorMonitor.getFrontIRPulseDuration();m.log("Detected IR beam duration: " + duration); }
@@ -287,7 +287,7 @@ public class UrbanAPI
 		double pulses = degrees * ra.degreesLeftX;
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			ra.sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
@@ -309,7 +309,7 @@ public class UrbanAPI
 		double pulses = degrees * 2.54;
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			ra.sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
@@ -524,11 +524,11 @@ public class UrbanAPI
 
 	public void readSensors() throws ConnectionLostException, InterruptedException
 	{
-		SystemClock.sleep(250);
+		ra.sleep(250);
 		sonar.read();
 		frontSensor = sonar.getFrontDistance();
 		leftSensor = sonar.getLeftDistance();
-		SystemClock.sleep(250);
+		ra.sleep(250);
 	}
 
 	public void goWest() throws ConnectionLostException, InterruptedException
@@ -578,7 +578,7 @@ public class UrbanAPI
 		double pulses = degrees * ra.degreesRightX;
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			ra.sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
@@ -602,7 +602,7 @@ public class UrbanAPI
 		double pulses = degrees * ra.degreesLeftX;
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			ra.sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);

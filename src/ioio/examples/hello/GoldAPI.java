@@ -28,7 +28,7 @@ public class GoldAPI
 		double pulses = 360 * ra.degreesLeftX;// (20.0/9.0);
 		for (int i = 0; i < pulses; i++)
 		{
-			SystemClock.sleep(1000 / speed);
+			ra.sleep(1000 / speed);
 			l.rightMotorClock.write(true);
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);

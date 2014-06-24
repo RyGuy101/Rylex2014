@@ -59,7 +59,7 @@ public class DragAPI
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
 			l.leftMotorClock.write(false);
-			ra.sleep((long) (1000000000 / currentSpeed));
+			ra.sleep((long) (1000 / currentSpeed));
 			if (currentSpeed <= finalSpeed - rate)
 			{
 				currentSpeed += rate;
