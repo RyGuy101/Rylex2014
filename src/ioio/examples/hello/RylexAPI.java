@@ -125,7 +125,7 @@ public class RylexAPI
 		log("--- TEST COMPLETED ---");
 	}
 
-	public void spinRight(int speed) throws ConnectionLostException
+	public void spinRight(int speed) throws Exception
 	{
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftForward);
@@ -136,7 +136,7 @@ public class RylexAPI
 		l.leftMotorClock.write(false);
 	}
 
-	public void spinLeft(int speed) throws ConnectionLostException
+	public void spinLeft(int speed) throws Exception
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftBackward);
@@ -249,7 +249,7 @@ public class RylexAPI
 		}
 	}
 
-	public void goForward(int speed) throws ConnectionLostException
+	public void goForward(int speed) throws Exception
 	{
 		l.rightMotorDirection.write(rightForward);
 		l.leftMotorDirection.write(leftForward);
@@ -260,7 +260,7 @@ public class RylexAPI
 		l.leftMotorClock.write(false);
 	}
 
-	public void goForward(int speed, int centimeters) throws ConnectionLostException
+	public void goForward(int speed, int centimeters) throws Exception
 	{
 		double pulses = centimeters * centimetersX;
 		l.rightMotorDirection.write(rightForward);
@@ -275,7 +275,7 @@ public class RylexAPI
 		}
 	}
 
-	public void goBackward(int speed) throws ConnectionLostException
+	public void goBackward(int speed) throws Exception
 	{
 		l.rightMotorDirection.write(rightBackward);
 		l.leftMotorDirection.write(leftBackward);
@@ -286,7 +286,7 @@ public class RylexAPI
 		l.leftMotorClock.write(false);
 	}
 
-	public void goBackward(int speed, int centimeters) throws ConnectionLostException
+	public void goBackward(int speed, int centimeters) throws Exception
 	{
 		double pulses = centimeters * centimetersX;
 		l.rightMotorDirection.write(rightBackward);
@@ -301,7 +301,7 @@ public class RylexAPI
 		}
 	}
 
-	void goStraight(double azimuth) throws ConnectionLostException
+	void goStraight(double azimuth) throws Exception
 	{
 		if (m.azimuth < azimuth)
 		{
@@ -323,7 +323,7 @@ public class RylexAPI
 		}
 	}
 
-	public void goStraight(int speed, int centimeters, double azimuth) throws ConnectionLostException
+	public void goStraight(int speed, int centimeters, double azimuth) throws Exception
 	{
 		int i = 0;
 		double pulses = centimeters * centimetersX;
@@ -374,13 +374,15 @@ public class RylexAPI
 		return sensorMonitor.getFrontIRPulseDuration();
 	}
 
-	public void sleep(long millis)
+	public void sleep(long millis) throws InterruptedException 
 	{
-		long initialTime = System.nanoTime();
-		long nanos = millis * 1000000;
-		while (System.nanoTime() - initialTime < nanos)
-		{
-		}
+		// long initialTime = System.nanoTime();
+		// long nanos = millis * 1000000;
+		// while (System.nanoTime() - initialTime < nanos)
+		// {
+		// }
+		// SystemClock.sleep(millis);
+		Thread.sleep(millis);
 	}
 
 	public void sleepNano(long nanos)
@@ -470,11 +472,11 @@ public class RylexAPI
 
 	public void followWallLeft(int speed, int distance, int centimeters) throws Exception
 	{
-		int pulses = (int) (centimeters * centimetersX);
+		int numOfLoops = (int) ((centimeters) / 5.0);
 		sonar.read();
 		int prevDistance = sonar.getLeftDistance();
 		goForward(speed, 5);
-		for (int i = 0; i < pulses; i++)
+		for (int i = 0; i < numOfLoops; i++)
 		{
 			sonar.read();
 			if (sonar.getLeftDistance() > prevDistance && sonar.getLeftDistance() > distance)

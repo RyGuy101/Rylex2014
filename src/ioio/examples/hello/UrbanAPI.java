@@ -163,6 +163,7 @@ public class UrbanAPI
 		} else
 		{
 			spinRight(defaultSpeed, 90);
+			readSensors();
 			backwardAlign();
 			// tempBool = false; //WARNING: This is a test!!! Return to false
 			// after testing <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<--
@@ -204,7 +205,7 @@ public class UrbanAPI
 		// if (northDegrees == 1000 && eastDegrees == 1000 && westDegrees == 1000 && southDegrees == 1000)
 		// {
 		// ra.goForward(defaultSpeed, cellSize);
-		ra.followWallLeft(defaultSpeed, desiredWallDistance, cellSize);
+		followWallLeftOneCell(defaultSpeed, desiredWallDistance);
 		// }
 		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
 		// ra.goForward(defaultSpeed, cellSize);
@@ -238,7 +239,7 @@ public class UrbanAPI
 		return newDegrees;
 	}
 
-	public void backwardAlign() throws ConnectionLostException
+	public void backwardAlign() throws Exception
 	{
 		ra.goBackward(100, (int) (rearSensor + 2));
 		if (gridSquares.get(counter).getDirection() == NORTH)
@@ -254,10 +255,10 @@ public class UrbanAPI
 		{
 			westDegrees = m.azimuth;
 		}
-		ra.goForward(defaultSpeed, 10);
+		ra.goForward(defaultSpeed, 17);
 	}
 
-	public void forwardAlign() throws ConnectionLostException
+	public void forwardAlign() throws Exception
 	{
 		ra.goForward(100, (int) (frontSensor + 2));
 		if (gridSquares.get(counter).getDirection() == NORTH)
@@ -273,11 +274,11 @@ public class UrbanAPI
 		{
 			westDegrees = m.azimuth;
 		}
-		ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
+		ra.goBackward(defaultSpeed, 20); // Test 20, previous 19
 		m.azimuth = 0;
 	}
 
-	public void spinLeft(int speed, double degrees) throws ConnectionLostException
+	public void spinLeft(int speed, double degrees) throws Exception
 	{
 		if (gridSquares.get(counter).getDirection() == NORTH)
 		{
@@ -301,7 +302,7 @@ public class UrbanAPI
 		}
 	}
 
-	public void spinRight(int speed, double degrees) throws ConnectionLostException
+	public void spinRight(int speed, double degrees) throws Exception
 	{
 		if (gridSquares.get(counter).getDirection() == WEST)
 		{
@@ -389,7 +390,7 @@ public class UrbanAPI
 		gridSquares2.add(new GridSquare(tempX, tempY, gridSquares2.get(counter).getDirection()));
 	}
 
-	public void mazeMapper() throws ConnectionLostException, InterruptedException
+	public void mazeMapper() throws Exception
 	{
 		m.log("Starting Maze Mapper...");
 		for (int i = gridSquares.size() - 1; i >= 0; i--)
@@ -427,7 +428,7 @@ public class UrbanAPI
 	}
 
 	// TODO: Go Directions Methods
-	public void goNorth() throws ConnectionLostException, InterruptedException
+	public void goNorth() throws Exception
 	{
 		readSensors();
 		// rightSensor = rightSensor();
@@ -456,12 +457,13 @@ public class UrbanAPI
 			spinRight2(defaultSpeed, 90);
 			if (leftSensor < 30)
 			{
+				readSensors();
 				backwardAlign();
 			}
 		}
 	}
 
-	public void goSouth() throws ConnectionLostException, InterruptedException
+	public void goSouth() throws Exception
 	{
 		readSensors();
 		// rightSensor = rightSensor();
@@ -486,6 +488,7 @@ public class UrbanAPI
 			spinRight2(defaultSpeed, 90);
 			if (leftSensor < 30)
 			{
+				readSensors();
 				backwardAlign();
 			}
 		}
@@ -495,7 +498,7 @@ public class UrbanAPI
 		}
 	}
 
-	public void goEast() throws ConnectionLostException, InterruptedException
+	public void goEast() throws Exception
 	{
 		readSensors();
 		if (frontSensor < wallDistance)
@@ -529,7 +532,7 @@ public class UrbanAPI
 		}
 	}
 
-	public void readSensors() throws ConnectionLostException, InterruptedException
+	public void readSensors() throws Exception
 	{
 		ra.sleep(250);
 		sonar.read();
@@ -540,7 +543,7 @@ public class UrbanAPI
 		ra.sleep(250);
 	}
 
-	public void goWest() throws ConnectionLostException, InterruptedException
+	public void goWest() throws Exception
 	{
 		readSensors();
 		if (frontSensor < wallDistance)
@@ -574,7 +577,7 @@ public class UrbanAPI
 		}
 	}
 
-	public void spinRight2(int speed, double degrees) throws ConnectionLostException
+	public void spinRight2(int speed, double degrees) throws Exception
 	{
 		if (gridSquares2.get(counter).getDirection() == WEST)
 		{
@@ -596,7 +599,7 @@ public class UrbanAPI
 		}
 	}
 
-	public void spinLeft2(int speed, double degrees) throws ConnectionLostException
+	public void spinLeft2(int speed, double degrees) throws Exception
 	{
 		if (gridSquares2.get(counter).getDirection() == NORTH)
 		{
@@ -629,6 +632,32 @@ public class UrbanAPI
 		} else if (sonar.getLeftDistance() < sonar.getRightDistance() && sonar.getLeftDistance() <= wallDistance)
 		{
 			spinRight(defaultSpeed, 5);
+		}
+	}
+
+	public void followWallLeftOneCell(int speed, int distance) throws Exception
+	{
+		sonar.read();
+		int prevDistance = sonar.getLeftDistance();
+		ra.goForward(speed, 5);
+		for (int i = 0; i < 15; i++)
+		{
+			sonar.read();
+			if (sonar.getLeftDistance() > prevDistance && sonar.getLeftDistance() > distance && sonar.getLeftDistance() < wallDistance)
+			{
+				prevDistance = sonar.getLeftDistance();
+				ra.spinLeft(speed, 5);
+				ra.goForward(speed, 5);
+			} else if (sonar.getLeftDistance() < prevDistance && sonar.getLeftDistance() < distance && sonar.getLeftDistance() < wallDistance)
+			{
+				prevDistance = sonar.getLeftDistance();
+				ra.spinRight(speed, 5);
+				ra.goForward(speed, 5);
+			} else
+			{
+				prevDistance = sonar.getLeftDistance();
+				ra.goForward(speed, 5);
+			}
 		}
 	}
 }
