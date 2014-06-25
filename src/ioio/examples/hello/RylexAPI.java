@@ -374,7 +374,7 @@ public class RylexAPI
 		return sensorMonitor.getFrontIRPulseDuration();
 	}
 
-	public void sleep(long millis) throws InterruptedException 
+	public void sleep(long millis)
 	{
 		// long initialTime = System.nanoTime();
 		// long nanos = millis * 1000000;
@@ -382,7 +382,16 @@ public class RylexAPI
 		// {
 		// }
 		// SystemClock.sleep(millis);
-		Thread.sleep(millis);
+		String waiter = "";
+		try
+		{
+			synchronized (waiter)
+			{
+				waiter.wait(millis);
+			}
+		} catch (InterruptedException e)
+		{
+		}
 	}
 
 	public void sleepNano(long nanos)
