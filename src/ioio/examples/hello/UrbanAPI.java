@@ -31,7 +31,7 @@ public class UrbanAPI
 	private double leftSensor;
 	private double rightSensor;
 	private double rearSensor;
-	private int defaultSpeed = 250;
+	private int defaultSpeed = 100;
 	public int tempX = 0;
 	public int tempY = 0;
 	public int cellSize = 70;
@@ -643,12 +643,12 @@ public class UrbanAPI
 		for (int i = 0; i < 15; i++)
 		{
 			sonar.read();
-			if (sonar.getLeftDistance() > prevDistance && sonar.getLeftDistance() > distance && sonar.getLeftDistance() < wallDistance)
+			if (sonar.getLeftDistance() > prevDistance && sonar.getLeftDistance() > distance && sonar.getLeftDistance() < wallDistance && prevDistance < wallDistance)
 			{
 				prevDistance = sonar.getLeftDistance();
 				ra.spinLeft(speed, 5);
 				ra.goForward(speed, 5);
-			} else if (sonar.getLeftDistance() < prevDistance && sonar.getLeftDistance() < distance && sonar.getLeftDistance() < wallDistance)
+			} else if (sonar.getLeftDistance() < prevDistance && sonar.getLeftDistance() < distance && sonar.getLeftDistance() < wallDistance && prevDistance < wallDistance)
 			{
 				prevDistance = sonar.getLeftDistance();
 				ra.spinRight(speed, 5);
