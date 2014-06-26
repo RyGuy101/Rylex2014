@@ -505,4 +505,27 @@ public class RylexAPI
 			}
 		}
 	}
+	
+	public void accelerateTo(int initialSpeed, int finalSpeed, double rate, int centimeters) throws Exception
+	{
+		l.rightMotorDirection.write(rightForward);
+		l.leftMotorDirection.write(leftForward);
+		double currentSpeed = initialSpeed;
+		double initialAzi = m.azimuth;
+		int pulses = (int) (centimeters * centimetersX);
+		for (int i = 0; i < pulses; i++)
+		{
+			{
+				l.rightMotorClock.write(true);
+				l.rightMotorClock.write(false);
+				l.leftMotorClock.write(true);
+				l.leftMotorClock.write(false);
+			}
+			sleep((long) (1000 / currentSpeed));
+			if (currentSpeed <= finalSpeed - rate)
+			{
+				currentSpeed += rate;
+			}
+		}
+	}
 }

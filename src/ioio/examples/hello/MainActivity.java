@@ -405,7 +405,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		}).start();
 		startedAcceleration = true;
 	}
-
+	
 	public void mapMaze() throws Exception
 	{
 		ua.mazeMapper();

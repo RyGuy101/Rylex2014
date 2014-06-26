@@ -31,7 +31,7 @@ public class UrbanAPI
 	private double leftSensor;
 	private double rightSensor;
 	private double rearSensor;
-	private int defaultSpeed = 100;
+	private int defaultSpeed = 500;
 	public int tempX = 0;
 	public int tempY = 0;
 	public int cellSize = 70;
