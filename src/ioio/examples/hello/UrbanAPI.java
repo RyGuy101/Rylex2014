@@ -205,7 +205,7 @@ public class UrbanAPI
 		// if (northDegrees == 1000 && eastDegrees == 1000 && westDegrees == 1000 && southDegrees == 1000)
 		// {
 		// ra.goForward(defaultSpeed, cellSize);
-		followWallLeftOneCell(defaultSpeed, desiredWallDistance);
+		followWallOneCell(defaultSpeed, desiredWallDistance);
 		// }
 		gridSquares.add(new GridSquare(tempX, tempY, gridSquares.get(counter).getDirection()));
 		// ra.goForward(defaultSpeed, cellSize);
@@ -635,28 +635,49 @@ public class UrbanAPI
 		}
 	}
 
-	public void followWallLeftOneCell(int speed, int distance) throws Exception
+	public void followWallOneCell(int speed, int distance) throws Exception
 	{
 		sonar.read();
-		int prevDistance = sonar.getLeftDistance();
-		ra.goForward(speed, 5);
+		int prevLeftDistance = sonar.getLeftDistance();
+		int prevRightDistance = sonar.getRightDistance();
+		ra.accelerateTo(100, 500, 1, 5);
 		for (int i = 0; i < 15; i++)
 		{
 			sonar.read();
-			if (sonar.getLeftDistance() > prevDistance && sonar.getLeftDistance() > distance && sonar.getLeftDistance() < wallDistance && prevDistance < wallDistance)
+			if (sonar.getLeftDistance() < wallDistance && prevLeftDistance < wallDistance)
 			{
-				prevDistance = sonar.getLeftDistance();
-				ra.spinLeft(speed, 5);
-				ra.goForward(speed, 5);
-			} else if (sonar.getLeftDistance() < prevDistance && sonar.getLeftDistance() < distance && sonar.getLeftDistance() < wallDistance && prevDistance < wallDistance)
+				if (sonar.getLeftDistance() > prevLeftDistance && sonar.getLeftDistance() > distance)
+				{
+					prevLeftDistance = sonar.getLeftDistance();
+					ra.spinLeft(speed, 10);
+					ra.accelerateTo(100, 500, 2, 5);
+				} else if (sonar.getLeftDistance() < prevLeftDistance && sonar.getLeftDistance() < distance)
+				{
+					prevLeftDistance = sonar.getLeftDistance();
+					ra.spinRight(speed, 10);
+					ra.accelerateTo(100, 500, 2, 5);
+				} else
+				{
+					prevLeftDistance = sonar.getLeftDistance();
+					ra.accelerateTo(100, 500, 2, 5);
+				}
+			} else if (sonar.getRightDistance() < wallDistance && prevRightDistance < wallDistance)
 			{
-				prevDistance = sonar.getLeftDistance();
-				ra.spinRight(speed, 5);
-				ra.goForward(speed, 5);
-			} else
-			{
-				prevDistance = sonar.getLeftDistance();
-				ra.goForward(speed, 5);
+				if (sonar.getRightDistance() > prevRightDistance && sonar.getRightDistance() > distance)
+				{
+					prevRightDistance = sonar.getRightDistance();
+					ra.spinRight(speed, 10);
+					ra.accelerateTo(100, 500, 2, 5);
+				} else if (sonar.getRightDistance() < prevRightDistance && sonar.getRightDistance() < distance)
+				{
+					prevRightDistance = sonar.getRightDistance();
+					ra.spinLeft(speed, 10);
+					ra.accelerateTo(100, 500, 2, 5);
+				} else
+				{
+					prevRightDistance = sonar.getRightDistance();
+					ra.accelerateTo(100, 500, 2, 5);
+				}
 			}
 		}
 	}

@@ -1,8 +1,10 @@
 package ioio.examples.hello;
 
+import java.util.Random;
 import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.exception.ConnectionLostException;
 import android.annotation.SuppressLint;
+import android.graphics.Path;
 import android.os.SystemClock;
 
 @SuppressLint("NewApi")
@@ -21,7 +23,7 @@ public class RylexAPI
 	public double degreesLeftX = 2.1;
 	public double centimetersX = 13.7;
 	private SensorMonitor sensorMonitor;
-
+	
 	public RylexAPI(MainActivity m, Looper l, UltraSonicSensor sonar, SensorMonitor sensorMonitor, boolean hazFenderz)
 	{
 		this.m = m;
