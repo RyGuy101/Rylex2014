@@ -191,7 +191,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		}
 	}
 
-	public void mapMaze() throws Exception
+	public void mapMaze(View v) throws Exception
 	{
 		while (true)
 		{
@@ -274,6 +274,20 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 																	// decay
 																	// mode
 			log("Hello world!");
+			// startMap = (Button) findViewById(R.id.restartButton);
+			// startMap.setOnClickListener(new View.OnClickListener()
+			// {
+			// public void onClick(View v)
+			// {
+			// try
+			// {
+			// mapMaze();
+			// } catch (Exception e)
+			// {
+			// e.printStackTrace();
+			// }
+			// }
+			// });
 		}
 
 		/**
