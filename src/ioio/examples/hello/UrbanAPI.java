@@ -74,7 +74,7 @@ public class UrbanAPI
 		m.log("done sleeping");
 		counter = 0;
 		m.log("counter made to 0");
-		gridSquares2.add(new GridSquare(2, 0, WEST));
+		gridSquares2.add(new GridSquare(startX, startY, startDirection));
 		m.log("added new GridSquare to GridSquares2");
 		while (true)
 		{
@@ -255,7 +255,7 @@ public class UrbanAPI
 		{
 			westDegrees = m.azimuth;
 		}
-		ra.goForward(defaultSpeed, 17);
+		ra.goForward(defaultSpeed, 10);
 	}
 
 	public void forwardAlign() throws Exception
@@ -274,7 +274,7 @@ public class UrbanAPI
 		{
 			westDegrees = m.azimuth;
 		}
-		ra.goBackward(defaultSpeed, 20); // Test 20, previous 19
+		ra.goBackward(defaultSpeed, 27); // Test 20, previous 19
 		m.azimuth = 0;
 	}
 
@@ -395,9 +395,9 @@ public class UrbanAPI
 		m.log("Starting Maze Mapper...");
 		for (int i = gridSquares.size() - 1; i >= 0; i--)
 		{
-			m.log("Have been in the forloop " + i + "time(s).");
-			m.log("the current grid is: " + gridSquares2.get(counter).getX() + ", " + gridSquares2.get(counter).getY());
-			m.log("it's comparing it to the grid of last run: " + gridSquares.get(i).getX() + ", " + gridSquares.get(i).getY());
+			// m.log("Have been in the forloop " + i + "time(s).");
+			// m.log("the current grid is: " + gridSquares2.get(counter).getX() + ", " + gridSquares2.get(counter).getY());
+			// m.log("it's comparing it to the grid of last run: " + gridSquares.get(i).getX() + ", " + gridSquares.get(i).getY());
 			if (gridSquares2.get(counter).getX() == gridSquares.get(i).getX() && gridSquares2.get(counter).getY() == gridSquares.get(i).getY())
 			{
 				m.log("It found a match");
@@ -434,8 +434,8 @@ public class UrbanAPI
 		// rightSensor = rightSensor();
 		if (frontSensor < wallDistance)
 		{
-			ra.goForward(100, 25);
-			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
+			forwardAlign();
+			; // Test 20, previous 19
 			readSensors();
 		}
 		if (gridSquares2.get(counter).getDirection() == NORTH)
@@ -469,8 +469,7 @@ public class UrbanAPI
 		// rightSensor = rightSensor();
 		if (frontSensor < wallDistance)
 		{
-			ra.goForward(100, 25);
-			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
+			forwardAlign();
 			readSensors();
 		}
 		if (gridSquares2.get(counter).getDirection() == SOUTH)
@@ -503,8 +502,7 @@ public class UrbanAPI
 		readSensors();
 		if (frontSensor < wallDistance)
 		{
-			ra.goForward(100, 25);
-			ra.goBackward(defaultSpeed, 18); // 20, previous 19
+			forwardAlign();
 			readSensors();
 		}
 		if (gridSquares2.get(counter).getDirection() == EAST)
@@ -548,8 +546,7 @@ public class UrbanAPI
 		readSensors();
 		if (frontSensor < wallDistance)
 		{
-			ra.goForward(100, 25);
-			ra.goBackward(defaultSpeed, 18); // Test 20, previous 19
+			forwardAlign();
 			readSensors();
 		}
 		if (gridSquares2.get(counter).getDirection() == WEST)
@@ -649,12 +646,12 @@ public class UrbanAPI
 				if (sonar.getLeftDistance() > prevLeftDistance && sonar.getLeftDistance() > distance)
 				{
 					prevLeftDistance = sonar.getLeftDistance();
-					ra.spinLeft(speed, 5);
+					ra.spinLeft(speed, 2);
 					ra.accelerateTo(100, 500, 2, 5);
 				} else if (sonar.getLeftDistance() < prevLeftDistance && sonar.getLeftDistance() < distance)
 				{
 					prevLeftDistance = sonar.getLeftDistance();
-					ra.spinRight(speed, 5);
+					ra.spinRight(speed, 2);
 					ra.accelerateTo(100, 500, 2, 5);
 				} else
 				{
@@ -666,12 +663,12 @@ public class UrbanAPI
 				if (sonar.getRightDistance() > prevRightDistance && sonar.getRightDistance() > distance)
 				{
 					prevRightDistance = sonar.getRightDistance();
-					ra.spinRight(speed, 5);
+					ra.spinRight(speed, 2);
 					ra.accelerateTo(100, 500, 2, 5);
 				} else if (sonar.getRightDistance() < prevRightDistance && sonar.getRightDistance() < distance)
 				{
 					prevRightDistance = sonar.getRightDistance();
-					ra.spinLeft(speed, 5);
+					ra.spinLeft(speed, 2);
 					ra.accelerateTo(100, 500, 2, 5);
 				} else
 				{
