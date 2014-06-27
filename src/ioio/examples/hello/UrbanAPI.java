@@ -4,6 +4,7 @@ import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.exception.ConnectionLostException;
 import java.util.ArrayList;
 import android.app.Activity;
+import android.hardware.Camera.PreviewCallback;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -645,7 +646,7 @@ public class UrbanAPI
 
 	public void followWallOneCell(int speed, int distance) throws Exception
 	{
-		//For accelerating
+		// For accelerating
 		int initialSpeed = 50;
 		int finalSpeed = 500;
 		int rate = 3;
@@ -707,6 +708,27 @@ public class UrbanAPI
 				prevLeftDistance = sonar.getLeftDistance();
 				prevRightDistance = sonar.getRightDistance();
 				ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
+			}
+		}
+	}
+
+	public void fixSelf() throws Exception
+	{
+		int prevLeftDistance = sonar.getLeftDistance();
+		int prevRightDistance = sonar.getRightDistance();
+		int prevFrontDistance = sonar.getFrontDistance();
+		int prevRearDistance = sonar.getRearDistance();
+		
+		sonar.read();
+		if (sonar.getFrontDistance() - prevFrontDistance <= 5 && sonar.getFrontDistance() - prevFrontDistance >= -5) // Checks if the frontDistance has changed significantly
+		{
+			if (sonar.getRightDistance() - prevRightDistance <= 5 && sonar.getRightDistance() - prevRightDistance >= -5)
+			{
+				spinLeft(defaultSpeed, 10);
+			}
+			if (sonar.getLeftDistance() - prevLeftDistance <= 5 && sonar.getLeftDistance() - prevLeftDistance >= -5)
+			{
+				spinRight(defaultSpeed, 10);
 			}
 		}
 	}
