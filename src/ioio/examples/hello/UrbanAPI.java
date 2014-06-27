@@ -24,8 +24,8 @@ public class UrbanAPI
 	public static final int SOUTH = 3; // Soggy
 	public static final int WEST = 4; // Waffles
 	public int startDirection = NORTH;
-	private int startX = 0;
-	private int startY = 0;
+	private int startX = 3;
+	private int startY = 4;
 	private int goalX = 0;
 	private int goalY = 11;
 	private int goalDirection = NORTH;
@@ -645,10 +645,16 @@ public class UrbanAPI
 
 	public void followWallOneCell(int speed, int distance) throws Exception
 	{
+		//For accelerating
+		int initialSpeed = 50;
+		int finalSpeed = 500;
+		int rate = 3;
+		int centimeters = 5;
+		//
 		sonar.readLeftAndRight();
 		int prevLeftDistance = sonar.getLeftDistance();
 		int prevRightDistance = sonar.getRightDistance();
-		ra.accelerateTo(100, 500, 3, 5);
+		ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 		for (int i = 0; i < 15; i++)
 		{
 			sonar.readLeftAndRight();
@@ -660,19 +666,19 @@ public class UrbanAPI
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 3, 5);
+					ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 				} else if (sonar.getLeftDistance() < prevLeftDistance && sonar.getLeftDistance() < distance)
 				{
 					ra.spinRight(speed, 2);
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 3, 5);
+					ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 				} else
 				{
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 3, 5);
+					ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 				}
 			} else if (sonar.getRightDistance() < wallDistance && prevRightDistance < wallDistance)
 			{
@@ -682,25 +688,25 @@ public class UrbanAPI
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 3, 5);
+					ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 				} else if (sonar.getRightDistance() < prevRightDistance && sonar.getRightDistance() < distance)
 				{
 					ra.spinLeft(speed, 2);
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 3, 5);
+					ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 				} else
 				{
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 3, 5);
+					ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 				}
 			} else
 			{
 				prevLeftDistance = sonar.getLeftDistance();
 				prevRightDistance = sonar.getRightDistance();
-				ra.accelerateTo(100, 500, 3, 5);
+				ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 			}
 		}
 	}
