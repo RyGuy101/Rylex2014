@@ -25,8 +25,8 @@ public class UrbanAPI
 	public static final int SOUTH = 3; // Soggy
 	public static final int WEST = 4; // Waffles
 	public int startDirection = NORTH;
-	private int startX = 3;
-	private int startY = 4;
+	private int startX = 0;
+	private int startY = 0;
 	private int goalX = 0;
 	private int goalY = 11;
 	private int goalDirection = NORTH;
@@ -68,7 +68,7 @@ public class UrbanAPI
 			m.log(goalX + ", " + goalY);
 			readSensors();
 			backwardAlign();
-			while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
+			while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY || gridSquares.get(counter).getDirection() != goalDirection)
 			{
 				m.log("In the first while loop");
 				leftWallHugger();
@@ -126,14 +126,15 @@ public class UrbanAPI
 			readSensors();
 			m.log("second left Distance: " + leftSensor);
 			m.log("second front distance: " + frontSensor);
-		}// else if (rearSensor < wallDistance)
-			// {
-		// backwardAlign();
-		// readSensors();
-		// }
+		} else if (rearSensor < wallDistance)
+		{
+			backwardAlign();
+			readSensors();
+		}
 		if (leftSensor >= wallDistance)
 		{
 			spinLeft(defaultSpeed, 90);
+			fixSelf();
 			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
 			tempX = gridSquares.get(counter).getX();
 			tempY = gridSquares.get(counter).getY();
@@ -174,7 +175,19 @@ public class UrbanAPI
 			goOneCell();
 		} else
 		{
-			spinRight(defaultSpeed, 90);
+			if (rightSensor < wallDistance)
+			{
+				if (rightSensor > leftSensor)
+				{
+					spinLeft(defaultSpeed, 90);
+				} else if (leftSensor > rightSensor)
+				{
+					spinRight(defaultSpeed, 90);
+				}
+			} else
+			{
+				spinRight(defaultSpeed, 90);
+			}
 			readSensors();
 			backwardAlign();
 			// tempBool = false; //WARNING: This is a test!!! Return to false
@@ -718,7 +731,6 @@ public class UrbanAPI
 		int prevRightDistance = sonar.getRightDistance();
 		int prevFrontDistance = sonar.getFrontDistance();
 		int prevRearDistance = sonar.getRearDistance();
-		
 		sonar.read();
 		if (sonar.getFrontDistance() - prevFrontDistance <= 5 && sonar.getFrontDistance() - prevFrontDistance >= -5) // Checks if the frontDistance has changed significantly
 		{
