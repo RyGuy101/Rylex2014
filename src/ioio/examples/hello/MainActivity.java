@@ -79,7 +79,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				ra.spinLeft(100, 360);
+				ra.spinRight(100, 360);
 				SystemClock.sleep(1000);
 			} catch (Exception e)
 			{
@@ -406,9 +406,12 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		}).start();
 		startedAcceleration = true;
 	}
-	
+
 	public void mapMaze() throws Exception
 	{
-		ua.mazeMapper();
+		while (true)
+		{
+			ua.mazeMapper();
+		}
 	}
 }

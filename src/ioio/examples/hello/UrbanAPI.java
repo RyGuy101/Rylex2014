@@ -76,10 +76,10 @@ public class UrbanAPI
 		m.log("counter made to 0");
 		gridSquares2.add(new GridSquare(startX, startY, startDirection));
 		m.log("added new GridSquare to GridSquares2");
-		while (true)
+		for (int i = 0; i < 10; i++)
 		{
-			m.log("about to start mazeMapper");
-			mazeMapper();
+			m.log("--PRESS MAP TO START MAZEMAPPER--");
+//			mazeMapper();
 		}
 		// m.log("" + sensorMonitor.getFrontDistance());
 		// ra.sleep(250);
@@ -118,7 +118,11 @@ public class UrbanAPI
 			readSensors();
 			m.log("second left Distance: " + leftSensor);
 			m.log("second front distance: " + frontSensor);
-		}
+		}// else if (rearSensor < wallDistance)
+//		{
+//			backwardAlign();
+//			readSensors();
+//		}
 		if (leftSensor >= wallDistance)
 		{
 			spinLeft(defaultSpeed, 90);
