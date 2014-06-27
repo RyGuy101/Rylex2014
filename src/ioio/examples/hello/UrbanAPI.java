@@ -37,7 +37,7 @@ public class UrbanAPI
 	private int defaultSpeed = 100;
 	public int tempX = 0;
 	public int tempY = 0;
-	public int cellSize = 70;
+	public int cellSize = 64;
 	RylexAPI ra;
 	public double northDegrees = 1000;
 	public double southDegrees = 1000;
