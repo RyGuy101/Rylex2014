@@ -34,7 +34,7 @@ public class UrbanAPI
 	private double leftSensor;
 	private double rightSensor;
 	private double rearSensor;
-	private int defaultSpeed = 100;
+	private int defaultSpeed = 250;
 	public int tempX = 0;
 	public int tempY = 0;
 	public int cellSize = 70;
@@ -43,7 +43,7 @@ public class UrbanAPI
 	public double southDegrees = 1000;
 	public double eastDegrees = 1000;
 	public double westDegrees = 1000;
-	int wallDistance = 64;
+	int wallDistance = 70;
 	int desiredWallDistance = 24;
 	boolean doneMapping = false;
 
@@ -658,7 +658,7 @@ public class UrbanAPI
 	public void followWallOneCell(int speed, int distance) throws Exception
 	{
 		// For accelerating
-		int initialSpeed = 50;
+		int initialSpeed = 150;
 		int finalSpeed = 500;
 		int rate = 3;
 		int centimeters = 5;
@@ -674,14 +674,14 @@ public class UrbanAPI
 			{
 				if (sonar.getLeftDistance() > prevLeftDistance && sonar.getLeftDistance() > distance)
 				{
-					ra.spinLeft(speed, 2);
+					ra.spinLeft(speed, 5);
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
 					ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 				} else if (sonar.getLeftDistance() < prevLeftDistance && sonar.getLeftDistance() < distance)
 				{
-					ra.spinRight(speed, 2);
+					ra.spinRight(speed, 5);
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
@@ -696,14 +696,14 @@ public class UrbanAPI
 			{
 				if (sonar.getRightDistance() > prevRightDistance && sonar.getRightDistance() > distance)
 				{
-					ra.spinRight(speed, 2);
+					ra.spinRight(speed, 5);
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
 					ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 				} else if (sonar.getRightDistance() < prevRightDistance && sonar.getRightDistance() < distance)
 				{
-					ra.spinLeft(speed, 2);
+					ra.spinLeft(speed, 5);
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
