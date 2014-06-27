@@ -77,6 +77,12 @@ public class UltraSonicSensor
 		rearDistance = read(rearStrobe, rearInput, REAR_ULTRASONIC_INPUT_PIN);
 	}
 
+	public void readLeftAndRight() throws ConnectionLostException, InterruptedException
+	{
+		leftDistance = read(leftStrobe, leftInput, LEFT_ULTRASONIC_INPUT_PIN);
+		rightDistance = read(rightStrobe, rightInput, RIGHT_ULTRASONIC_INPUT_PIN);
+	}
+
 	private int read(DigitalOutput strobe, PulseInput input, int inputPin) throws ConnectionLostException, InterruptedException // Order of
 																																// following
 																																// statements
