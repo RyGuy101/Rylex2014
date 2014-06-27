@@ -43,7 +43,7 @@ public class UrbanAPI
 	public double southDegrees = 1000;
 	public double eastDegrees = 1000;
 	public double westDegrees = 1000;
-	int wallDistance = 50;
+	int wallDistance = 70;
 	int desiredWallDistance = 24;
 	boolean doneMapping = false;
 
