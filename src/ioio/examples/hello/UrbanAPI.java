@@ -37,13 +37,13 @@ public class UrbanAPI
 	private int defaultSpeed = 100;
 	public int tempX = 0;
 	public int tempY = 0;
-	public int cellSize = 64;
+	public int cellSize = 70;
 	RylexAPI ra;
 	public double northDegrees = 1000;
 	public double southDegrees = 1000;
 	public double eastDegrees = 1000;
 	public double westDegrees = 1000;
-	int wallDistance = 70;
+	int wallDistance = 64;
 	int desiredWallDistance = 24;
 	boolean doneMapping = false;
 
