@@ -648,7 +648,7 @@ public class UrbanAPI
 		sonar.readLeftAndRight();
 		int prevLeftDistance = sonar.getLeftDistance();
 		int prevRightDistance = sonar.getRightDistance();
-		ra.accelerateTo(100, 500, 5, 5);
+		ra.accelerateTo(100, 500, 3, 5);
 		for (int i = 0; i < 15; i++)
 		{
 			sonar.readLeftAndRight();
@@ -660,19 +660,19 @@ public class UrbanAPI
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 5, 5);
+					ra.accelerateTo(100, 500, 3, 5);
 				} else if (sonar.getLeftDistance() < prevLeftDistance && sonar.getLeftDistance() < distance)
 				{
 					ra.spinRight(speed, 2);
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 5, 5);
+					ra.accelerateTo(100, 500, 3, 5);
 				} else
 				{
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 5, 5);
+					ra.accelerateTo(100, 500, 3, 5);
 				}
 			} else if (sonar.getRightDistance() < wallDistance && prevRightDistance < wallDistance)
 			{
@@ -682,25 +682,25 @@ public class UrbanAPI
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 5, 5);
+					ra.accelerateTo(100, 500, 3, 5);
 				} else if (sonar.getRightDistance() < prevRightDistance && sonar.getRightDistance() < distance)
 				{
 					ra.spinLeft(speed, 2);
 					sonar.readLeftAndRight();
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 5, 5);
+					ra.accelerateTo(100, 500, 3, 5);
 				} else
 				{
 					prevLeftDistance = sonar.getLeftDistance();
 					prevRightDistance = sonar.getRightDistance();
-					ra.accelerateTo(100, 500, 5, 5);
+					ra.accelerateTo(100, 500, 3, 5);
 				}
 			} else
 			{
 				prevLeftDistance = sonar.getLeftDistance();
 				prevRightDistance = sonar.getRightDistance();
-				ra.accelerateTo(100, 500, 5, 5);
+				ra.accelerateTo(100, 500, 3, 5);
 			}
 		}
 	}
