@@ -191,6 +191,14 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		}
 	}
 
+	public void mapMaze() throws Exception
+	{
+		while (true)
+		{
+			ua.mazeMapper();
+		}
+	}
+
 	@Override
 	public void onPause()
 	{
@@ -405,13 +413,5 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			}
 		}).start();
 		startedAcceleration = true;
-	}
-
-	public void mapMaze() throws Exception
-	{
-		while (true)
-		{
-			ua.mazeMapper();
-		}
 	}
 }

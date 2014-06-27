@@ -3,6 +3,7 @@ package ioio.examples.hello;
 import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.exception.ConnectionLostException;
 import java.util.ArrayList;
+import android.app.Activity;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -26,7 +27,7 @@ public class UrbanAPI
 	private int startX = 0;
 	private int startY = 0;
 	private int goalX = 0;
-	private int goalY = 11;
+	private int goalY = 1;
 	private double frontSensor;
 	private double leftSensor;
 	private double rightSensor;
@@ -42,6 +43,7 @@ public class UrbanAPI
 	public double westDegrees = 1000;
 	int wallDistance = 50;
 	int desiredWallDistance = 24;
+	boolean doneMapping = false;
 
 	public UrbanAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -57,51 +59,55 @@ public class UrbanAPI
 
 	public void urbanChallange() throws Exception
 	{
-		gridSquares.add(new GridSquare(startX, startY, startDirection));
-		m.log("The current goal is: ");
-		m.log(goalX + ", " + goalY);
-		readSensors();
-		backwardAlign();
-		while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
+		if (!doneMapping)
 		{
-			m.log("In the first while loop");
-			leftWallHugger();
+			gridSquares.add(new GridSquare(startX, startY, startDirection));
+			m.log("The current goal is: ");
+			m.log(goalX + ", " + goalY);
+			readSensors();
+			backwardAlign();
+			while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
+			{
+				m.log("In the first while loop");
+				leftWallHugger();
+			}
+			ra.goForward(defaultSpeed, 30);
+			m.log("Initiating victory dance");
+			ra.goBackward(defaultSpeed, 27);
+			ra.victoryDance();
+			// ra.sleep(20000);
+			counter = 0;
+			m.log("counter made to 0");
+			gridSquares2.add(new GridSquare(startX, startY, startDirection));
+			m.log("added new GridSquare to GridSquares2");
+			for (int i = 0; i < 10; i++)
+			{
+				m.log("--PRESS MAP TO START MAZEMAPPER--");
+				// mazeMapper();
+			}
+			doneMapping = true;
+			// m.log("" + sensorMonitor.getFrontDistance());
+			// ra.sleep(250);
+			// goForward(100, 50);
+			// spinRight(100, 180);
+			// mazeMapper();
+			// showOffSpeed();
+			// Put in for sensor check
+			// m.log("front Distance: " + frontSensor);
+			// goForward(100, 100);
+			// accelerateTo(2000);
+			// ra.sleep(200);
+			// m.log("right Distance: " + rightsensor);
+			// ra.sleep(200);
+			// Put in for sensor check
+			// goForward(100, 1);
+			// ra.sleep(200);
+			// m.log("rear Distance: " + rearSensor());
+			/*
+			 * if (sensorMonitor != null) { sensorMonitor.readAllSensors(); float duration = sensorMonitor.getFrontIRPulseDuration();m.log("Detected IR beam duration: " + duration); }
+			 */
+			// }
 		}
-		ra.goForward(defaultSpeed, 30);
-		m.log("Initiating victory dance");
-		ra.victoryDance();
-		ra.sleep(20000);
-		m.log("done sleeping");
-		counter = 0;
-		m.log("counter made to 0");
-		gridSquares2.add(new GridSquare(startX, startY, startDirection));
-		m.log("added new GridSquare to GridSquares2");
-		for (int i = 0; i < 10; i++)
-		{
-			m.log("--PRESS MAP TO START MAZEMAPPER--");
-//			mazeMapper();
-		}
-		// m.log("" + sensorMonitor.getFrontDistance());
-		// ra.sleep(250);
-		// goForward(100, 50);
-		// spinRight(100, 180);
-		// mazeMapper();
-		// showOffSpeed();
-		// Put in for sensor check
-		// m.log("front Distance: " + frontSensor);
-		// goForward(100, 100);
-		// accelerateTo(2000);
-		// ra.sleep(200);
-		// m.log("right Distance: " + rightsensor);
-		// ra.sleep(200);
-		// Put in for sensor check
-		// goForward(100, 1);
-		// ra.sleep(200);
-		// m.log("rear Distance: " + rearSensor());
-		/*
-		 * if (sensorMonitor != null) { sensorMonitor.readAllSensors(); float duration = sensorMonitor.getFrontIRPulseDuration();m.log("Detected IR beam duration: " + duration); }
-		 */
-		// }
 	}
 
 	public void leftWallHugger() throws Exception
@@ -119,10 +125,10 @@ public class UrbanAPI
 			m.log("second left Distance: " + leftSensor);
 			m.log("second front distance: " + frontSensor);
 		}// else if (rearSensor < wallDistance)
-//		{
-//			backwardAlign();
-//			readSensors();
-//		}
+			// {
+		// backwardAlign();
+		// readSensors();
+		// }
 		if (leftSensor >= wallDistance)
 		{
 			spinLeft(defaultSpeed, 90);
@@ -426,7 +432,7 @@ public class UrbanAPI
 				updateGrid2();
 				ra.goForward(defaultSpeed, cellSize);
 				counter++;
-				return;
+				break;
 			}
 		}
 	}

@@ -18,7 +18,7 @@ public class RylexAPI
 	public boolean rightBackward;
 	public boolean leftBackward;
 	private int counter = 0;
-	private int defaultSpeed = 250;
+	private int defaultSpeed = 100;
 	public double degreesRightX = 2.22;
 	public double degreesLeftX = 2.24;
 	public double centimetersX = 13.7;
