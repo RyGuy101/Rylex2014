@@ -79,8 +79,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				ra.spinRight(100, 720);
-				SystemClock.sleep(1000);
+				ra.goForward(250);
 			} catch (Exception e)
 			{
 				e.printStackTrace();

@@ -27,8 +27,8 @@ public class UrbanAPI
 	public int startDirection = NORTH;
 	private int startX = 0;
 	private int startY = 0;
-	private int goalX = 0;
-	private int goalY = 11;
+	private int goalX = 1;
+	private int goalY = 3;
 	private int goalDirection = NORTH;
 	private double frontSensor;
 	private double leftSensor;
@@ -67,7 +67,6 @@ public class UrbanAPI
 			m.log("The current goal is: ");
 			m.log(goalX + ", " + goalY);
 			readSensors();
-			backwardAlign();
 			while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY || gridSquares.get(counter).getDirection() != goalDirection)
 			{
 				m.log("In the first while loop");
@@ -189,7 +188,6 @@ public class UrbanAPI
 				spinRight(defaultSpeed, 90);
 			}
 			readSensors();
-			backwardAlign();
 			// tempBool = false; //WARNING: This is a test!!! Return to false
 			// after testing <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<--
 		}
@@ -669,7 +667,7 @@ public class UrbanAPI
 		int prevLeftDistance = sonar.getLeftDistance();
 		int prevRightDistance = sonar.getRightDistance();
 		ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
-		for (int i = 0; i < 15; i++)
+		for (int i = 0; i < 14; i++)
 		{
 			sonar.readLeftAndRight();
 			if (sonar.getLeftDistance() < wallDistance && prevLeftDistance < wallDistance)
@@ -736,11 +734,11 @@ public class UrbanAPI
 		{
 			if (sonar.getRightDistance() - prevRightDistance <= 5 && sonar.getRightDistance() - prevRightDistance >= -5)
 			{
-				spinLeft(defaultSpeed, 10);
+				spinLeft(defaultSpeed, 20);
 			}
 			if (sonar.getLeftDistance() - prevLeftDistance <= 5 && sonar.getLeftDistance() - prevLeftDistance >= -5)
 			{
-				spinRight(defaultSpeed, 10);
+				spinRight(defaultSpeed, 20);
 			}
 		}
 	}
