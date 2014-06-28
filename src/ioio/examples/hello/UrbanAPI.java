@@ -27,8 +27,8 @@ public class UrbanAPI
 	public int startDirection = NORTH;
 	private int startX = 0;
 	private int startY = 0;
-	private int goalX = 1;
-	private int goalY = 3;
+	private int goalX = 0;
+	private int goalY = 11;
 	private int goalDirection = NORTH;
 	private double frontSensor;
 	private double leftSensor;
@@ -66,8 +66,7 @@ public class UrbanAPI
 			gridSquares.add(new GridSquare(startX, startY, startDirection));
 			m.log("The current goal is: ");
 			m.log(goalX + ", " + goalY);
-			readSensors();
-			while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY || gridSquares.get(counter).getDirection() != goalDirection)
+			while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
 			{
 				m.log("In the first while loop");
 				leftWallHugger();
@@ -132,6 +131,12 @@ public class UrbanAPI
 		}
 		if (leftSensor >= wallDistance)
 		{
+			if (rightSensor < desiredWallDistance)
+			{
+				ra.spinRight(defaultSpeed, 90);
+				forwardAlign();
+				ra.spinLeft(defaultSpeed, 90);
+			}
 			spinLeft(defaultSpeed, 90);
 			fixSelf();
 			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
@@ -183,6 +188,12 @@ public class UrbanAPI
 				{
 					spinRight(defaultSpeed, 90);
 				}
+			} else if (leftSensor < desiredWallDistance)
+			{
+				ra.spinLeft(defaultSpeed, 90);
+				forwardAlign();
+				ra.spinRight(defaultSpeed, 90);
+				spinRight(defaultSpeed, 90);
 			} else
 			{
 				spinRight(defaultSpeed, 90);
@@ -661,13 +672,13 @@ public class UrbanAPI
 		int initialSpeed = 150;
 		int finalSpeed = 500;
 		int rate = 3;
-		int centimeters = 5;
+		int centimeters = 10;
 		//
 		sonar.readLeftAndRight();
 		int prevLeftDistance = sonar.getLeftDistance();
 		int prevRightDistance = sonar.getRightDistance();
 		ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
-		for (int i = 0; i < 14; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			sonar.readLeftAndRight();
 			if (sonar.getLeftDistance() < wallDistance && prevLeftDistance < wallDistance)

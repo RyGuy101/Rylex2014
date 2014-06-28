@@ -74,4 +74,36 @@ public class DragAPI
 			}
 		}
 	}
+
+	public void dragRace(int speed, int distance) throws Exception
+	{
+		int initialSpeed = 200;
+		int finalSpeed = 1000;
+		int rate = 2;
+		int centimeters = 50;
+		//
+		sonar.readLeftAndRight();
+		int prevLeftDistance = sonar.getLeftDistance();
+		int prevRightDistance = sonar.getRightDistance();
+		if (sonar.getLeftDistance() > prevLeftDistance && sonar.getLeftDistance() > distance)
+		{
+			ra.spinLeft(speed, 15);
+			sonar.readLeftAndRight();
+			prevLeftDistance = sonar.getLeftDistance();
+			prevRightDistance = sonar.getRightDistance();
+			ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
+		} else if (sonar.getLeftDistance() < prevLeftDistance && sonar.getLeftDistance() < distance)
+		{
+			ra.spinRight(speed, 15);
+			sonar.readLeftAndRight();
+			prevLeftDistance = sonar.getLeftDistance();
+			prevRightDistance = sonar.getRightDistance();
+			ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
+		} else
+		{
+			prevLeftDistance = sonar.getLeftDistance();
+			prevRightDistance = sonar.getRightDistance();
+			ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
+		}
+	}
 }
