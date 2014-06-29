@@ -88,7 +88,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				 ra.spinLeft(200, 360);
+				ra.spinLeft(200, 360);
 				SystemClock.sleep(1000);
 			} catch (Exception e)
 			{
@@ -202,7 +202,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 
 	public void mapMaze(View v) throws Exception
 	{
-		while (true)
+		while (!ua.doneSolution)
 		{
 			ua.mazeMapper();
 		}

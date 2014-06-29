@@ -46,6 +46,7 @@ public class UrbanAPI
 	int wallDistance = 60;
 	int desiredWallDistance = 24;
 	boolean doneMapping = false;
+	public boolean doneSolution = false;
 
 	public UrbanAPI(MainActivity m, Looper l, UltraSonicSensor sonar, boolean hazFenderz)
 	{
@@ -621,9 +622,14 @@ public class UrbanAPI
 					ra.goForward(defaultSpeed, (int) (frontSensor + 2));
 					ra.goBackward(defaultSpeed, 27);
 					ra.victoryDance();
-					ra.sleep(5000);
+					gridSquares2.clear();
+					counter = 0;
+					gridSquares2.add(new GridSquare(startX, startY, startDirection));
+					doneSolution = true;
+				} else
+				{
+					followWallOneCell(defaultSpeed, 70);
 				}
-				followWallOneCell(defaultSpeed, 70);
 				counter++;
 				break;
 			}
