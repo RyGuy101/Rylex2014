@@ -52,6 +52,20 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			}
 		}
 	};
+	private Runnable urbanRight = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			try
+			{
+				ua.urbanChallangeRight();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	};
 	private Runnable gold = new Runnable()
 	{
 		@Override
@@ -185,6 +199,9 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		if (challenge.equals(Setup.URBAN))
 		{
 			theChallenge = urban;
+		} else if (challenge.equals(Setup.URBAN_RIGHT))
+		{
+			theChallenge = urbanRight;
 		} else if (challenge.equals(Setup.GOLD))
 		{
 			theChallenge = gold;

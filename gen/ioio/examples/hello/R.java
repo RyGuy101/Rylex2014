@@ -1098,11 +1098,11 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_settings=0x7f06004c;
+        public static final int action_settings=0x7f06004d;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
-        public static final int button=0x7f060046;
+        public static final int button=0x7f060047;
         public static final int checkbox=0x7f06002d;
         public static final int chooseChallengeLabel=0x7f06003d;
         public static final int collapseActionView=0x7f06000d;
@@ -1110,15 +1110,15 @@ containing a value of this type.
         public static final int default_activity_button=0x7f060028;
         public static final int dialog=0x7f06000e;
         public static final int disableHome=0x7f060008;
-        public static final int drag=0x7f060041;
+        public static final int drag=0x7f060042;
         public static final int dropdown=0x7f06000f;
         public static final int edit_query=0x7f060030;
         public static final int end=0x7f060013;
-        public static final int endLearningButton=0x7f060048;
-        public static final int exitButton=0x7f060045;
+        public static final int endLearningButton=0x7f060049;
+        public static final int exitButton=0x7f060046;
         public static final int expand_activities_button=0x7f060026;
         public static final int expanded_menu=0x7f06002c;
-        public static final int gold=0x7f060040;
+        public static final int gold=0x7f060041;
         public static final int hazFenderz=0x7f06003e;
         public static final int home=0x7f060014;
         public static final int homeAsUp=0x7f060005;
@@ -1127,7 +1127,7 @@ containing a value of this type.
         public static final int image=0x7f060027;
         public static final int listMode=0x7f060001;
         public static final int list_item=0x7f060029;
-        public static final int logText=0x7f06004b;
+        public static final int logText=0x7f06004c;
         public static final int middle=0x7f060012;
         public static final int never=0x7f060009;
         public static final int none=0x7f060010;
@@ -1135,8 +1135,8 @@ containing a value of this type.
         public static final int progress_circular=0x7f060018;
         public static final int progress_horizontal=0x7f060019;
         public static final int radio=0x7f06002f;
-        public static final int restartButton=0x7f060049;
-        public static final int scroller=0x7f06004a;
+        public static final int restartButton=0x7f06004a;
+        public static final int scroller=0x7f06004b;
         public static final int search_badge=0x7f060032;
         public static final int search_bar=0x7f060031;
         public static final int search_button=0x7f060033;
@@ -1152,16 +1152,17 @@ containing a value of this type.
         public static final int showHome=0x7f060004;
         public static final int showTitle=0x7f060006;
         public static final int split_action_bar=0x7f06001e;
-        public static final int startButton=0x7f060044;
+        public static final int startButton=0x7f060045;
         public static final int submit_area=0x7f060039;
         public static final int tabMode=0x7f060002;
-        public static final int test=0x7f060042;
-        public static final int testUltra=0x7f060043;
+        public static final int test=0x7f060043;
+        public static final int testUltra=0x7f060044;
         public static final int title=0x7f06002b;
-        public static final int toSetup=0x7f060047;
+        public static final int toSetup=0x7f060048;
         public static final int top_action_bar=0x7f060020;
         public static final int up=0x7f060021;
         public static final int urban=0x7f06003f;
+        public static final int urbanRight=0x7f060040;
         public static final int useLogo=0x7f060003;
         public static final int withText=0x7f06000c;
     }
@@ -1223,8 +1224,8 @@ containing a value of this type.
         public static final int setup=0x7f0d0000;
     }
     public static final class string {
-        public static final int Test_Label=0x7f0b0015;
-        public static final int Test_Ultra_Label=0x7f0b0016;
+        public static final int Test_Label=0x7f0b0016;
+        public static final int Test_Ultra_Label=0x7f0b0017;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0b0001;
@@ -1267,14 +1268,15 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
         public static final int action_settings=0x7f0b0011;
         public static final int app_name=0x7f0b000e;
-        public static final int chooseLabel=0x7f0b0017;
-        public static final int drag_label=0x7f0b0014;
-        public static final int gold_label=0x7f0b0013;
+        public static final int chooseLabel=0x7f0b0018;
+        public static final int drag_label=0x7f0b0015;
+        public static final int gold_label=0x7f0b0014;
         public static final int hello=0x7f0b000d;
         public static final int hello_world=0x7f0b0010;
-        public static final int start_label=0x7f0b0018;
+        public static final int start_label=0x7f0b0019;
         public static final int title_activity_setup=0x7f0b000f;
         public static final int urban_label=0x7f0b0012;
+        public static final int urban_label_right=0x7f0b0013;
     }
     public static final class style {
         /**  Mimic text appearance in select_dialog_item.xml 
