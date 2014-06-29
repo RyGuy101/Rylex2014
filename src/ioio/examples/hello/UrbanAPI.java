@@ -182,7 +182,7 @@ public class UrbanAPI
 				ra.spinLeft(defaultSpeed, 90);
 			}
 			spinLeft(defaultSpeed, 90);
-			fixSelf();
+//			fixSelf();
 			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
 			tempX = gridSquares.get(counter).getX();
 			tempY = gridSquares.get(counter).getY();
@@ -269,7 +269,7 @@ public class UrbanAPI
 				ra.spinRight(defaultSpeed, 90);
 			}
 			spinRight(defaultSpeed, 90);
-			fixSelf();
+//			fixSelf();
 			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
 			tempX = gridSquares.get(counter).getX();
 			tempY = gridSquares.get(counter).getY();
