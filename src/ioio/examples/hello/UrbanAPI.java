@@ -71,7 +71,60 @@ public class UrbanAPI
 				m.log("In the first while loop");
 				leftWallHugger();
 			}
-			ra.goForward(defaultSpeed, 30);
+			readSensors();
+			ra.goForward(defaultSpeed, (int) (frontSensor + 2));
+			m.log("Initiating victory dance");
+			ra.goBackward(defaultSpeed, 27);
+			ra.victoryDance();
+			// ra.sleep(20000);
+			counter = 0;
+			m.log("counter made to 0");
+			gridSquares2.add(new GridSquare(startX, startY, startDirection));
+			m.log("added new GridSquare to GridSquares2");
+			for (int i = 0; i < 10; i++)
+			{
+				m.log("--PRESS MAP TO START MAZEMAPPER--");
+				// mazeMapper();
+			}
+			doneMapping = true;
+			// m.log("" + sensorMonitor.getFrontDistance());
+			// ra.sleep(250);
+			// goForward(100, 50);
+			// spinRight(100, 180);
+			// mazeMapper();
+			// showOffSpeed();
+			// Put in for sensor check
+			// m.log("front Distance: " + frontSensor);
+			// goForward(100, 100);
+			// accelerateTo(2000);
+			// ra.sleep(200);
+			// m.log("right Distance: " + rightsensor);
+			// ra.sleep(200);
+			// Put in for sensor check
+			// goForward(100, 1);
+			// ra.sleep(200);
+			// m.log("rear Distance: " + rearSensor());
+			/*
+			 * if (sensorMonitor != null) { sensorMonitor.readAllSensors(); float duration = sensorMonitor.getFrontIRPulseDuration();m.log("Detected IR beam duration: " + duration); }
+			 */
+			// }
+		}
+	}
+
+	public void urbanChallangeRight() throws Exception
+	{
+		if (!doneMapping)
+		{
+			gridSquares.add(new GridSquare(startX, startY, startDirection));
+			m.log("The current goal is: ");
+			m.log(goalX + ", " + goalY);
+			while (gridSquares.get(counter).getX() != goalX || gridSquares.get(counter).getY() != goalY)
+			{
+				m.log("In the first while loop");
+				rightWallHugger();
+			}
+			readSensors();
+			ra.goForward(defaultSpeed, (int) (frontSensor + 2));
 			m.log("Initiating victory dance");
 			ra.goBackward(defaultSpeed, 27);
 			ra.victoryDance();
@@ -190,6 +243,93 @@ public class UrbanAPI
 			} else
 			{
 				spinRight(defaultSpeed, 90);
+			}
+			// tempBool = false; //WARNING: This is a test!!! Return to false
+			// after testing <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<--
+		}
+		m.log("End of wallHugger method");
+	}
+
+	public void rightWallHugger() throws Exception
+	{
+		m.log("beginning of wallHugger method");
+		readSensors();
+		// rightSensor = rightSensor();
+		m.log("left Distance: " + leftSensor);
+		m.log("front distance: " + frontSensor);
+		checkForAlignment();
+		if (rightSensor >= wallDistance)
+		{
+			if (leftSensor < desiredWallDistance)
+			{
+				ra.spinLeft(defaultSpeed, 90);
+				readSensors();
+				forwardAlign();
+				ra.spinRight(defaultSpeed, 90);
+			}
+			spinRight(defaultSpeed, 90);
+			fixSelf();
+			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
+			tempX = gridSquares.get(counter).getX();
+			tempY = gridSquares.get(counter).getY();
+			if (gridSquares.get(counter).getDirection() == NORTH)
+			{
+				m.log("The Direction is: North");
+			} else if (gridSquares.get(counter).getDirection() == SOUTH)
+			{
+				m.log("The Direction is: South");
+			} else if (gridSquares.get(counter).getDirection() == EAST)
+			{
+				m.log("The Direction is: East");
+			} else if (gridSquares.get(counter).getDirection() == WEST)
+			{
+				m.log("The Direction is: West");
+			}
+			readSensors();
+			checkForBackwardAlignment();
+			goOneCell();
+			// goForward(-300, 50);
+			// spinRight(300, 360);
+		} else if (frontSensor >= wallDistance)
+		{
+			m.log("The current grid is: " + gridSquares.get(counter).getX() + ", " + gridSquares.get(counter).getY());
+			tempX = gridSquares.get(counter).getX();
+			tempY = gridSquares.get(counter).getY();
+			if (gridSquares.get(counter).getDirection() == NORTH)
+			{
+				m.log("The Direction is: North");
+			} else if (gridSquares.get(counter).getDirection() == SOUTH)
+			{
+				m.log("The Direction is: South");
+			} else if (gridSquares.get(counter).getDirection() == EAST)
+			{
+				m.log("The Direction is: East");
+			} else if (gridSquares.get(counter).getDirection() == WEST)
+			{
+				m.log("The Direction is: West");
+			}
+			goOneCell();
+		} else
+		{
+			if (leftSensor < wallDistance)
+			{
+				if (leftSensor > rightSensor)
+				{
+					spinRight(defaultSpeed, 90);
+				} else if (rightSensor > leftSensor)
+				{
+					spinLeft(defaultSpeed, 90);
+				}
+			} else if (rightSensor < desiredWallDistance)
+			{
+				ra.spinRight(defaultSpeed, 90);
+				readSensors();
+				forwardAlign();
+				ra.spinLeft(defaultSpeed, 90);
+				spinLeft(defaultSpeed, 90);
+			} else
+			{
+				spinLeft(defaultSpeed, 90);
 			}
 			// tempBool = false; //WARNING: This is a test!!! Return to false
 			// after testing <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<--
@@ -481,7 +621,7 @@ public class UrbanAPI
 					ra.goForward(defaultSpeed, (int) (frontSensor + 2));
 					ra.goBackward(defaultSpeed, 27);
 					ra.victoryDance();
-					break;
+					ra.sleep(5000);
 				}
 				followWallOneCell(defaultSpeed, 70);
 				counter++;
