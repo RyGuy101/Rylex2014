@@ -1,6 +1,7 @@
 package ioio.examples.hello;
 
 import ioio.examples.hello.R.string;
+import ioio.lib.api.AnalogInput;
 import ioio.lib.api.DigitalOutput;
 import ioio.lib.api.IOIO;
 import ioio.lib.api.PwmOutput;
@@ -37,6 +38,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	private boolean startedAcceleration = false;
 	private int leftMotorPWMfrequency = 200;// used to be both 200;
 	private int rightMotorPWMfrequency = 195;
+	private AnalogInput IR;
 	private Runnable urban = new Runnable()
 	{
 		@Override
@@ -55,6 +57,13 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		@Override
 		public void run()
 		{
+			try
+			{
+				ga.goldRush();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	};
 	private Runnable drag = new Runnable()
@@ -64,7 +73,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 		{
 			try
 			{
-				da.dragRace(250, 50);
+				da.YOLO();
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -79,7 +88,8 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			try
 			{
 				// ra.test();
-				ra.goForward(250);
+				 ra.spinLeft(200, 360);
+				SystemClock.sleep(1000);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -252,6 +262,7 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 			// sensorReader = new SensorReader(sonar, false);
 			// sr = new Thread(sensorReader);
 			// sr.start();
+			IR = ioio_.openAnalogInput(31);
 			led_ = ioio_.openDigitalOutput(0, true);
 			rightMotorDirection = ioio_.openDigitalOutput(20, ra.rightForward);// Goes forward
 			leftMotorDirection = ioio_.openDigitalOutput(21, ra.leftForward);// Goes forward
@@ -391,6 +402,11 @@ public class MainActivity extends IOIOActivity implements SensorEventListener
 	{
 		log("NullPointerException\nThank you for using the forfeit method!");
 		throw new NullPointerException();
+	}
+
+	public float readIR() throws Exception
+	{
+		return IR.read();
 	}
 
 	public void accelerateTo(final int finalPWMfrequency)

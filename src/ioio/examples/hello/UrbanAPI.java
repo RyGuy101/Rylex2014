@@ -25,10 +25,10 @@ public class UrbanAPI
 	public static final int SOUTH = 3; // Soggy
 	public static final int WEST = 4; // Waffles
 	public int startDirection = NORTH;
-	private int startX = 0;
+	private int startX = 4;
 	private int startY = 0;
-	private int goalX = 0;
-	private int goalY = 11;
+	private int goalX = 2;
+	private int goalY = 5;
 	private int goalDirection = NORTH;
 	private double frontSensor;
 	private double leftSensor;
@@ -43,7 +43,7 @@ public class UrbanAPI
 	public double southDegrees = 1000;
 	public double eastDegrees = 1000;
 	public double westDegrees = 1000;
-	int wallDistance = 60;
+	int wallDistance = 70;
 	int desiredWallDistance = 24;
 	boolean doneMapping = false;
 
@@ -134,6 +134,7 @@ public class UrbanAPI
 			if (rightSensor < desiredWallDistance)
 			{
 				ra.spinRight(defaultSpeed, 90);
+				readSensors();
 				forwardAlign();
 				ra.spinLeft(defaultSpeed, 90);
 			}
@@ -191,6 +192,7 @@ public class UrbanAPI
 			} else if (leftSensor < desiredWallDistance)
 			{
 				ra.spinLeft(defaultSpeed, 90);
+				readSensors();
 				forwardAlign();
 				ra.spinRight(defaultSpeed, 90);
 				spinRight(defaultSpeed, 90);
@@ -678,7 +680,7 @@ public class UrbanAPI
 		int prevLeftDistance = sonar.getLeftDistance();
 		int prevRightDistance = sonar.getRightDistance();
 		ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 6; i++)//Used to be 7
 		{
 			sonar.readLeftAndRight();
 			if (sonar.getLeftDistance() < wallDistance && prevLeftDistance < wallDistance)
@@ -745,11 +747,11 @@ public class UrbanAPI
 		{
 			if (sonar.getRightDistance() - prevRightDistance <= 5 && sonar.getRightDistance() - prevRightDistance >= -5)
 			{
-				spinLeft(defaultSpeed, 20);
+				ra.spinLeft(defaultSpeed, 20);
 			}
 			if (sonar.getLeftDistance() - prevLeftDistance <= 5 && sonar.getLeftDistance() - prevLeftDistance >= -5)
 			{
-				spinRight(defaultSpeed, 20);
+				ra.spinRight(defaultSpeed, 20);
 			}
 		}
 	}

@@ -67,7 +67,7 @@ public class DragAPI
 				l.leftMotorClock.write(true);
 				l.leftMotorClock.write(false);
 			}
-			ra.sleepNano((long) (1000000000 / currentSpeed));
+			ra.sleepNano((long) (1000000000.0 / currentSpeed));
 			if (currentSpeed <= finalSpeed - rate)
 			{
 				currentSpeed += rate;
@@ -90,14 +90,14 @@ public class DragAPI
 		{
 			if (sonar.getLeftDistance() > prevLeftDistance && sonar.getLeftDistance() > distance)
 			{
-				ra.spinLeft(speed, 15);
+				ra.spinLeft(speed, 10);
 				sonar.readLeftAndRight();
 				prevLeftDistance = sonar.getLeftDistance();
 				prevRightDistance = sonar.getRightDistance();
 				ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 			} else if (sonar.getLeftDistance() < prevLeftDistance && sonar.getLeftDistance() < distance)
 			{
-				ra.spinRight(speed, 15);
+				ra.spinRight(speed, 20);
 				sonar.readLeftAndRight();
 				prevLeftDistance = sonar.getLeftDistance();
 				prevRightDistance = sonar.getRightDistance();
@@ -109,5 +109,15 @@ public class DragAPI
 				ra.accelerateTo(initialSpeed, finalSpeed, rate, centimeters);
 			}
 		}
+	}
+
+	public void goForward(int speed) throws Exception
+	{
+		ra.goForward(speed);
+	}
+
+	public void YOLO() throws Exception
+	{
+		accelerateTo(200, 1000, 0.5);
 	}
 }

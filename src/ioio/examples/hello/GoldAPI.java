@@ -3,6 +3,7 @@ package ioio.examples.hello;
 import android.os.SystemClock;
 import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.IOIO;
+import ioio.lib.api.exception.ConnectionLostException;
 
 public class GoldAPI
 {
@@ -21,6 +22,13 @@ public class GoldAPI
 		ra = m.ra;
 	}
 
+	public void goldRush() throws Exception
+	{
+		sonar.read();
+		ra.goForward(200, sonar.getFrontDistance() / 2);
+		spinScan(200);
+	}
+
 	public void spinScan(int speed) throws Exception
 	{
 		l.rightMotorDirection.write(ra.rightForward);
@@ -34,12 +42,12 @@ public class GoldAPI
 			l.leftMotorClock.write(true);
 			l.leftMotorClock.write(false);
 			ra.getIR();
-			if (ra.getIR() < 1500)
+			if (m.readIR() != 1.0)
 			{
 				m.log("");
 				m.log("SEES IR");
 				m.log("");
-				break;
+				goldRush();
 			}
 		}
 	}
