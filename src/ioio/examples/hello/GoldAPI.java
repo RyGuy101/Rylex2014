@@ -1,5 +1,6 @@
 package ioio.examples.hello;
 
+import java.util.ArrayList;
 import android.os.SystemClock;
 import ioio.examples.hello.MainActivity.Looper;
 import ioio.lib.api.IOIO;
@@ -41,8 +42,7 @@ public class GoldAPI
 			l.rightMotorClock.write(false);
 			l.leftMotorClock.write(true);
 			l.leftMotorClock.write(false);
-			ra.getIR();
-			if (m.readIR() != 1.0)
+			if (readIR() > 0)
 			{
 				m.log("");
 				m.log("SEES IR");
@@ -50,5 +50,26 @@ public class GoldAPI
 				goldRush();
 			}
 		}
+		goldRush();
+	}
+
+	public float readIR() throws Exception
+	{
+		float r = 0;
+		float t = 0;
+		ArrayList<Float> readings = new ArrayList<Float>();
+		for (int i = 0; i < 50; i++)
+		{
+			r = m.readIR();
+			if (r != 1)
+			{
+				readings.add(r);
+			}
+		}
+		for (int i = 0; i < readings.size(); i++)
+		{
+			t += readings.get(i);
+		}
+		return t;
 	}
 }
